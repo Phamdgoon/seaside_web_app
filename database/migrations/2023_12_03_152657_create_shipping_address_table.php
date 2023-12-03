@@ -11,15 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('personal_access_tokens', function (Blueprint $table) {
+        Schema::create('shipping_address', function (Blueprint $table) {
             $table->id();
-            $table->morphs('tokenable');
+            $table->string('username');
             $table->string('name');
-            $table->string('token', 64)->unique();
-            $table->text('abilities')->nullable();
-            $table->timestamp('last_used_at')->nullable();
-            $table->timestamp('expires_at')->nullable();
+            $table->string('phone_number');
+            $table->string('address');
+            $table->boolean('default_address')->default(false);
             $table->timestamps();
+
+            $table->foreign('username')
+            ->references('username')->on('buyer_profile')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('personal_access_tokens');
+        Schema::dropIfExists('shipping_address');
     }
 };
