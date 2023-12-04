@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('buyer_profile', function (Blueprint $table) {
             $table->string('username')->primary();
             $table->string('account_name');
-            $table->string('email');
             $table->string('gender')->default('Khác');
             $table->string('birth_day')->nullable();
             $table->string('avt');
