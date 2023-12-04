@@ -226,11 +226,14 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 }
 
 /*---------------------------------------------*/
-.left-top-bar {
+.left-top-bar a {
   font-family: Arial, sans-serif;
   font-size: 12px;
   line-height: 1.8;
+
+  height: 100%;
   color: #b2b2b2;
+  border-right: 1px solid rgba(255,255,255,0.3);
 }
 
 
@@ -272,6 +275,8 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
   background-color: transparent;
   width: 100%;
   height: 84px;
+  top: 40px;
+  left: 0px; 
 
   -webkit-transition: height 0.3s, background-color 0.3s;
   -o-transition: height 0.3s, background-color 0.3s;
@@ -291,13 +296,15 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 }
 
 .header-v4 .wrap-menu-desktop {
-  background-color: #fff;
+  background-color: transparent;
 }
 
 
 /*---------------------------------------------*/
 .limiter-menu-desktop {
   height: 100%;
+  padding-top:15px;
+  padding-bottom: 15px;
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
@@ -1689,58 +1696,6 @@ button.mfp-close {
 
 /*//////////////////////////////////////////////////////////////////
 [ Filter ]*/
-.show-search .icon-search,
-.show-filter .icon-filter {display: none;}
-
-.show-search .icon-close-search,
-.show-filter .icon-close-filter {display: unset;}
-
-.show-search,
-.show-filter {
-  background-color: #f2f2f2;
-  border-color: #e7e7e7;
-  position: relative;
-}
-
-.show-search::after,
-.show-filter::after {
-  content: "";
-  position: absolute;
-  display: block;
-
-  width: 14px;
-  height: 14px;
-  background-color: #f2f2f2;
-  border-left: 1px solid #e7e7e7;
-  border-bottom: 1px solid #e7e7e7;
-  
-  transform-origin: center center;
-  -webkit-transform: rotate(-45deg);
-  -moz-transform: rotate(-45deg);
-  -ms-transform: rotate(-45deg);
-  -o-transform: rotate(-45deg);
-  transform: rotate(-45deg);
-
-  left: calc(50% - 7px);
-  bottom: -8px;
-
-  -webkit-transition: all 0.4s;
-  -o-transition: all 0.4s;
-  -moz-transition: all 0.4s;
-  transition: all 0.4s;
-}
-
-.show-search:hover:after,
-.show-filter:hover:after {
-  background-color: #bf6d72;
-  border-color: #bf6d72;
-}
-
-/*---------------------------------------------*/
-.filter-col1 {width: 27%;}
-.filter-col2 {width: 27%;}
-.filter-col3 {width: 26%;}
-.filter-col4 {width: 20%;}
 
 /*---------------------------------------------*/
 .filter-link {
@@ -3411,4 +3366,47 @@ img {
 .buy-button-container p{
   margin-left:5px;
   margin-right:5px;
+}
+
+
+.icon-header-item {
+    display: flex;
+    align-items: center;
+}
+
+/* Icon tìm kiếm */
+.icon-header-item i {
+    margin-right: 10px; /* Khoảng cách giữa icon và ô tìm kiếm */
+}
+/* Thiết lập kiểu dáng cơ bản cho ô tìm kiếm */
+.search-input {
+  width: 600px; 
+  height: 30px;/* Đặt chiều rộng của ô tìm kiếm */
+  padding: 10px; /* Đặt khoảng trắng bên trong ô tìm kiếm */
+  border: 1px solid #ccc; /* Đặt viền của ô tìm kiếm */
+  border-radius: 15px; /* Bo góc của ô tìm kiếm */
+  outline: none; /* Loại bỏ đường viền khi ô tìm kiếm được focus */
+}
+
+/* Tạo hiệu ứng khi di chuột qua ô tìm kiếm */
+.search-input:hover {
+  border-color: #555; /* Đổi màu viền khi di chuột qua */
+}
+
+/* Tạo hiệu ứng khi ô tìm kiếm được focus */
+.search-input:focus {
+  border-color: #2196F3; /* Đổi màu viền khi ô tìm kiếm được focus */
+  box-shadow: 0 0 5px rgba(33, 150, 243, 0.5); /* Tạo shadow khi ô tìm kiếm được focus */
+}
+
+.search-input + .icon-search{
+  position: absolute;
+  right: 10px; /* Điều chỉnh khoảng cách từ biểu tượng đến ô nhập */
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+.input-wrapper {
+  position: relative;
+  display: inline-block;
 }
