@@ -22,7 +22,15 @@ class DatabaseSeeder extends Seeder
             UserTableSeeder::class,
             PermissionTableSeeder::class,            
             UserPermissionTableSeeder::class,
-            BuyerProfileTableSeeder::class
+            BuyerProfileTableSeeder::class,
+            ShopProfileSeeder::class,
+            CategorySeeder::class,
+            CategoryChildSeeder::class,
+            ProductSeeder::class,
+            ProductDetailSeeder::class,
+            ProductSizeSeeder::class,
+            ProductImageSeeder::class,
+            ShippingAddressSeeder::class
         ]);
     }
 }
