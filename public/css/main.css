@@ -3380,7 +3380,7 @@ img {
 }
 /* Thiết lập kiểu dáng cơ bản cho ô tìm kiếm */
 .search-input {
-  width: 600px; 
+  width: 550px; 
   height: 30px;/* Đặt chiều rộng của ô tìm kiếm */
   padding: 10px; /* Đặt khoảng trắng bên trong ô tìm kiếm */
   border: 1px solid #ccc; /* Đặt viền của ô tìm kiếm */
@@ -3410,3 +3410,35 @@ img {
   position: relative;
   display: inline-block;
 }
+.modal {
+  z-index: 2050; /* Số này có thể cần điều chỉnh tùy thuộc vào các phần tử khác trong trang của bạn */
+}
+/* Thêm các quy tắc CSS sau vào stylesheet của bạn */
+
+.small-avatar-container {
+  display: flex;
+  align-items: center;
+}
+
+.small-avatar {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  object-position: center center;
+  border-radius: 50%; /* Để hình ảnh trở thành hình tròn */
+}
+
+.nav-item.dropdown {
+  display: flex;
+  align-items: center;
+}
+
+.nav-link.dropdown-toggle {
+  display: flex;
+  align-items: center;
+  text-decoration: none; /* Loại bỏ gạch chân mặc định của liên kết */
+  color: #bf6d72;
+}
+
+
+
