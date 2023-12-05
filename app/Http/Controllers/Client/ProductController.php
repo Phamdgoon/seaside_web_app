@@ -78,13 +78,20 @@ class ProductController extends Controller
                 ->leftJoin('product_detail', 'product.id', '=', 'product_detail.id_product')
                 ->leftJoin('product_image', 'product_detail.id', '=', 'product_image.id_product_detail')
                 ->groupBy('product.id', 'product.name_product', 'product.id_category_child')
-                ->where('product.id_category_child', $categoryChild->id)
-                ->get();
-
+                ->where('product.id_category_child', $categoryChild->id);
+        
+            if (session('price_from')) {
+                if (session('price_arrives')) {
+                    $product->whereBetween('product_detail.price', [session('price_from'), session('price_arrives')]);
+                } else {
+                    $product->where('product_detail.price', '>=', session('price_from'));
+                }
+            }
+        
+            $product = $product->get();
             $products = array_merge($products, $product->toArray());
-        }
+        }        
 
-        // Sắp xếp theo giá sau khi đã merge hết
         if ($sortOrder == 'asc') {
             usort($products, function ($a, $b) {
                 return $a['price'] <=> $b['price'];
@@ -119,17 +126,19 @@ class ProductController extends Controller
         session()->put('price_from', $priceFrom);
         session()->put('price_arrives', $priceArrives);
         // Kiểm tra nếu price_arrives là null
-        if ($priceArrives === null) {
-            $products = [];
+        $products = [];
 
             foreach ($category_Childs as $categoryChild) {
                 $product = Product::select('product.id', 'product.name_product', 'product.id_category_child', DB::raw('MIN(product_detail.price) as price'), DB::raw('MAX(product_image.url_image) as url_image'))
                     ->leftJoin('product_detail', 'product.id', '=', 'product_detail.id_product')
                     ->leftJoin('product_image', 'product_detail.id', '=', 'product_image.id_product_detail')
                     ->groupBy('product.id', 'product.name_product', 'product.id_category_child')
-                    ->where('product.id_category_child', $categoryChild->id)
-                    ->where('product_detail.price', '>=', $priceFrom); // Điều kiện lọc theo giá từ priceFrom
-                    
+                    ->where('product.id_category_child', $categoryChild->id);
+                    if ($priceArrives === null) {
+                            $product->where('product_detail.price', '>=', $priceFrom);
+                        } else {
+                            $product->whereBetween('product_detail.price', [$priceFrom, $priceArrives]);
+                        }
                     // Kiểm tra nếu có sắp xếp
                     if (session('sort')) {
                         // Thực hiện sắp xếp theo giá
@@ -144,35 +153,7 @@ class ProductController extends Controller
 
                 $products = array_merge($products, $product->toArray());
             }
-        } else {
-            // Xử lý khi price_arrives không phải là null
-            $category_Childs = Category_Child::where('id_category', $categoryId)->get();
-            $products = [];
-
-            foreach ($category_Childs as $categoryChild) {
-                $product = Product::select('product.id', 'product.name_product', 'product.id_category_child', DB::raw('MIN(product_detail.price) as price'), DB::raw('MAX(product_image.url_image) as url_image'))
-                    ->leftJoin('product_detail', 'product.id', '=', 'product_detail.id_product')
-                    ->leftJoin('product_image', 'product_detail.id', '=', 'product_image.id_product_detail')
-                    ->groupBy('product.id', 'product.name_product', 'product.id_category_child')
-                    ->where('product.id_category_child', $categoryChild->id)
-                    ->whereBetween('product_detail.price', [$priceFrom, $priceArrives]);
-                    
-                    // Kiểm tra nếu có sắp xếp
-                    if (session('sort')) {
-                        // Thực hiện sắp xếp theo giá
-                        if (session('sort') == 'asc') {
-                            $product->orderBy('price');
-                        } else {
-                            $product->orderByDesc('price');
-                        }
-                    }
-
-        $product = $product->get();
-
-                $products = array_merge($products, $product->toArray());
-            }
-        }
-
+        
         return view('client.product.product', [
             'price_from' => $priceFrom, 'price_arrives' => $priceArrives, 'products' => $products
         ]);
