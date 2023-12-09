@@ -16,13 +16,17 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\ProductController;
 
+use App\Http\Controllers\Seller\DashboardController;
+
 Route::get('/', [HomeController::class, 'index'])->name('client.home');
 
 Route::get('/product', [ProductController::class, 'product'])->name('client.product');
 Route::post('/product', [ProductController::class, 'search'])->name('client.product.search');
 Route::post('/product_sort', [ProductController::class, 'sort'])->name('client.product.sort');
 Route::post('/product_price', [ProductController::class, 'priceFilter'])->name('client.product.price');
+
 use App\Http\Controllers\Auth\AuthController;
+
 Route::get('/', [HomeController::class, 'index'])->name('client.home');
 
 
@@ -36,10 +40,18 @@ Route::get('/buyer/register', function () {
     return view('auth.buyer.register');
 })->name('buyer.register');
 
-Route::get('/logout', [AuthController::class,'logout'])->name('logout');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/email/verify/{token}', [AuthController::class, 'verifyEmail'])->name('verify.email');
 
 Route::get('/verify-email', function () {
     return view('emails.verify-email');
 })->name('verify.email.custom');
+
+
+//seller
+Route::prefix('seller1')->group(function () {
+    Route::get('', [DashboardController::class, 'index']);
+
+});
+
