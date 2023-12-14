@@ -30,7 +30,15 @@ class DatabaseSeeder extends Seeder
             ProductDetailSeeder::class,
             ProductSizeSeeder::class,
             ProductImageSeeder::class,
-            ShippingAddressSeeder::class
+            ShippingAddressSeeder::class,
+            OrderTableSeeder::class,
+            CartTableSeeder::class,
+            OrderDetailTableSeeder::class,
+            VoucherTableSeeder::class,
+            VoucherOrderTableSeeder::class,
+            FeedbackTableSeeder::class,
+            FeedbackImageTableSeeder::class
+            
         ]);
     }
 }
