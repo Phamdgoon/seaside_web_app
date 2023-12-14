@@ -1,0 +1,7 @@
+.cover {
+    background-size: cover;
+    background-repeat: no-repeat
+}
+.profile-head {
+    transform: translateY(5rem)
+}

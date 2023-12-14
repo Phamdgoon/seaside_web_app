@@ -15,8 +15,10 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\ProductController;
-
 use App\Http\Controllers\Seller\DashboardController;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Client\ProfileSellerController;
+
 
 Route::get('/', [HomeController::class, 'index'])->name('client.home');
 
@@ -24,11 +26,6 @@ Route::get('/product', [ProductController::class, 'product'])->name('client.prod
 Route::post('/product', [ProductController::class, 'search'])->name('client.product.search');
 Route::post('/product_sort', [ProductController::class, 'sort'])->name('client.product.sort');
 Route::post('/product_price', [ProductController::class, 'priceFilter'])->name('client.product.price');
-
-use App\Http\Controllers\Auth\AuthController;
-
-Route::get('/', [HomeController::class, 'index'])->name('client.home');
-
 
 Route::post('/buyer/login', [AuthController::class, 'login'])->name('login');
 Route::post('/buyer/register', [AuthController::class, 'register'])->name('register');
@@ -55,3 +52,4 @@ Route::prefix('seller1')->group(function () {
 
 });
 
+Route::get('/profile-seller', [ProfileSellerController::class, 'index']);
