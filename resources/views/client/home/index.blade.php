@@ -1,6 +1,6 @@
 <!-- Page Header Start -->
 @extends('client.layouts.app')
-@section('title', 'SEASIDE STORE SHOP')
+@section('title', 'SEASIDE')
 @section('content')
     <section class="section-slide">
         <div class="wrap-slick1">
@@ -349,15 +349,15 @@
                             <div class="block2-pic hov-img0">
                                 <img src="{{ $product->url_image }}" alt="IMG-PRODUCT">
 
-                                <a href="#"
-                                    class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+                                <a href="{{ route('client.productDetail', ['id' => $product->id]) }}"
+                                    class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
                                     Quick View
                                 </a>
                             </div>
 
                             <div class="block2-txt flex-w flex-t p-t-14">
                                 <div class="block2-txt-child1 flex-col-l ">
-                                    <a style="height: 40px" href="product-detail.html"
+                                    <a style="height: 40px" href="{{ route('client.productDetail', ['id' => $product->id]) }}"
                                         class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
                                         {{ \Illuminate\Support\Str::limit($product->name_product, 60, ' ...') }}
                                     </a>

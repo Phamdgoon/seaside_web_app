@@ -43,3 +43,6 @@ Route::get('/email/verify/{token}', [AuthController::class, 'verifyEmail'])->nam
 Route::get('/verify-email', function () {
     return view('emails.verify-email');
 })->name('verify.email.custom');
+
+
+Route::get('/product_detail', [ProductController::class, 'productDetail'])->name('client.productDetail');

@@ -51,7 +51,7 @@
             <nav class="limiter-menu-desktop container">
                 <!-- Logo desktop -->
                 <a href="{{ route('client.home') }}" class="logo" style="color: #000">
-                    <h4><b>SEASIDE</b> STORE</h4>
+                    <h4><b>SEASIDE</b></h4>
                 </a>
                 <!-- Icon header -->
                 <div class="wrap-icon-header flex-w flex-r-m">
