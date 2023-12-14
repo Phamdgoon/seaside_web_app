@@ -24,12 +24,12 @@
                     <label for="priceRange">Khoảng giá:</label>
 
                     <div style="display: flex" class="m-b">
-                        <input type="number" name="price_from" class="form-control" placeholder="@if (session('price_from')) {{ session('price_from') }} @else Từ @endif"
+                        <input type="number" name="price_from" class="form-control" @if (session('price_from')) value="{{ session('price_from') }}" @endif  placeholder="Từ"
                             id="price_from" min="0" step="1" required>
 
                         <span style="margin-left: 10px; margin-right: 10px"> - </span>
 
-                        <input type="number" name="price_arrives" class="form-control" placeholder="@if (session('price_arrives')) {{ session('price_arrives') }} @else Đến @endif"
+                        <input type="number" name="price_arrives" class="form-control" @if (session('price_arrives')) value="{{ session('price_arrives') }}"@endif placeholder="Đến"
                             id="price_arrives" min="0" step="1">
                     </div>
 
