@@ -64,7 +64,7 @@
                                     <div class="block2-txt-child1 flex-col-l ">
                                         <a style="height: 40px" href="{{ route('buyer.productDetail', ['id' => $product['id']]) }}"
                                             class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                                            {{ \Illuminate\Support\Str::limit($product['name_product'], 40, ' ...') }}
+                                            {{ \Illuminate\Support\Str::limit($product['name_product'], 35, ' ...') }}
                                         </a>
 
                                         <span class="stext-105 cl3" style="color: #fa4251">

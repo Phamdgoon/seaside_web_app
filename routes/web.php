@@ -46,4 +46,3 @@ Route::get('/verify-email', function () {
 
 
 Route::get('/product_detail', [ProductController::class, 'productDetail'])->name('buyer.productDetail');
-Route::get('/profileSeller', [ProductController::class, 'profileSeller'])->name('buyer.profileSeller');

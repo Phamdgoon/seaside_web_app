@@ -45,6 +45,17 @@ class ProductController extends Controller
         $searchQuery = $request->input('search1');
         session()->put('search', $searchQuery);
         $category_Childs = Category_Child::where('name_category_child', 'LIKE', "%$searchQuery%")->get();
+        if ($category_Childs->isEmpty()) {
+            // Chia nhỏ câu thành mảng các từ
+            $words = explode(' ', $searchQuery);
+            
+            // Tìm kiếm sử dụng mảng từ
+            $category_Childs = Category_Child::where(function ($query) use ($words) {
+                foreach ($words as $word) {
+                    $query->orWhere('name_category_child', 'LIKE', "%$word%");
+                }
+            })->get();
+        }
         $products = [];
 
         foreach ($category_Childs as $categoryChild) {
@@ -73,6 +84,17 @@ class ProductController extends Controller
         } else {
             $searchQuery = session('search'); 
             $category_Childs = Category_Child::where('name_category_child', 'LIKE', "%$searchQuery%")->get();
+            if ($category_Childs->isEmpty()) {
+                // Chia nhỏ câu thành mảng các từ
+                $words = explode(' ', $searchQuery);
+                
+                // Tìm kiếm sử dụng mảng từ
+                $category_Childs = Category_Child::where(function ($query) use ($words) {
+                    foreach ($words as $word) {
+                        $query->orWhere('name_category_child', 'LIKE', "%$word%");
+                    }
+                })->get();
+            }
         }
         
         $products = [];
@@ -123,6 +145,17 @@ class ProductController extends Controller
         } else {
             $searchQuery = session('search'); 
             $category_Childs = Category_Child::where('name_category_child', 'LIKE', "%$searchQuery%")->get();
+            if ($category_Childs->isEmpty()) {
+                // Chia nhỏ câu thành mảng các từ
+                $words = explode(' ', $searchQuery);
+                
+                // Tìm kiếm sử dụng mảng từ
+                $category_Childs = Category_Child::where(function ($query) use ($words) {
+                    foreach ($words as $word) {
+                        $query->orWhere('name_category_child', 'LIKE', "%$word%");
+                    }
+                })->get();
+            }
         }
         $priceFrom = $request->input('price_from');
         $priceArrives = $request->input('price_arrives');

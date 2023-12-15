@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <div class="header"> <a href="{{ route('client.home') }}" class="logo" style="color: #000">
+    <div class="header"> <a href="{{ route('buyer.home') }}" class="logo" style="color: #000">
             <p><b>SEASIDE</b> / <span style="color: #a0a5a8">Đăng nhập</span></p>
         </a>
         <p style="font-size: 16px;color: #bf6d72">Bạn cần giúp đỡ?</p>

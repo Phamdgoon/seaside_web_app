@@ -327,69 +327,78 @@
                             </p>
                         </div>
                     </div>
-                    <div class="button-container">
+                    <div class="button-container filter-tope-group">
+                            
+                           
+                           
+                           
+                           
+                           
                         <div>
-                            <button class="flex-c-m stext-102 cl14 bg0 bor10 hov-btn3 p-lr-15  trans-04">
+                            <button class="flex-c-m stext-102 cl14 bg0 bor20 hov-btn3 p-lr-15  trans-04 how-active1" data-filter="*">
                                 Tất cả bình luận
                             </button>
                         </div>
                         <div class="m-l-10">
-                            <button class="flex-c-m stext-102 cl8 bg0 bor20 hov-btn3 p-lr-15  trans-04">
+                            <button class="flex-c-m stext-102 cl14 bg0 bor20 hov-btn3 p-lr-15  trans-04" data-filter=".5">
                                 5 sao
                             </button>
                         </div>
                         <div class="m-l-10">
-                            <button class="flex-c-m stext-102 cl8 bg0 bor20 hov-btn3 p-lr-15  trans-04">
+                            <button class="flex-c-m stext-102 cl14 bg0 bor20 hov-btn3 p-lr-15  trans-04" data-filter=".4">
                                 4 sao
                             </button>
                         </div>
                         <div class="m-l-10">
-                            <button class="flex-c-m stext-102 cl8 bg0 bor20 hov-btn3 p-lr-15  trans-04">
+                            <button class="flex-c-m stext-102 cl14 bg0 bor20 hov-btn3 p-lr-15  trans-04" data-filter=".3">
                                 3 sao
                             </button>
                         </div>
                         <div class="m-l-10">
-                            <button class="flex-c-m stext-102 cl8 bg0 bor20 hov-btn3 p-lr-15  trans-04">
+                            <button class="flex-c-m stext-102 cl14 bg0 bor20 hov-btn3 p-lr-15  trans-04" data-filter=".2">
                                 2 sao
                             </button>
                         </div>
                         <div class="m-l-10">
-                            <button class="flex-c-m stext-102 cl8 bg0 bor20 hov-btn3 p-lr-15  trans-04">
+                            <button class="flex-c-m stext-102 cl14 bg0 bor20 hov-btn3 p-lr-15  trans-04" data-filter=".1">
                                 1 sao
                             </button>
                         </div>
                     </div>
                 </div>
-                @foreach ($feedbackData as $feedback)
-                    <div class="flex-w flex-t p-b-10 m-l-20">
-                        <div class="small-avatar-container">
-                            <img name="avt" src="{{ $feedback->avt }}" alt="AVATAR"
-                                class="rounded-circle small-avatar">
-                        </div>
-                        <div class="size-207">
-                            <div>
-                                {{ $feedback->account_name }}
-                                <span class="fs-18 cl11">
-                                    @for ($i = 0; $i < $feedback->star; $i++)
-                                        <i class="zmdi zmdi-star"></i>
-                                    @endfor
-                                </span>
+                <div class="isotope-grid">
+                    @foreach ($feedbackData as $feedback)
+                        <div class="flex-w flex-t p-b-10 m-l-20 isotope-item {{ $feedback->star }}" style="width: 500px">
+                            <div class="small-avatar-container">
+                                <img name="avt" src="{{ $feedback->avt }}" alt="AVATAR"
+                                    class="rounded-circle small-avatar">
                             </div>
-                            <p class="stext-102">
-                                {{ $feedback->created_at }} | {{ $feedback->name_product_detail }} |
-                                Size:{{ $feedback->size }}
-                            </p>
-                            <p class="stext-103 cl6">
-                                {{ $feedback->message }}
-                            </p>
-                            <div class="block2-pic" style="display: flex;height:200px">
-                                @foreach ($feedback_Images as $feedback_Image)
-                                    <img class="img-feedback" src="{{ $feedback_Image->url_image }}" alt="">
-                                @endforeach
+                            <div class="size-207">
+                                <div>
+                                    {{ $feedback->account_name }}
+                                    <span class="fs-18 cl11">
+                                        @for ($i = 0; $i < $feedback->star; $i++)
+                                            <i class="zmdi zmdi-star"></i>
+                                        @endfor
+                                    </span>
+                                </div>
+                                <p class="stext-102">
+                                    {{ $feedback->created_at }} | {{ $feedback->name_product_detail }} |
+                                    Size:{{ $feedback->size }}
+                                </p>
+                                <p class="stext-103 cl6">
+                                    {{ $feedback->message }}
+                                </p>
+                                <div class="block2-pic" style="display: flex;height:200px">
+                                    @foreach ($feedback_Images as $feedback_Image)
+                                        <img class="img-feedback" src="{{ $feedback_Image->url_image }}" alt="">
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                </div>
             </div>
+        </div>
     </section>
 @endsection
