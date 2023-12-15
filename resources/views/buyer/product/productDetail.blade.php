@@ -2,13 +2,11 @@
 @extends('buyer.layouts.app')
 @section('title', $products->name_product)
 @section('content')
-
     <!-- Product Detail -->
-    <section class="sec-product-detail bg0 p-t-65 p-b-60">
-
+    <section class="sec-product-detail bg12 p-t-65 p-b-60">
         <!-- breadcrumb -->
         <div class="container">
-            <div class="bread-crumb flex-w p-l-25 p-r-15 p-b-30 p-lr-0-lg">
+            <div class="bread-crumb flex-w p-l-25 p-r-15 p-b-10 p-lr-0-lg">
                 <a href="{{ route('buyer.home') }}" class="stext-109 cl8 hov-cl1 trans-04">
                     Home
                     <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
@@ -19,9 +17,8 @@
                 </span>
             </div>
         </div>
-
         <div class="container">
-            <div class="row">
+            <div class="row bor22 bg0">
                 <div class="col-md-6 col-lg-7 p-b-30">
                     <div class="p-l-25 p-r-30 p-lr-0-lg">
                         <div class="wrap-slick3 flex-sb flex-w">
@@ -47,12 +44,39 @@
                                     </div>
                                 @endforeach
                             </div>
+                            <div class="flex-w flex-m p-l-100 p-t-10 respon7">
+                                <div class="flex-m bor9 p-r-10 m-r-11">
+                                    <a href="#"
+                                        class="fs-24 cl3 hov-cl1 trans-04 lh-10 p-lr-2 p-tb-2 js-addwish-detail tooltip100"
+                                        data-tooltip="Add to Wishlist">
+                                        <i class="zmdi zmdi-favorite"></i>
+                                    </a>
+                                </div>
+                                <p>Chia sẻ: </p>
+                                <!-- Facebook Share -->
+                                <a href="" class="fs-24 cl13 hov-cl1 trans-04 lh-10 p-l-10 p-tb-2 m-r-8 tooltip100"
+                                    onclick="shareOnFacebook()" data-tooltip="Chia sẻ trên Facebook">
+                                    <i class="fa-brands fa-facebook"></i>
+                                </a>
+
+                                <!-- Twitter Share -->
+                                <a href="" class="fs-24 cl15 hov-cl1 trans-04 lh-10  p-tb-2 m-r-8 tooltip100"
+                                    onclick="shareOnTwitter()" data-tooltip="Chia sẻ trên Twitter">
+                                    <i class="fa-brands fa-square-twitter"></i>
+                                </a>
+
+                                <!-- Google Plus Share -->
+                                <a href="" class="fs-24 cl14 hov-cl1 trans-04 lh-10  p-tb-2 m-r-8 tooltip100"
+                                    onclick="shareOnGooglePlus()" data-tooltip="Chia sẻ trên Google Plus">
+                                    <i class="fa-brands fa-google-plus"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-5 p-b-30">
                     <div class="p-r-50 p-t-5 p-lr-0-lg">
-                        <h4 class="mtext-105 cl2 p-b-14">
+                        <h4 class=" cl2">
                             @if (session('success'))
                                 <div class="alert alert-success" id="success-alert">
                                     {{ session('success') }}
@@ -63,8 +87,8 @@
                                     }, 3000);
                                 </script>
                             @endif
-                            <span class="js-name-detail">{{ $products->name_product }}</span><br>
-                            <p style="color: #f9ba48">
+                            <span class="js-name-detail mtext-106">{{ $products->name_product }}</span>
+                            <p class="mtext-107"style="color: #f9ba48">
                                 {{ number_format($averageStarRating, 1) }}
                                 @if ($averageStarRating > floor($averageStarRating))
                                     @for ($i = 0; $i < floor($averageStarRating); $i++)
@@ -81,7 +105,7 @@
                             </p>
                         </h4>
 
-                        <span style="color: #ff2600;font-size: 24px" class="mtext-106 cl2">
+                        <span style="color: #ff2600;font-size: 20px" class="mtext-106 cl2">
                             @if ($priceByProduct[$ID]['min'] == $priceByProduct[$ID]['max'])
                                 Giá : {{ number_format($priceByProduct[$ID]['min'], 0, ',', '.') }} <span
                                     style="font-size: 18px">đ</span>
@@ -90,9 +114,9 @@
                                 {{ number_format($priceByProduct[$ID]['max'], 0, ',', '.') }} <u>đ</u>
                             @endif
                         </span>
-                        <p class="stext-102 cl3 p-t-23">
+                        {{-- <p class="stext-102 cl3 p-t-23">
                             {{ $products->description }}
-                        </p>
+                        </p> --}}
 
                         <!--  -->
                         {{-- {{ route('cart.add') }} --}}
@@ -135,31 +159,26 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="flex-w flex-r-m p-b-10">
-
                                     <div class="size-204 flex-w flex-m respon6-next">
                                         <div class="wrap-num-product flex-w m-r-20 m-tb-10">
                                             <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
                                                 <i class="fs-16 zmdi zmdi-minus"></i>
                                             </div>
-
                                             <input class="mtext-104 cl3 txt-center num-product" type="number"
                                                 name="quantity" value="1">
-
                                             <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
                                                 <i class="fs-16 zmdi zmdi-plus"></i>
                                             </div>
                                         </div>
-
                                     </div>
                                     <div class="group-cart">
                                         <button type="submit" name="action" value="add_to_cart"
-                                            class="flex-c-m stext-101 cl0 size-101 bg10 bor1 hov-btn1 p-lr-15 trans-04">
-                                            Giỏ hàng
+                                            class="flex-c-m stext-103  size-101 cl14 bg11 bor10 hov-btn1 p-lr-15 trans-04">
+                                            Thêm vào giỏ hàng
                                         </button>
                                         <button type="button" onclick="submitForm('buy_now')"
-                                            class="flex-c-m stext-101 cl0 size-101 bg10 bor1 hov-btn1 p-lr-15 trans-04">
+                                            class="flex-c-m stext-103 cl0 size-101 bg10 bor10 hov-btn1 p-lr-15 trans-04">
                                             Mua ngay
                                         </button>
                                     </div>
@@ -176,7 +195,7 @@
                         </script> --}}
 
                         <!--  -->
-                        <div class="flex-w flex-m p-l-100 p-t-40 respon7">
+                        {{-- <div class="flex-w flex-m p-l-100 p-t-40 respon7">
                             <div class="flex-m bor9 p-r-10 m-r-11">
                                 <a href="#"
                                     class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100"
@@ -202,86 +221,151 @@
                                 onclick="shareOnGooglePlus()" data-tooltip="Chia sẻ trên Google Plus">
                                 <i class="fa-brands fa-google-plus"></i>
                             </a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
+
+            {{-- Start-Thông tin shop --}}
             @foreach ($shopProfiles as $profile)
-                <div class="container">
-                    <div class="row bg2">
-                        <div>
-                            <a href="#" style="height: 100%; color: #bf6d72;" class="nav-link">
-                                <div class="small-avatar-container">
-                                    <img name="avt" src="{{ $profile->avt }}" alt="Avatar của Shop"
-                                        class="rounded-circle small-avatar-shop">
-                                </div>
-                            </a>
-                        </div>
-                        <div class="p-t-10">
-                            <h5 name="name_shop">{{$profile->name_shop}}</h5>
-                            <div class=" p-t-10 button-container">
-                                <div>
-                                    <button class="flex-c-m stext-102 cl14 bg11 bor10 hov-btn3 p-lr-15 p-tb-3 trans-04">
-                                        <i class="fas fa-comment-dots p-r-3"></i>Chat ngay
-                                    </button>
-                                </div>
-                                <div class="m-l-10">
-                                    <button class="flex-c-m stext-102 cl8 bg0 bor20 hov-btn3 p-lr-15 p-tb-3 trans-04">
-                                        <i class="fas fa-store p-r-3"></i>Xem shop
-                                    </button>
-                                </div>
+                <div class="row bor22 bg0 m-t-15">
+                    <div>
+                        <a href="#" style="height: 100%; color: #bf6d72;" class="nav-link">
+                            <div class="small-avatar-container">
+                                <img name="avt" src="{{ $profile->avt }}" alt="Avatar của Shop"
+                                    class="rounded-circle small-avatar-shop">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="p-t-10">
+                        <h5 name="name_shop">{{ $profile->name_shop }}</h5>
+                        <div class=" p-t-10 button-container">
+                            <div>
+                                <button class="flex-c-m stext-102 cl14 bg11 bor10 hov-btn3 p-lr-15 p-tb-3 trans-04">
+                                    <i class="fas fa-comment-dots p-r-3"></i>Chat ngay
+                                </button>
+                            </div>
+                            <div class="m-l-10">
+                                <button class="flex-c-m stext-102 cl8 bg0 bor20 hov-btn3 p-lr-15 p-tb-3 trans-04">
+                                    <i class="fas fa-store p-r-3"></i>Xem shop
+                                </button>
                             </div>
                         </div>
-                        <div class="p-tb-15 p-lr-40 flex-w">
-                            @php
+                    </div>
+                    <div class="p-tb-15 p-lr-15 flex-w">
+                        @php
                             $productNumber = session('shopProfile')['productNumber'];
                             $feedbackNumber = session('shopProfile')['feedbackNumber'];
-                             @endphp
-                            <div>
-                                <div class="flex-shop">
-                                    <label>Đánh giá </label>
-                                    <span class="p-l-20 cl14 txt-right">{{ $feedbackNumber }}</span>
-                                </div>
-                                <div class="flex-shop">
-                                    <label>Sản phẩm</label>
-                                    <span class="p-l-20 cl14 txt-right">{{ $productNumber }}</span>
-                                </div>
+                        @endphp
+                        <div>
+                            <div class="flex-shop">
+                                <label>Đánh giá </label>
+                                <span class="cl14 txt-right">{{ $feedbackNumber }}</span>
+                            </div>
+                            <div class="flex-shop">
+                                <label>Sản phẩm</label>
+                                <span class=" cl14 txt-right">{{ $productNumber }}</span>
                             </div>
                         </div>
-                        <div class="p-tb-15 p-lr-40 ">
-                            <div>
-                                <div class="flex-shop">
-                                    <label>Đánh giá </label>
-                                    <span class="p-l-20 cl14 txt-right">20k</span>
-                                </div>
-                                <div class="flex-shop">
-                                    <label>Sản phẩm</label>
-                                    <span class="p-l-20 cl14 txt-right">123</span>
-                                </div>
+                    </div>
+                    <div class="p-tb-15 p-lr-15 ">
+                        <div>
+                            <div class="flex-shop">
+                                <label>Tỉ lệ phản hồi </label>
+                                <span class=" cl14 txt-right">95%</span>
+                            </div>
+                            <div class="flex-shop">
+                                <label>Thời gian phản hồi</label>
+                                <span class=" cl14 txt-right">trong vài giờ</span>
                             </div>
                         </div>
-                        <div class="p-tb-15 p-lr-40 ">
-                            <div>
-                                <div class="flex-shop">
-                                    <label>Đánh giá </label>
-                                    <span class="p-l-20 cl14 txt-right">20k</span>
-                                </div>
-                                <div class="flex-shop">
-                                    <label>Sản phẩm</label>
-                                    <span class="p-l-20 cl14 txt-right">123</span>
-                                </div>
+                    </div>
+                    <div class="p-tb-15 p-lr-15 ">
+                        <div>
+                            <div class="flex-shop">
+                                <label>Tham gia </label>
+                                <span class=" cl14 txt-right">1 tháng trước</span>
+                            </div>
+                            <div class="flex-shop">
+                                <label>Người theo dõi</label>
+                                <span class=" cl14 txt-right">12k</span>
                             </div>
                         </div>
                     </div>
                 </div>
             @endforeach
-            <div class="bor22 m-t-50 p-t-43 p-b-40">
+            {{-- End-Thông tin shop --}}
+
+            <div class="row bor22 bg0 m-t-15">
+                <div class="w-full m-t-20 m-b-10 m-l-20">
+                    <h5> MÔ TẢ SẢN PHẨM</h5>
+                </div>
+                <p class="stext-102 cl3 p-lr-20">
+                    {{ $products->description }}
+                </p>
+            </div>
+
+            <div class="row bor22 bg0 m-t-15">
+                <div class="w-full m-tb-20 m-l-20">
+                    <h5> ĐÁNH GIÁ SẢN PHẨM</h5>
+                </div>
+                <div class="w-full flex-w  p-all-10  m-lr-20 bor22 bg13 m-b-15">
+                    <div class="p-r-20">
+                        <div style="color: #f9ba48">
+                            <span class="mtext-111">{{ number_format($averageStarRating, 1) }}</span> trên 5
+                            <p class="mtext-111 ">
+                                @if ($averageStarRating > floor($averageStarRating))
+                                    @for ($i = 0; $i < floor($averageStarRating); $i++)
+                                        <i class="zmdi zmdi-star"></i>
+                                    @endfor
+                                    <i class="zmdi zmdi-star-half"></i>
+                                @else
+                                    @for ($i = 0; $i < $averageStarRating; $i++)
+                                        <i class="zmdi zmdi-star"></i>
+                                    @endfor
+                                @endif
+                            </p>
+                        </div>
+                    </div>
+                    <div class="button-container">
+                        <div>
+                            <button class="flex-c-m stext-102 cl14 bg0 bor10 hov-btn3 p-lr-15  trans-04">
+                                Tất cả bình luận
+                            </button>
+                        </div>
+                        <div class="m-l-10">
+                            <button class="flex-c-m stext-102 cl8 bg0 bor20 hov-btn3 p-lr-15  trans-04">
+                                5 sao
+                            </button>
+                        </div>
+                        <div class="m-l-10">
+                            <button class="flex-c-m stext-102 cl8 bg0 bor20 hov-btn3 p-lr-15  trans-04">
+                                4 sao
+                            </button>
+                        </div>
+                        <div class="m-l-10">
+                            <button class="flex-c-m stext-102 cl8 bg0 bor20 hov-btn3 p-lr-15  trans-04">
+                                3 sao
+                            </button>
+                        </div>
+                        <div class="m-l-10">
+                            <button class="flex-c-m stext-102 cl8 bg0 bor20 hov-btn3 p-lr-15  trans-04">
+                                2 sao
+                            </button>
+                        </div>
+                        <div class="m-l-10">
+                            <button class="flex-c-m stext-102 cl8 bg0 bor20 hov-btn3 p-lr-15  trans-04">
+                                1 sao
+                            </button>
+                        </div>
+                    </div>
+                </div>
                 @foreach ($feedbackData as $feedback)
                     <div class="flex-w flex-t p-b-10 m-l-20">
-                        <div class="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
-                            <img src="{{ $feedback->avt }}" alt="AVATAR">
+                        <div class="small-avatar-container">
+                            <img name="avt" src="{{ $feedback->avt }}" alt="AVATAR"
+                                class="rounded-circle small-avatar">
                         </div>
-
                         <div class="size-207">
                             <div>
                                 {{ $feedback->account_name }}
@@ -291,12 +375,11 @@
                                     @endfor
                                 </span>
                             </div>
-                            <p>
+                            <p class="stext-102">
                                 {{ $feedback->created_at }} | {{ $feedback->name_product_detail }} |
                                 Size:{{ $feedback->size }}
                             </p>
-
-                            <p class="stext-102 cl6">
+                            <p class="stext-103 cl6">
                                 {{ $feedback->message }}
                             </p>
                             <div class="block2-pic" style="display: flex;height:200px">
@@ -308,7 +391,5 @@
                     </div>
                 @endforeach
             </div>
-        </div>
-        </div>
     </section>
 @endsection
