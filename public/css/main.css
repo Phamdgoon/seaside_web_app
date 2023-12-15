@@ -2625,6 +2625,7 @@ input.num-product::-webkit-inner-spin-button {
 .bg8 {background-color: #f3f3f3;}
 .bg10 {background-color: #d52a2a;}
 .bg9 {background-color: rgba(255,255,255,0.9);}
+.bg11 {background-color: #fbebed;}
 
 /*---------------------------------------------*/
 .bg-overlay1::before {
@@ -2694,7 +2695,7 @@ input.num-product::-webkit-inner-spin-button {
 }
 
 .bor10 {
-  border: 1px solid #e6e6e6;
+  border: 1px solid #d95d5d;
 }
 
 .bor11 {
@@ -2743,8 +2744,12 @@ input.num-product::-webkit-inner-spin-button {
   border: 1px solid #d9d9d9;
   border-radius: 2px;
 }
-
-
+.bor20 {
+  border: 1px solid #bfbfbf;
+}
+.bor22 {
+  border: 1px solid #e6e6e6;
+}
 /*==================================================================
  HOW HOW HOW HOW HOW HOW HOW HOW HOW HOW HOW HOW HOW HOW HOW HOW HOW 
 ==================================================================*/
@@ -3446,8 +3451,8 @@ img {
   border-radius: 50%; /* Để hình ảnh trở thành hình tròn */
 }
 .small-avatar-shop {
-  width: 80px;
-  height: 80px;
+  width: 70px;
+  height: 70px;
   object-fit: cover;
   object-position: center center;
   border-radius: 50%; /* Để hình ảnh trở thành hình tròn */
@@ -3464,5 +3469,16 @@ img {
   color: #bf6d72;
 }
 
+.button-container {
+  display: flex;
+  justify-content: space-between; /* Các phần tử con sẽ nằm ở hai đầu */
+}
 
 
+
+.flex-shop {
+    display: flex;
+    justify-content: space-between;
+    width: 150px; 
+    margin-right: 20px; 
+}

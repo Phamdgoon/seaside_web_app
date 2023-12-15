@@ -217,26 +217,65 @@
                                 </div>
                             </a>
                         </div>
-                        <div class="p-t-10 m-r-50">
-                            <h5 name="name_shop">{{ $profile->name_shop }}</h5>
-                            <button class="flex-c-m stext-101 cl0 bg10 hov-btn1 p-lr-15 trans-04">
-                                Chat ngay
-                            </button>
-                        </div>
                         <div class="p-t-10">
+                            <h5 name="name_shop">{{$profile->name_shop}}</h5>
+                            <div class=" p-t-10 button-container">
+                                <div>
+                                    <button class="flex-c-m stext-102 cl14 bg11 bor10 hov-btn3 p-lr-15 p-tb-3 trans-04">
+                                        <i class="fas fa-comment-dots p-r-3"></i>Chat ngay
+                                    </button>
+                                </div>
+                                <div class="m-l-10">
+                                    <button class="flex-c-m stext-102 cl8 bg0 bor20 hov-btn3 p-lr-15 p-tb-3 trans-04">
+                                        <i class="fas fa-store p-r-3"></i>Xem shop
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-tb-15 p-lr-40 flex-w">
                             @php
-                                $productNumber = session('shopProfile')['productNumber'];
-                                $feedbackNumber = session('shopProfile')['feedbackNumber'];
-                            @endphp
-    
-                            <p>Sản Phẩm : {{ $productNumber }}</p>
-                            <p>Đánh giá : {{ $feedbackNumber }}</p>
+                            $productNumber = session('shopProfile')['productNumber'];
+                            $feedbackNumber = session('shopProfile')['feedbackNumber'];
+                             @endphp
+                            <div>
+                                <div class="flex-shop">
+                                    <label>Đánh giá </label>
+                                    <span class="p-l-20 cl14 txt-right">{{ $feedbackNumber }}</span>
+                                </div>
+                                <div class="flex-shop">
+                                    <label>Sản phẩm</label>
+                                    <span class="p-l-20 cl14 txt-right">{{ $productNumber }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-tb-15 p-lr-40 ">
+                            <div>
+                                <div class="flex-shop">
+                                    <label>Đánh giá </label>
+                                    <span class="p-l-20 cl14 txt-right">20k</span>
+                                </div>
+                                <div class="flex-shop">
+                                    <label>Sản phẩm</label>
+                                    <span class="p-l-20 cl14 txt-right">123</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-tb-15 p-lr-40 ">
+                            <div>
+                                <div class="flex-shop">
+                                    <label>Đánh giá </label>
+                                    <span class="p-l-20 cl14 txt-right">20k</span>
+                                </div>
+                                <div class="flex-shop">
+                                    <label>Sản phẩm</label>
+                                    <span class="p-l-20 cl14 txt-right">123</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    
                 </div>
             @endforeach
-            <div class="bor10 m-t-50 p-t-43 p-b-40">
+            <div class="bor22 m-t-50 p-t-43 p-b-40">
                 @foreach ($feedbackData as $feedback)
                     <div class="flex-w flex-t p-b-10 m-l-20">
                         <div class="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
