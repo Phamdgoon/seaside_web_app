@@ -64,7 +64,7 @@
                                 </script>
                             @endif
                             <span class="js-name-detail">{{ $products->name_product }}</span><br>
-                            {{-- <p style="color: #f9ba48">
+                            <p style="color: #f9ba48">
                                 {{ number_format($averageStarRating, 1) }}
                                 @if ($averageStarRating > floor($averageStarRating))
                                     @for ($i = 0; $i < floor($averageStarRating); $i++)
@@ -78,7 +78,7 @@
                                 @endif
                                 <span style="color: black">| {{ $totalFeedback }}</span><span style="color: #888"> Đánh
                                     giá</span>
-                            </p> --}}
+                            </p>
                         </h4>
 
                         <span style="color: #ff2600;font-size: 24px" class="mtext-106 cl2">
@@ -170,7 +170,7 @@
                         {{-- <script>
                             function submitForm(action) {
                                 var form = document.getElementById('productForm');
-                                form.action = action === 'buy_now' ? "{{ route('buyer.order.processOrder') }}" : "{{ route('cart.add') }}";
+                                form.action = action === 'buy_now' ? "{{ route('client.order.processOrder') }}" : "{{ route('cart.add') }}";
                                 form.submit();
                             }
                         </script> --}}
@@ -205,159 +205,71 @@
                         </div>
                     </div>
                 </div>
-            </div>            
-        </div>
-        <div class="container">
-            <div class="row bg2">
-                <div>
-                    <a href="#" style="height: 100%; color: #bf6d72;" class="nav-link">
-                        <div class="small-avatar-container">
-                            <img name="avt" src="{{ $products->name_shop->avt }}" alt="Avatar của Shop" class="rounded-circle small-avatar-shop">
-                        </div>
-                    </a>
-                </div>
-                <div class="p-t-10">
-                    <h5 name="name_shop">{{ $ShopProfile->name_shop }}</h5>
-                    <button class="flex-c-m stext-101 cl0 bg10 hov-btn1 p-lr-15 trans-04">
-                        Chat ngay
-                    </button>
-                </div>
             </div>
-        </div>
-                
-    </section>
-@endsection
-{{-- <div class="bor10 m-t-50 p-t-43 p-b-40">
-                <!-- Tab01 -->
-                <div class="tab01">
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li class="nav-item p-b-10">
-                            <a class="nav-link active" data-toggle="tab" href="#description" role="tab">MÔ TẢ SẢN
-                                PHẨM</a>
-                        </li>
-
-                        <li class="nav-item p-b-10">
-                            <a class="nav-link" data-toggle="tab" href="#information" role="tab">CHI TIẾT SẢN
-                                PHẨM</a>
-                        </li>
-
-                        <li class="nav-item p-b-10">
-                            <a class="nav-link" data-toggle="tab" href="#reviews" role="tab">ĐÁNH GIÁ SẢN PHẨM
-                                ({{ $totalFeedback }})</a>
-                        </li>
-                    </ul>
-
-                    <!-- Tab panes -->
-                    <div class="tab-content p-t-20">
-                        <!-- - -->
-                        <div class="tab-pane fade show active" id="description" role="tabpanel">
-                            <div class="how-pos2 p-lr-15-md">
-                                <p class="stext-102 cl6">
-                                    {{ $products->description }}
-                                </p>
-                            </div>
-                        </div>
-
-                        <!-- - -->
-                        <div class="tab-pane fade" id="information" role="tabpanel">
-                            <div class="row">
-                                <ul class="p-lr-28 p-lr-15-sm">
-                                    <li class="flex-w flex-t p-b-7">
-                                        <span class="stext-102 cl3 size-205">
-                                            Weight
-                                        </span>
-
-                                        <span class="stext-102 cl6 size-206">
-                                            0.79 kg
-                                        </span>
-                                    </li>
-
-                                    <li class="flex-w flex-t p-b-7">
-                                        <span class="stext-102 cl3 size-205">
-                                            Dimensions
-                                        </span>
-
-                                        <span class="stext-102 cl6 size-206">
-                                            110 x 33 x 100 cm
-                                        </span>
-                                    </li>
-
-                                    <li class="flex-w flex-t p-b-7">
-                                        <span class="stext-102 cl3 size-205">
-                                            Materials
-                                        </span>
-
-                                        <span class="stext-102 cl6 size-206">
-                                            60% cotton
-                                        </span>
-                                    </li>
-
-                                    <li class="flex-w flex-t p-b-7">
-                                        <span class="stext-102 cl3 size-205">
-                                            Color
-                                        </span>
-
-                                        <span class="stext-102 cl6 size-206">
-                                            @foreach ($product_Details as $product_Detail)
-                                                {{ $product_Detail->color }} .
-                                            @endforeach
-                                        </span>
-                                    </li>
-
-                                    <li class="flex-w flex-t p-b-7">
-                                        <span class="stext-102 cl3 size-205">
-                                            Size
-                                        </span>
-
-                                        <span class="stext-102 cl6 size-206">
-                                            @foreach ($size_Product as $sizeProduct)
-                                                {{ $sizeProduct->id_size }} .
-                                            @endforeach
-                                        </span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <!-- - -->
-                        <div class="tab-pane fade" id="reviews" role="tabpanel">
-                            <div class="row">
-                                <div class="p-b-10">
-                                    <!-- Review -->
-                                    @foreach ($feedbackData as $feedback)
-                                        <div class="flex-w flex-t p-b-10">
-                                            <div class="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
-                                                <img src="{{ $feedback->avt }}" alt="AVATAR">
-                                            </div>
-
-                                            <div class="size-207">
-                                                <div>
-                                                    {{ $feedback->account_name }}
-                                                    <span class="fs-18 cl11">
-                                                        @for ($i = 0; $i < $feedback->star; $i++)
-                                                            <i class="zmdi zmdi-star"></i>
-                                                        @endfor
-                                                    </span>
-                                                </div>
-                                                <p>
-                                                    {{ $feedback->day_feedback }} | {{ $feedback->color }} |
-                                                    Size:{{ $feedback->size }}
-                                                </p>
-
-                                                <p class="stext-102 cl6">
-                                                    {{ $feedback->message }}
-                                                </p>
-                                                <div class="block2-pic hov-img0">
-                                                    <img class="img-feedback" src="{{ $feedback->image }}"
-                                                        alt="">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endforeach
+            @foreach ($shopProfiles as $profile)
+                <div class="container">
+                    <div class="row bg2">
+                        <div>
+                            <a href="#" style="height: 100%; color: #bf6d72;" class="nav-link">
+                                <div class="small-avatar-container">
+                                    <img name="avt" src="{{ $profile->avt }}" alt="Avatar của Shop"
+                                        class="rounded-circle small-avatar-shop">
                                 </div>
+                            </a>
+                        </div>
+                        <div class="p-t-10 m-r-50">
+                            <h5 name="name_shop">{{ $profile->name_shop }}</h5>
+                            <button class="flex-c-m stext-101 cl0 bg10 hov-btn1 p-lr-15 trans-04">
+                                Chat ngay
+                            </button>
+                        </div>
+                        <div class="p-t-10">
+                            @php
+                                $productNumber = session('shopProfile')['productNumber'];
+                                $feedbackNumber = session('shopProfile')['feedbackNumber'];
+                            @endphp
+    
+                            <p>Sản Phẩm : {{ $productNumber }}</p>
+                            <p>Đánh giá : {{ $feedbackNumber }}</p>
+                        </div>
+                    </div>
+                    
+                </div>
+            @endforeach
+            <div class="bor10 m-t-50 p-t-43 p-b-40">
+                @foreach ($feedbackData as $feedback)
+                    <div class="flex-w flex-t p-b-10 m-l-20">
+                        <div class="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
+                            <img src="{{ $feedback->avt }}" alt="AVATAR">
+                        </div>
+
+                        <div class="size-207">
+                            <div>
+                                {{ $feedback->account_name }}
+                                <span class="fs-18 cl11">
+                                    @for ($i = 0; $i < $feedback->star; $i++)
+                                        <i class="zmdi zmdi-star"></i>
+                                    @endfor
+                                </span>
+                            </div>
+                            <p>
+                                {{ $feedback->created_at }} | {{ $feedback->name_product_detail }} |
+                                Size:{{ $feedback->size }}
+                            </p>
+
+                            <p class="stext-102 cl6">
+                                {{ $feedback->message }}
+                            </p>
+                            <div class="block2-pic" style="display: flex;height:200px">
+                                @foreach ($feedback_Images as $feedback_Image)
+                                    <img class="img-feedback" src="{{ $feedback_Image->url_image }}" alt="">
+                                @endforeach
                             </div>
                         </div>
                     </div>
-                </div>
-            </div> --}}
+                @endforeach
+            </div>
+        </div>
+        </div>
+    </section>
+@endsection

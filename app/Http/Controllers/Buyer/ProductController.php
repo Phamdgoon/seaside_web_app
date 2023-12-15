@@ -10,14 +10,15 @@ use App\Models\Product_Detail;
 use App\Models\Product_Images;
 use App\Models\Category_Child;
 use App\Models\Size_Product;
+use App\Models\Feedback;
+use App\Models\Feedback_Images;
 use App\Models\ShopProfile;
 
 class ProductController extends Controller
 {
-    public function product(Request $request)
-    {
+    public function product(Request $request){
         $categoryId = $request->input('id');
-        $category_Childs = Category_Child::where('id_category', $categoryId)->get();
+        $category_Childs = Category_Child::where('id_category',$categoryId)->get();
         $products = [];
         session()->put('id_category', $categoryId);
         foreach ($category_Childs as $categoryChild) {
@@ -27,10 +28,10 @@ class ProductController extends Controller
                 ->groupBy('product.id', 'product.name_product', 'product.id_category_child')
                 ->where('product.id_category_child', $categoryChild->id)
                 ->get();
-
+        
             $products = array_merge($products, $product->toArray());
         }
-
+        
         return view('buyer.product.product', [
             'products' => $products,
         ]);
@@ -53,12 +54,12 @@ class ProductController extends Controller
                 ->groupBy('product.id', 'product.name_product', 'product.id_category_child')
                 ->where('product.id_category_child', $categoryChild->id)
                 ->get();
-
+        
             $products = array_merge($products, $product->toArray());
         }
 
         return view('buyer.product.product', [
-            'products' => $products,
+            'products' => $products,        
         ]);
     }
     public function sort(Request $request)
@@ -66,14 +67,14 @@ class ProductController extends Controller
         $sortOrder = $request->input('sort');
 
         session()->put('sort', $sortOrder);
-        if (session('id_category')) {
-            $categoryId = session('id_category');
+        if (session('id_category')) {            
+            $categoryId = session('id_category');            
             $category_Childs = Category_Child::where('id_category', $categoryId)->get();
         } else {
-            $searchQuery = session('search');
+            $searchQuery = session('search'); 
             $category_Childs = Category_Child::where('name_category_child', 'LIKE', "%$searchQuery%")->get();
         }
-
+        
         $products = [];
 
         foreach ($category_Childs as $categoryChild) {
@@ -82,7 +83,7 @@ class ProductController extends Controller
                 ->leftJoin('product_image', 'product_detail.id', '=', 'product_image.id_product_detail')
                 ->groupBy('product.id', 'product.name_product', 'product.id_category_child')
                 ->where('product.id_category_child', $categoryChild->id);
-
+        
             if (session('price_from')) {
                 if (session('price_arrives')) {
                     $product->whereBetween('product_detail.price', [session('price_from'), session('price_arrives')]);
@@ -90,10 +91,10 @@ class ProductController extends Controller
                     $product->where('product_detail.price', '>=', session('price_from'));
                 }
             }
-
+        
             $product = $product->get();
             $products = array_merge($products, $product->toArray());
-        }
+        }        
 
         if ($sortOrder == 'asc') {
             usort($products, function ($a, $b) {
@@ -116,11 +117,11 @@ class ProductController extends Controller
             'price_from' => 'required|numeric|min:0',
             'price_arrives' => 'nullable|numeric|min:0',
         ]);
-        if (session('id_category')) {
-            $categoryId = session('id_category');
+        if (session('id_category')) {            
+            $categoryId = session('id_category');            
             $category_Childs = Category_Child::where('id_category', $categoryId)->get();
         } else {
-            $searchQuery = session('search');
+            $searchQuery = session('search'); 
             $category_Childs = Category_Child::where('name_category_child', 'LIKE', "%$searchQuery%")->get();
         }
         $priceFrom = $request->input('price_from');
@@ -131,32 +132,32 @@ class ProductController extends Controller
         // Kiểm tra nếu price_arrives là null
         $products = [];
 
-        foreach ($category_Childs as $categoryChild) {
-            $product = Product::select('product.id', 'product.name_product', 'product.id_category_child', DB::raw('MIN(product_detail.price) as price'), DB::raw('MAX(product_image.url_image) as url_image'))
-                ->leftJoin('product_detail', 'product.id', '=', 'product_detail.id_product')
-                ->leftJoin('product_image', 'product_detail.id', '=', 'product_image.id_product_detail')
-                ->groupBy('product.id', 'product.name_product', 'product.id_category_child')
-                ->where('product.id_category_child', $categoryChild->id);
-            if ($priceArrives === null) {
-                $product->where('product_detail.price', '>=', $priceFrom);
-            } else {
-                $product->whereBetween('product_detail.price', [$priceFrom, $priceArrives]);
+            foreach ($category_Childs as $categoryChild) {
+                $product = Product::select('product.id', 'product.name_product', 'product.id_category_child', DB::raw('MIN(product_detail.price) as price'), DB::raw('MAX(product_image.url_image) as url_image'))
+                    ->leftJoin('product_detail', 'product.id', '=', 'product_detail.id_product')
+                    ->leftJoin('product_image', 'product_detail.id', '=', 'product_image.id_product_detail')
+                    ->groupBy('product.id', 'product.name_product', 'product.id_category_child')
+                    ->where('product.id_category_child', $categoryChild->id);
+                    if ($priceArrives === null) {
+                            $product->where('product_detail.price', '>=', $priceFrom);
+                        } else {
+                            $product->whereBetween('product_detail.price', [$priceFrom, $priceArrives]);
+                        }
+                    // Kiểm tra nếu có sắp xếp
+                    if (session('sort')) {
+                        // Thực hiện sắp xếp theo giá
+                        if (session('sort') == 'asc') {
+                            $product->orderBy('price');
+                        } else {
+                            $product->orderByDesc('price');
+                        }
+                    }
+
+                    $product = $product->get();
+
+                $products = array_merge($products, $product->toArray());
             }
-            // Kiểm tra nếu có sắp xếp
-            if (session('sort')) {
-                // Thực hiện sắp xếp theo giá
-                if (session('sort') == 'asc') {
-                    $product->orderBy('price');
-                } else {
-                    $product->orderByDesc('price');
-                }
-            }
-
-            $product = $product->get();
-
-            $products = array_merge($products, $product->toArray());
-        }
-
+        
         return view('buyer.product.product', [
             'price_from' => $priceFrom, 'price_arrives' => $priceArrives, 'products' => $products
         ]);
@@ -179,44 +180,50 @@ class ProductController extends Controller
             'min' => $minPrice,
             'max' => $maxPrice,
         ];
-        foreach ($product_Details as $product_Detail) {
+        foreach($product_Details as $product_Detail){
 
             $size_Product = Size_Product::where('id_product_detail', $product_Detail->id)->get();
             $product_Images = Product_Images::whereIn('id_product_detail', $product_Details->pluck('id'))->get();
         }
+        $shopProfile=ShopProfile::where('name_shop',$products->name_shop)->get();
 
+        $productNumber = ShopProfile::join('product', 'shop_profile.name_shop', '=', 'product.name_shop')
+        ->where('shop_profile.name_shop', $products->name_shop)
+        ->count('shop_profile.name_shop');    
 
-        // $feedbackData = Feedback::join('order', 'feedback.id_order', '=', 'order.id')
-        //     ->join('user', 'user.username', '=', 'order.username')
-        //     ->join('order_detail', 'order.id', '=', 'order_detail.id_order')
-        //     ->join('product_detail', 'order_detail.id_product_detail', '=', 'product_detail.id')
-        //     ->join('feedback_images', 'feedback_images.id_feedback', '=', 'feedback.id')
-        //     ->join('images', 'images.id', '=', 'feedback_images.id_image')
-        //     ->where('product_detail.id_product', $id)
-        //     ->select('user.account_name', 'user.avt', 'product_detail.color', 'order_detail.size', 'feedback.message', 'feedback.star', 'feedback.day_feedback', 'images.image')
-        //     ->get();
+        $feedbackNumber = Feedback::join('order_detail', 'order_detail.id', '=', 'feedback.id_order_detail')
+        ->join('product_detail', 'product_detail.id', '=', 'order_detail.id_product_detail')
+        ->join('product', 'product.id', '=', 'product_detail.id_product')
+        ->join('shop_profile', 'shop_profile.name_shop', '=', 'product.name_shop')
+        ->where('shop_profile.name_shop', $products->name_shop)
+        ->count('feedback.id');
 
-        // // Count total feedback
-        // $totalFeedback = $feedbackData->count();
+        $feedbackDatas = Feedback::join('order_detail', 'order_detail.id', '=', 'feedback.id_order_detail')
+        ->join('order', 'order.id', '=', 'order_detail.id_order')
+        ->join('product_detail', 'product_detail.id', '=', 'order_detail.id_product_detail')
+        ->join('product', 'product.id', '=', 'product_detail.id_product')
+        ->join('buyer_profile', 'buyer_profile.username', '=', 'order.username')
+        ->where('product.id', $id)
+        ->select('feedback.id', 'buyer_profile.account_name', 'buyer_profile.avt', 'feedback.created_at', 'feedback.star', 'product_detail.name_product_detail', 'order_detail.size', 'feedback.message')
+        ->get();
+        $feedback_Images=0;
+        foreach($feedbackDatas as $feedbackData){
+            $feedback_Images= Feedback_Images::where('id_feedback',$feedbackData->id)->get();
+        }
+        // Count total feedback
+        $totalFeedback = $feedbackDatas->count();
 
-        // // Calculate average star rating
-        // $averageStarRating = $feedbackData->avg('star');
+        // Calculate average star rating
+        $averageStarRating = $feedbackDatas->avg('star');
 
         // foreach ($product_Details as $product_Detail) {
         //     $size_Product = Size_Product::where('id_product_detail', $product_Detail->id)->get();
         // }
 
-        // $request->session()->put('product_data', [
-        //     'ID' => $id,
-        //     'products' => $products,
-        //     'priceByProduct' => $priceByProduct,
-        //     'productDetailsWithImages' => $productDetailsWithImages,
-        //     'size_Product' => $size_Product,
-        //     'product_Details' => $product_Details,
-        //     'feedbackData' => $feedbackData,
-        //     'totalFeedback' => $totalFeedback,
-        //     'averageStarRating' => $averageStarRating,
-        // ]);
+        $request->session()->put('shopProfile', [
+            'productNumber' => $productNumber,
+            'feedbackNumber' => $feedbackNumber,
+        ]);
 
         return view('buyer.product.productDetail', [
             'ID' => $id,
@@ -225,24 +232,11 @@ class ProductController extends Controller
             'productDetailsWithImages' => $product_Images,
             'size_Product' => $size_Product,
             'product_Details' => $product_Details,
-            // 'feedbackData' => $feprofile_shopshop_profileedbackData,
-            // 'totalFeedback' => $totalFeedback,
-            // 'averageStarRating' => $averageStarRating,
-        ]);
-    }
-    public function profileSeller(Request $request)
-    {
-        $id = $request->input('id');
-        $product = Product::with('shopProfile')->find($id);
-        $shopProfile = $product->shopProfile;
-
-        if (!$shopProfile) {
-            abort(404); 
-        }
-
-        return view('buyer.seller.profile', [
-            'avt' => $shopProfile->avt,
-            'name_shop' => $shopProfile->name_shop,
+            'feedbackData' => $feedbackDatas,
+            'totalFeedback' => $totalFeedback,
+            'averageStarRating' => $averageStarRating,
+            'feedback_Images' => $feedback_Images,
+            'shopProfiles' =>$shopProfile,
         ]);
     }
 }

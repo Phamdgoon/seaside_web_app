@@ -10,6 +10,5 @@ class ShopProfile extends Model
     use HasFactory;
 
     protected $table = 'shop_profile';
-    protected $primaryKey = 'name_shop';
-    protected $fillable = ['username','address','description','cover_image','avt','created_at','updated_at'];
+    protected $fillable = ['username','name_shop','address','description','cover_image','avt','created_at','updated_at'];
 }
