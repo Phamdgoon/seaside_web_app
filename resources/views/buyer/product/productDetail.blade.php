@@ -1,5 +1,5 @@
 <!-- Page Header Start -->
-@extends('client.layouts.app')
+@extends('buyer.layouts.app')
 @section('title', $products->name_product)
 @section('content')
 
@@ -9,7 +9,7 @@
         <!-- breadcrumb -->
         <div class="container">
             <div class="bread-crumb flex-w p-l-25 p-r-15 p-b-30 p-lr-0-lg">
-                <a href="{{ route('client.home') }}" class="stext-109 cl8 hov-cl1 trans-04">
+                <a href="{{ route('buyer.home') }}" class="stext-109 cl8 hov-cl1 trans-04">
                     Home
                     <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
                 </a>
@@ -170,7 +170,7 @@
                         {{-- <script>
                             function submitForm(action) {
                                 var form = document.getElementById('productForm');
-                                form.action = action === 'buy_now' ? "{{ route('client.order.processOrder') }}" : "{{ route('cart.add') }}";
+                                form.action = action === 'buy_now' ? "{{ route('buyer.order.processOrder') }}" : "{{ route('cart.add') }}";
                                 form.submit();
                             }
                         </script> --}}
@@ -205,9 +205,29 @@
                         </div>
                     </div>
                 </div>
+            </div>            
+        </div>
+        <div class="container">
+            <div class="row bg2">
+                <div>
+                    <a href="#" style="height: 100%; color: #bf6d72;" class="nav-link">
+                        <div class="small-avatar-container">
+                            <img name="avt" src="{{ $products->name_shop->avt }}" alt="Avatar của Shop" class="rounded-circle small-avatar-shop">
+                        </div>
+                    </a>
+                </div>
+                <div class="p-t-10">
+                    <h5 name="name_shop">{{ $ShopProfile->name_shop }}</h5>
+                    <button class="flex-c-m stext-101 cl0 bg10 hov-btn1 p-lr-15 trans-04">
+                        Chat ngay
+                    </button>
+                </div>
             </div>
-
-            {{-- <div class="bor10 m-t-50 p-t-43 p-b-40">
+        </div>
+                
+    </section>
+@endsection
+{{-- <div class="bor10 m-t-50 p-t-43 p-b-40">
                 <!-- Tab01 -->
                 <div class="tab01">
                     <!-- Nav tabs -->
@@ -341,6 +361,3 @@
                     </div>
                 </div>
             </div> --}}
-        </div>
-    </section>
-@endsection

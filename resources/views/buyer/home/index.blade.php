@@ -1,5 +1,5 @@
 <!-- Page Header Start -->
-@extends('client.layouts.app')
+@extends('buyer.layouts.app')
 @section('title', 'SEASIDE')
 @section('content')
     <section class="section-slide">
@@ -72,7 +72,7 @@
                         <div class="block1 wrap-pic-w">
                             <img src="{{ $category->url_category }}" alt="IMG-BANNER">
 
-                            <a href="{{ route('client.product', ['id' => $category->id, 'name_category' => $category->name_category]) }}"
+                            <a href="{{ route('buyer.product', ['id' => $category->id, 'name_category' => $category->name_category]) }}"
                                 class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
                                 <div class="block1-txt-child1 flex-col-l">
                                     <span class="block1-name ltext-102 trans-04 p-b-8">
@@ -349,7 +349,7 @@
                             <div class="block2-pic hov-img0">
                                 <img src="{{ $product->url_image }}" alt="IMG-PRODUCT">
 
-                                <a href="{{ route('client.productDetail', ['id' => $product->id]) }}"
+                                <a href="{{ route('buyer.productDetail', ['id' => $product->id]) }}"
                                     class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
                                     Quick View
                                 </a>
@@ -357,7 +357,7 @@
 
                             <div class="block2-txt flex-w flex-t p-t-14">
                                 <div class="block2-txt-child1 flex-col-l ">
-                                    <a style="height: 40px" href="{{ route('client.productDetail', ['id' => $product->id]) }}"
+                                    <a style="height: 40px" href="{{ route('buyer.productDetail', ['id' => $product->id]) }}"
                                         class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
                                         {{ \Illuminate\Support\Str::limit($product->name_product, 60, ' ...') }}
                                     </a>

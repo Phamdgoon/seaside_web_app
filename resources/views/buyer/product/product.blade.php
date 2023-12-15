@@ -1,8 +1,8 @@
 <!-- Page Header Start -->
-@extends('client.layouts.app')
+@extends('buyer.layouts.app')
 @section('title', 'SEASIDE STORE SHOP')
 @section('content')
-    <section class="section-slide" style="margin-left: 150px;margin-right: 150px">
+    <section class="section-slide" style="margin-left: 5%;margin-right: 5%">
         <div class="wrap-slick1">
             <div class="slick1" style="margin-top: 75px">
                 <div style="height: 40vh; background-image: url('https://cf.shopee.vn/file/vn-50009109-51d1440ee994b8858ffd013e319aded0');"
@@ -19,7 +19,7 @@
     <section class="bg0 p-t-23 p-b-140">
         <div class="container">
             <div style="display: flex; width:100%">
-                <form style="width: 20%; padding-right: 10px" action="{{ route('client.product.price') }}" method="post">
+                <form style="width: 20%; padding-right: 10px" action="{{ route('buyer.product.price') }}" method="post">
                     @csrf
                     <label for="priceRange">Khoảng giá:</label>
 
@@ -39,7 +39,7 @@
                 <div class="row" style="width: 80%">
 
                     <form style="width:100%; display: flex; margin-bottom: 10px;margin-left: 30px"
-                        action="{{ route('client.product.sort') }}" method="post">
+                        action="{{ route('buyer.product.sort') }}" method="post">
                         @csrf
                         <label for="sort" style="margin-right: 10px">Sắp xếp:</label>
                         <select name="sort" id="sort" onchange="this.form.submit()">
@@ -55,15 +55,14 @@
                                 <div class="block3-pic hov-img0">
                                     <img src="{{ $product['url_image'] }}" alt="IMG-PRODUCT">
 
-                                    <a href="{{ route('client.productDetail', ['id' => $product['id']]) }}"
+                                    <a href="{{ route('buyer.productDetail', ['id' => $product['id']]) }}"
                                         class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
                                         Quick View
                                     </a>
                                 </div>
-
                                 <div class="block2-txt flex-w flex-t p-t-14">
                                     <div class="block2-txt-child1 flex-col-l ">
-                                        <a style="height: 40px" href="{{ route('client.productDetail', ['id' => $product['id']]) }}"
+                                        <a style="height: 40px" href="{{ route('buyer.productDetail', ['id' => $product['id']]) }}"
                                             class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
                                             {{ \Illuminate\Support\Str::limit($product['name_product'], 40, ' ...') }}
                                         </a>

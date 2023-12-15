@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Client;
+namespace App\Http\Controllers\Buyer;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -28,7 +28,7 @@ class HomeController extends Controller
         session()->forget('sort');
         session()->forget('price_from');
         session()->forget('price_arrives');
-        return view('client.home.index', [
+        return view('buyer.home.index', [
             'products' => $products,
             'categorys' => $categorys,
             'category_Childs' => $category_Childs

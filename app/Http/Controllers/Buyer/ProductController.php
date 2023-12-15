@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Client;
+namespace App\Http\Controllers\Buyer;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -10,12 +10,14 @@ use App\Models\Product_Detail;
 use App\Models\Product_Images;
 use App\Models\Category_Child;
 use App\Models\Size_Product;
+use App\Models\ShopProfile;
 
 class ProductController extends Controller
 {
-    public function product(Request $request){
+    public function product(Request $request)
+    {
         $categoryId = $request->input('id');
-        $category_Childs = Category_Child::where('id_category',$categoryId)->get();
+        $category_Childs = Category_Child::where('id_category', $categoryId)->get();
         $products = [];
         session()->put('id_category', $categoryId);
         foreach ($category_Childs as $categoryChild) {
@@ -25,11 +27,11 @@ class ProductController extends Controller
                 ->groupBy('product.id', 'product.name_product', 'product.id_category_child')
                 ->where('product.id_category_child', $categoryChild->id)
                 ->get();
-        
+
             $products = array_merge($products, $product->toArray());
         }
-        
-        return view('client.product.product', [
+
+        return view('buyer.product.product', [
             'products' => $products,
         ]);
     }
@@ -51,12 +53,12 @@ class ProductController extends Controller
                 ->groupBy('product.id', 'product.name_product', 'product.id_category_child')
                 ->where('product.id_category_child', $categoryChild->id)
                 ->get();
-        
+
             $products = array_merge($products, $product->toArray());
         }
 
-        return view('client.product.product', [
-            'products' => $products,        
+        return view('buyer.product.product', [
+            'products' => $products,
         ]);
     }
     public function sort(Request $request)
@@ -64,14 +66,14 @@ class ProductController extends Controller
         $sortOrder = $request->input('sort');
 
         session()->put('sort', $sortOrder);
-        if (session('id_category')) {            
-            $categoryId = session('id_category');            
+        if (session('id_category')) {
+            $categoryId = session('id_category');
             $category_Childs = Category_Child::where('id_category', $categoryId)->get();
         } else {
-            $searchQuery = session('search'); 
+            $searchQuery = session('search');
             $category_Childs = Category_Child::where('name_category_child', 'LIKE', "%$searchQuery%")->get();
         }
-        
+
         $products = [];
 
         foreach ($category_Childs as $categoryChild) {
@@ -80,7 +82,7 @@ class ProductController extends Controller
                 ->leftJoin('product_image', 'product_detail.id', '=', 'product_image.id_product_detail')
                 ->groupBy('product.id', 'product.name_product', 'product.id_category_child')
                 ->where('product.id_category_child', $categoryChild->id);
-        
+
             if (session('price_from')) {
                 if (session('price_arrives')) {
                     $product->whereBetween('product_detail.price', [session('price_from'), session('price_arrives')]);
@@ -88,10 +90,10 @@ class ProductController extends Controller
                     $product->where('product_detail.price', '>=', session('price_from'));
                 }
             }
-        
+
             $product = $product->get();
             $products = array_merge($products, $product->toArray());
-        }        
+        }
 
         if ($sortOrder == 'asc') {
             usort($products, function ($a, $b) {
@@ -103,7 +105,7 @@ class ProductController extends Controller
             });
         }
 
-        return view('client.product.product', [
+        return view('buyer.product.product', [
             'products' => $products,
         ]);
     }
@@ -114,11 +116,11 @@ class ProductController extends Controller
             'price_from' => 'required|numeric|min:0',
             'price_arrives' => 'nullable|numeric|min:0',
         ]);
-        if (session('id_category')) {            
-            $categoryId = session('id_category');            
+        if (session('id_category')) {
+            $categoryId = session('id_category');
             $category_Childs = Category_Child::where('id_category', $categoryId)->get();
         } else {
-            $searchQuery = session('search'); 
+            $searchQuery = session('search');
             $category_Childs = Category_Child::where('name_category_child', 'LIKE', "%$searchQuery%")->get();
         }
         $priceFrom = $request->input('price_from');
@@ -129,33 +131,33 @@ class ProductController extends Controller
         // Kiểm tra nếu price_arrives là null
         $products = [];
 
-            foreach ($category_Childs as $categoryChild) {
-                $product = Product::select('product.id', 'product.name_product', 'product.id_category_child', DB::raw('MIN(product_detail.price) as price'), DB::raw('MAX(product_image.url_image) as url_image'))
-                    ->leftJoin('product_detail', 'product.id', '=', 'product_detail.id_product')
-                    ->leftJoin('product_image', 'product_detail.id', '=', 'product_image.id_product_detail')
-                    ->groupBy('product.id', 'product.name_product', 'product.id_category_child')
-                    ->where('product.id_category_child', $categoryChild->id);
-                    if ($priceArrives === null) {
-                            $product->where('product_detail.price', '>=', $priceFrom);
-                        } else {
-                            $product->whereBetween('product_detail.price', [$priceFrom, $priceArrives]);
-                        }
-                    // Kiểm tra nếu có sắp xếp
-                    if (session('sort')) {
-                        // Thực hiện sắp xếp theo giá
-                        if (session('sort') == 'asc') {
-                            $product->orderBy('price');
-                        } else {
-                            $product->orderByDesc('price');
-                        }
-                    }
-
-                    $product = $product->get();
-
-                $products = array_merge($products, $product->toArray());
+        foreach ($category_Childs as $categoryChild) {
+            $product = Product::select('product.id', 'product.name_product', 'product.id_category_child', DB::raw('MIN(product_detail.price) as price'), DB::raw('MAX(product_image.url_image) as url_image'))
+                ->leftJoin('product_detail', 'product.id', '=', 'product_detail.id_product')
+                ->leftJoin('product_image', 'product_detail.id', '=', 'product_image.id_product_detail')
+                ->groupBy('product.id', 'product.name_product', 'product.id_category_child')
+                ->where('product.id_category_child', $categoryChild->id);
+            if ($priceArrives === null) {
+                $product->where('product_detail.price', '>=', $priceFrom);
+            } else {
+                $product->whereBetween('product_detail.price', [$priceFrom, $priceArrives]);
             }
-        
-        return view('client.product.product', [
+            // Kiểm tra nếu có sắp xếp
+            if (session('sort')) {
+                // Thực hiện sắp xếp theo giá
+                if (session('sort') == 'asc') {
+                    $product->orderBy('price');
+                } else {
+                    $product->orderByDesc('price');
+                }
+            }
+
+            $product = $product->get();
+
+            $products = array_merge($products, $product->toArray());
+        }
+
+        return view('buyer.product.product', [
             'price_from' => $priceFrom, 'price_arrives' => $priceArrives, 'products' => $products
         ]);
     }
@@ -177,7 +179,7 @@ class ProductController extends Controller
             'min' => $minPrice,
             'max' => $maxPrice,
         ];
-        foreach($product_Details as $product_Detail){
+        foreach ($product_Details as $product_Detail) {
 
             $size_Product = Size_Product::where('id_product_detail', $product_Detail->id)->get();
             $product_Images = Product_Images::whereIn('id_product_detail', $product_Details->pluck('id'))->get();
@@ -216,16 +218,31 @@ class ProductController extends Controller
         //     'averageStarRating' => $averageStarRating,
         // ]);
 
-        return view('client.product.productDetail', [
+        return view('buyer.product.productDetail', [
             'ID' => $id,
             'products' => $products,
             'priceByProduct' => $priceByProduct,
             'productDetailsWithImages' => $product_Images,
             'size_Product' => $size_Product,
             'product_Details' => $product_Details,
-            // 'feedbackData' => $feedbackData,
+            // 'feedbackData' => $feprofile_shopshop_profileedbackData,
             // 'totalFeedback' => $totalFeedback,
             // 'averageStarRating' => $averageStarRating,
+        ]);
+    }
+    public function profileSeller(Request $request)
+    {
+        $id = $request->input('id');
+        $product = Product::with('shopProfile')->find($id);
+        $shopProfile = $product->shopProfile;
+
+        if (!$shopProfile) {
+            abort(404); 
+        }
+
+        return view('buyer.seller.profile', [
+            'avt' => $shopProfile->avt,
+            'name_shop' => $shopProfile->name_shop,
         ]);
     }
 }

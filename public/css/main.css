@@ -3445,7 +3445,13 @@ img {
   object-position: center center;
   border-radius: 50%; /* Để hình ảnh trở thành hình tròn */
 }
-
+.small-avatar-shop {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  object-position: center center;
+  border-radius: 50%; /* Để hình ảnh trở thành hình tròn */
+}
 .nav-item.dropdown {
   display: flex;
   align-items: center;
