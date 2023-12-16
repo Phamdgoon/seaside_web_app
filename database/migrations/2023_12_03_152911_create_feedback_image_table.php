@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('feedback_image', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_order_detail');
+            $table->unsignedBigInteger('id_feedback');
             $table->string('url_image');
             $table->timestamps();
 
-            $table->foreign('id_order_detail')
-            ->references('id')->on('order_detail')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('id_feedback')
+            ->references('id')->on('feedback')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

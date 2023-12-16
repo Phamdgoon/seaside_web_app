@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Client;
+namespace App\Http\Controllers\Buyer;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category_Child;
 use App\Models\Product;
-use App\Models\Shop_profile;
+use App\Models\ShopProfile;
 use Illuminate\Http\Request;
 
 class ProfileSellerController extends Controller
@@ -19,10 +19,13 @@ class ProfileSellerController extends Controller
         $this->category_child = $category_child;
     }
 
-    public function index(Shop_profile $shop_profile)
+    public function getInforShop(Request $request)
     {
-        $category_childs = $shop_profile->category_child;
-        $products = $shop_profile->product;
-        return view('client.profile-seller.index', compact('category_childs', 'products'));
+        $nameShop = $request->input('name_shop');
+        $shopProfileInfos = ShopProfile::where('name_shop', $nameShop)->get();
+       dd($shopProfileInfos);
+        
+
+        return view('buyer.profile-seller.index', compact('shopProfileInfos', 'nameShop'));
     }
 }

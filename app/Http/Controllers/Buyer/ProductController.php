@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Client;
+namespace App\Http\Controllers\Buyer;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -9,6 +9,10 @@ use App\Models\Product;
 use App\Models\Product_Detail;
 use App\Models\Product_Images;
 use App\Models\Category_Child;
+use App\Models\Size_Product;
+use App\Models\Feedback;
+use App\Models\Feedback_Images;
+use App\Models\ShopProfile;
 
 class ProductController extends Controller
 {
@@ -28,7 +32,7 @@ class ProductController extends Controller
             $products = array_merge($products, $product->toArray());
         }
         
-        return view('client.product.product', [
+        return view('buyer.product.product', [
             'products' => $products,
         ]);
     }
@@ -41,6 +45,17 @@ class ProductController extends Controller
         $searchQuery = $request->input('search1');
         session()->put('search', $searchQuery);
         $category_Childs = Category_Child::where('name_category_child', 'LIKE', "%$searchQuery%")->get();
+        if ($category_Childs->isEmpty()) {
+            // Chia nhỏ câu thành mảng các từ
+            $words = explode(' ', $searchQuery);
+            
+            // Tìm kiếm sử dụng mảng từ
+            $category_Childs = Category_Child::where(function ($query) use ($words) {
+                foreach ($words as $word) {
+                    $query->orWhere('name_category_child', 'LIKE', "%$word%");
+                }
+            })->get();
+        }
         $products = [];
 
         foreach ($category_Childs as $categoryChild) {
@@ -54,7 +69,7 @@ class ProductController extends Controller
             $products = array_merge($products, $product->toArray());
         }
 
-        return view('client.product.product', [
+        return view('buyer.product.product', [
             'products' => $products,        
         ]);
     }
@@ -69,6 +84,17 @@ class ProductController extends Controller
         } else {
             $searchQuery = session('search'); 
             $category_Childs = Category_Child::where('name_category_child', 'LIKE', "%$searchQuery%")->get();
+            if ($category_Childs->isEmpty()) {
+                // Chia nhỏ câu thành mảng các từ
+                $words = explode(' ', $searchQuery);
+                
+                // Tìm kiếm sử dụng mảng từ
+                $category_Childs = Category_Child::where(function ($query) use ($words) {
+                    foreach ($words as $word) {
+                        $query->orWhere('name_category_child', 'LIKE', "%$word%");
+                    }
+                })->get();
+            }
         }
         
         $products = [];
@@ -102,7 +128,7 @@ class ProductController extends Controller
             });
         }
 
-        return view('client.product.product', [
+        return view('buyer.product.product', [
             'products' => $products,
         ]);
     }
@@ -119,6 +145,17 @@ class ProductController extends Controller
         } else {
             $searchQuery = session('search'); 
             $category_Childs = Category_Child::where('name_category_child', 'LIKE', "%$searchQuery%")->get();
+            if ($category_Childs->isEmpty()) {
+                // Chia nhỏ câu thành mảng các từ
+                $words = explode(' ', $searchQuery);
+                
+                // Tìm kiếm sử dụng mảng từ
+                $category_Childs = Category_Child::where(function ($query) use ($words) {
+                    foreach ($words as $word) {
+                        $query->orWhere('name_category_child', 'LIKE', "%$word%");
+                    }
+                })->get();
+            }
         }
         $priceFrom = $request->input('price_from');
         $priceArrives = $request->input('price_arrives');
@@ -154,9 +191,85 @@ class ProductController extends Controller
                 $products = array_merge($products, $product->toArray());
             }
         
-        return view('client.product.product', [
+        return view('buyer.product.product', [
             'price_from' => $priceFrom, 'price_arrives' => $priceArrives, 'products' => $products
         ]);
     }
 
+    public function productDetail(Request $request)
+    {
+        $id = $request->input('id');
+        $products = Product::find($id);
+        $priceByProduct = [];
+        $product_Details = Product_Detail::where('id_product', $id)->get();
+        $priceStats = Product_Detail::where('id_product', $id)
+            ->selectRaw('MIN(price) as minPrice, MAX(price) as maxPrice')
+            ->first();
+
+        $minPrice = $priceStats->minPrice;
+        $maxPrice = $priceStats->maxPrice;
+
+        $priceByProduct[$id] = [
+            'min' => $minPrice,
+            'max' => $maxPrice,
+        ];
+        foreach($product_Details as $product_Detail){
+
+            $size_Product = Size_Product::where('id_product_detail', $product_Detail->id)->get();
+            $product_Images = Product_Images::whereIn('id_product_detail', $product_Details->pluck('id'))->get();
+        }
+        $shopProfile=ShopProfile::where('name_shop',$products->name_shop)->get();
+
+        $productNumber = ShopProfile::join('product', 'shop_profile.name_shop', '=', 'product.name_shop')
+        ->where('shop_profile.name_shop', $products->name_shop)
+        ->count('shop_profile.name_shop');    
+
+        $feedbackNumber = Feedback::join('order_detail', 'order_detail.id', '=', 'feedback.id_order_detail')
+        ->join('product_detail', 'product_detail.id', '=', 'order_detail.id_product_detail')
+        ->join('product', 'product.id', '=', 'product_detail.id_product')
+        ->join('shop_profile', 'shop_profile.name_shop', '=', 'product.name_shop')
+        ->where('shop_profile.name_shop', $products->name_shop)
+        ->count('feedback.id');
+
+        $feedbackDatas = Feedback::join('order_detail', 'order_detail.id', '=', 'feedback.id_order_detail')
+        ->join('order', 'order.id', '=', 'order_detail.id_order')
+        ->join('product_detail', 'product_detail.id', '=', 'order_detail.id_product_detail')
+        ->join('product', 'product.id', '=', 'product_detail.id_product')
+        ->join('buyer_profile', 'buyer_profile.username', '=', 'order.username')
+        ->where('product.id', $id)
+        ->select('feedback.id', 'buyer_profile.account_name', 'buyer_profile.avt', 'feedback.created_at', 'feedback.star', 'product_detail.name_product_detail', 'order_detail.size', 'feedback.message')
+        ->get();
+        $feedback_Images=0;
+        foreach($feedbackDatas as $feedbackData){
+            $feedback_Images= Feedback_Images::where('id_feedback',$feedbackData->id)->get();
+        }
+        // Count total feedback
+        $totalFeedback = $feedbackDatas->count();
+
+        // Calculate average star rating
+        $averageStarRating = $feedbackDatas->avg('star');
+
+        // foreach ($product_Details as $product_Detail) {
+        //     $size_Product = Size_Product::where('id_product_detail', $product_Detail->id)->get();
+        // }
+
+        $request->session()->put('shopProfile', [
+            'productNumber' => $productNumber,
+            'feedbackNumber' => $feedbackNumber,
+        ]);
+
+        return view('buyer.product.productDetail', [
+            'ID' => $id,
+            'products' => $products,
+            'priceByProduct' => $priceByProduct,
+            'productDetailsWithImages' => $product_Images,
+            'size_Product' => $size_Product,
+            'product_Details' => $product_Details,
+            'feedbackData' => $feedbackDatas,
+            'totalFeedback' => $totalFeedback,
+            'averageStarRating' => $averageStarRating,
+            'feedback_Images' => $feedback_Images,
+            'shopProfiles' =>$shopProfile,
+        ]);
+    }
 }

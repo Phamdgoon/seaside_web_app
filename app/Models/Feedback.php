@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product_Images extends Model
+class Feedback extends Model
 {
     use HasFactory;
-    protected $table = 'product_image'; // Tên của bảng trong cơ sở dữ liệu
+    protected $table = 'feedback'; // Tên của bảng trong cơ sở dữ liệu
     protected $primaryKey = 'id'; // Khóa chính của bảng
-    protected $fillable = ['id_product_detail','url_image','created_at','updated_at'];
+    protected $fillable = ['id_order_detail','message','star','created_at','updated_at'];
 }

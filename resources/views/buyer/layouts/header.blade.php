@@ -50,12 +50,12 @@
         <div class="wrap-menu-desktop">
             <nav class="limiter-menu-desktop container">
                 <!-- Logo desktop -->
-                <a href="{{ route('client.home') }}" class="logo" style="color: #000">
-                    <h4><b>SEASIDE</b> STORE</h4>
+                <a href="{{ route('buyer.home') }}" class="logo" style="color: #000">
+                    <h4><b>SEASIDE</b></h4>
                 </a>
                 <!-- Icon header -->
                 <div class="wrap-icon-header flex-w flex-r-m">
-                    <form action="{{ route('client.product.search') }}" method="post">
+                    <form action="{{ route('buyer.product.search') }}" method="post">
                         @csrf
                         <div class="input-wrapper flex-w">
                             <input type="text" name="search1" placeholder="Tìm kiếm..." value="@if (session('search')){{ session('search') }}@endif" class="search-input">
@@ -72,7 +72,7 @@
                         data-notify="5">
                         <i class="zmdi zmdi-shopping-cart"></i>
                     </a>
-                    {{-- <a href="{{ route('client.cart.index') }}"
+                    {{-- <a href="{{ route('buyer.cart.index') }}"
                     class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
                     data-notify="@if (session('countCart')) {{ session('countCart') }}
                 @else

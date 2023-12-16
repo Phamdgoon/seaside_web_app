@@ -13,19 +13,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-use App\Http\Controllers\Client\HomeController;
-use App\Http\Controllers\Client\ProductController;
 use App\Http\Controllers\Seller\DashboardController;
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\Client\ProfileSellerController;
+use App\Http\Controllers\Buyer\ProfileSellerController;
 
+use App\Http\Controllers\Buyer\HomeController;
+use App\Http\Controllers\Buyer\ProductController;
 
-Route::get('/', [HomeController::class, 'index'])->name('client.home');
+Route::get('/', [HomeController::class, 'index'])->name('buyer.home');
 
-Route::get('/product', [ProductController::class, 'product'])->name('client.product');
-Route::post('/product', [ProductController::class, 'search'])->name('client.product.search');
-Route::post('/product_sort', [ProductController::class, 'sort'])->name('client.product.sort');
-Route::post('/product_price', [ProductController::class, 'priceFilter'])->name('client.product.price');
+Route::get('/product', [ProductController::class, 'product'])->name('buyer.product');
+Route::post('/product', [ProductController::class, 'search'])->name('buyer.product.search');
+Route::post('/product_sort', [ProductController::class, 'sort'])->name('buyer.product.sort');
+Route::post('/product_price', [ProductController::class, 'priceFilter'])->name('buyer.product.price');
+Route::get('/', [HomeController::class, 'index'])->name('buyer.home');
+
 
 Route::post('/buyer/login', [AuthController::class, 'login'])->name('login');
 Route::post('/buyer/register', [AuthController::class, 'register'])->name('register');
@@ -52,4 +54,5 @@ Route::prefix('seller1')->group(function () {
 
 });
 
-Route::get('/profile-seller', [ProfileSellerController::class, 'index']);
+Route::get('//profile-seller', [ProfileSellerController::class, 'getInforShop'])->name('profile-seller');
+Route::get('/product_detail', [ProductController::class, 'productDetail'])->name('buyer.productDetail');

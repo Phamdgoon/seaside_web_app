@@ -41,17 +41,17 @@
 <body class="animsition">
 
         <!-- Header Start -->
-        @include('client.layouts.header')
+        @include('buyer.layouts.header')
         <!-- Header End -->
         @yield('content')
 
 
         <!-- Footer Start -->
-        @include('client.layouts.footer')
+        @include('buyer.layouts.footer')
         <!-- Footer End -->
 
         <!-- JavaScript Libraries -->
-        @include('client.layouts.javascript')
+        @include('buyer.layouts.javascript')
 </body>
 
 </html>
