@@ -21,4 +21,16 @@ class Product extends Model
     {
         return $this->hasMany(Product_Detail::class, 'id_product');
     }
+
+    public function orderDetails()
+    {
+        return $this->hasManyThrough(
+            Order_Detail::class,
+            Product_Detail::class,
+            'id_product', // Khóa ngoại trong bảng trung gian (Product_Detail)
+            'id', // Khóa chính của model trung gian (Product_Detail)
+            'id', // Khóa chính của model đích (Order_Detail)
+            'id_product' // Khóa ngoại trong bảng đích (Order_Detail)
+        );
+    }
 }

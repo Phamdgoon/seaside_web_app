@@ -5,32 +5,38 @@
     <div class="container">
         <div>
             @foreach ($shopProfileInfos as $shopProfileInfo)
-            <div class="px-4 pt-0 pb-4 cover" style="background-image: url('{{ $shopProfileInfo->cover_image }}');">
-                <div class="media align-items-end profile-head">
-                    <div class="profile mr-3"><img src="{{ $shopProfileInfo->avt }}" alt="..." width="130" height="130px" class="rounded mb-2 img-thumbnail">
-                        <a href="#" class="btn btn-outline-dark btn-sm btn-block">Theo dõi</a>
-                    </div>
-                    <div class="media-body mb-5 text-white">
-                        <h2 class="mt-0 mb-0">{{ $shopProfileInfo->name_shop }}</h2>
-                        <h3 class="small mb-4"> <i class="fas fa-map-marker-alt mr-2"></i>{{ $shopProfileInfo->address }}</h3>
+            <div class="cover-container">
+                <div class="px-4 pt-0 pb-4 cover">
+                    <div class="blur-background" style="background-image: url('{{ $shopProfileInfo->cover_image }}');"></div>
+                    <div class="media align-items-end profile-head">
+                        <div class="profile mr-3">
+                            <img src="{{ $shopProfileInfo->avt }}" alt="..." class="avt-shop rounded mb-2 img-thumbnail">
+                            <a href="#" class="btn btn-outline-dark btn-sm btn-block">Theo dõi</a>
+                        </div>
+                        <div class="media-body mb-5 name-shop">
+                            <h1 class="mt-0 mb-0">{{ $shopProfileInfo->name_shop }}</h1>
+                            <p class="mb-4"> <i class="fas fa-map-marker-alt mr-2"></i>{{ $shopProfileInfo->address }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="bg-light p-4 d-flex justify-content-end text-center">
+
+
+            <div class="bg-shadow p-4 d-flex justify-content-end text-center">
                 <ul class="list-inline mb-0">
                     <li class="list-inline-item" style="margin-left: 50px" ;>
-                        <h5 class="font-weight-bold mb-0 d-block"></h5>
+                        <p class="font-weight-bold mb-0 d-block">{{ $products->count() }}</p>
                         <small class="text"> <i class="fas fa-box-open mr-1"></i>Sản phẩm</small>
                     </li>
                     <li class="list-inline-item" style="margin-left: 50px" ;>
-                        <h5 class="font-weight-bold mb-0 d-block">745</h5>
+                        <p class="font-weight-bold mb-0 d-block">{{ round($averageRatingForShop, 2);}}</p>
                         <small class="text"> <i class="fas fa-star mr-1"></i>Đánh giá</small>
                     </li>
                     <li class="list-inline-item" style="margin-left: 50px" ;>
                         <?php
                         $createdAt = \Carbon\Carbon::parse($shopProfileInfo->created_at);
                         ?>
-                        <h5 class="font-weight-bold mb-0 d-block">{{ $createdAt->format('m/Y') }}</h5>
+                        <p class="font-weight-bold mb-0 d-block">{{ $createdAt->format('m/Y') }}</p>
                         <small class="text"> <i class="fas fa-clock mr-1"></i>Tham gia</small>
                     </li>
                 </ul>

@@ -16,4 +16,14 @@ class Product_Detail extends Model
     {
         return $this->hasMany(Product_Images::class, 'id_product_detail');
     }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'id_product');
+    }
+    public function feedbacks()
+    {
+        return $this->hasMany(Feedback::class, 'id_product_detail');
+    }
+
 }

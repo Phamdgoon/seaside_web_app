@@ -11,4 +11,9 @@ class Feedback extends Model
     protected $table = 'feedback'; // Tên của bảng trong cơ sở dữ liệu
     protected $primaryKey = 'id'; // Khóa chính của bảng
     protected $fillable = ['id_order_detail','message','star','created_at','updated_at'];
+
+    public function orderDetail()
+    {
+        return $this->belongsTo(Order_Detail::class, 'id_order_detail');
+    }
 }
