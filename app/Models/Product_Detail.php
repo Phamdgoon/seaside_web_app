@@ -11,4 +11,9 @@ class Product_Detail extends Model
     protected $table = 'product_detail'; // Tên của bảng trong cơ sở dữ liệu
     protected $primaryKey = 'id'; // Khóa chính của bảng
     protected $fillable = ['id_product','name_product_detail','price','created_at','updated_at'];
+
+    public function productImage()
+    {
+        return $this->hasMany(Product_Images::class, 'id_product_detail');
+    }
 }

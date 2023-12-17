@@ -38,7 +38,7 @@
             @endforeach
         </div>
 
-        
+
         <div class="flex-w flex-sb-m p-b-52">
             <div class="flex-w flex-l-m filter-tope-group m-tb-10">
                 <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
@@ -58,21 +58,22 @@
                 <!-- Block2 -->
                 <div class="block2">
                     <div class="block2-pic hov-img0">
-                        <img src="{{ $product->url_image }}" alt="IMG-PRODUCT">
+                        @foreach ($product->productDetail as $productDetail)
+                        <img src="{{ $productDetail->productImage->first()->url_image }}" alt="IMG-PRODUCT">
+                        @endforeach
 
-                        <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+                        <a href="{{ route('buyer.productDetail', ['id' => $product->id]) }}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
                             Quick View
                         </a>
                     </div>
 
                     <div class="block2-txt flex-w flex-t p-t-14">
                         <div class="block2-txt-child1 flex-col-l ">
-                            <a style="height: 40px" href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+                            <a style="height: 40px" href="" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
                                 {{ \Illuminate\Support\Str::limit($product->name_product, 60, ' ...') }}
                             </a>
-
                             <span class="stext-105 cl3" style="color: #fa4251">
-                                {{ number_format($product->price, 0, ',', '.') }} <span style="font-size: 14px">đ</span>
+                                {{ number_format($product->productDetail->first()->price, 0, ',', '.') }} <span style="font-size: 14px">đ</span>
                             </span>
                         </div>
 
@@ -87,7 +88,6 @@
             </div>
             @endforeach
         </div>
-
     </div>
 </section>
 @endsection

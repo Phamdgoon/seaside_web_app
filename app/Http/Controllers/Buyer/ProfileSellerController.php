@@ -22,10 +22,15 @@ class ProfileSellerController extends Controller
     public function getInforShop(Request $request)
     {
         $nameShop = $request->input('name_shop');
-        $shopProfileInfos = ShopProfile::where('name_shop', $nameShop)->get();
-       dd($shopProfileInfos);
-        
+        $shopProfileInfos = ShopProfile::with(['products.productDetail.productImage'])->where('name_shop', $nameShop)->get();
 
-        return view('buyer.profile-seller.index', compact('shopProfileInfos', 'nameShop'));
+        // Lấy danh sách các sản phẩm của cửa hàng
+        $products = $shopProfileInfos->pluck('products')->flatten();
+
+        // Lấy danh sách danh mục con (category_child) từ các sản phẩm
+        $category_childs = $products->pluck('category_child')->flatten()->unique();
+
+
+        return view('buyer.profile-seller.index', compact('shopProfileInfos', 'nameShop', 'category_childs', 'products',));
     }
 }
