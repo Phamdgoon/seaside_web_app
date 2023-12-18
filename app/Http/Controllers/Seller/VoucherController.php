@@ -5,14 +5,14 @@ namespace App\Http\Controllers\Seller;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class DashboardController extends Controller
+class VoucherController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('seller.dashboard.index');
+        return view('seller.voucher.index');
     }
 
     /**

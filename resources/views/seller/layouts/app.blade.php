@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="/seller/template/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
 <!-- Theme style -->
 <link rel="stylesheet" href="/seller/template/dist/css/adminlte.min.css">
+<link rel="stylesheet" href="/seller/template/dist/css/tab.css">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -40,9 +41,7 @@
                   <div class="col-md-12">
                      <!-- jquery validation -->
                      <div class="card card-primary mt-3">
-                        <div class="card-header">
-                           <h3 class="card-title">{{ $title }}</h3>
-                        </div>
+                        
                         <div class="card-body">
                            @yield('content')</div>
 

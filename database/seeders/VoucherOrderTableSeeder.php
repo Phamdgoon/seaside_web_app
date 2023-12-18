@@ -18,19 +18,19 @@ class VoucherOrderTableSeeder extends Seeder
         DB::table('voucher_order')->insert([
             [
                 'id_order_detail' => '1', 
-                'code' => 'UMITET2024123', 
+                'code' => 'UMI123', 
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [
                 'id_order_detail' => '2', 
-                'code' => 'MENFASHION123', 
+                'code' => 'SEASIDE2024', 
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [
                 'id_order_detail' => '3', 
-                'code' => 'HAVANA2512', 
+                'code' => 'SS112024', 
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]
