@@ -84,9 +84,7 @@ class SellerController extends Controller
                 session()->put('username', $user->username);
 
                 if ($id_permission == 2) {
-                    return view('seller.dashboard.index', [
-                        'title' => 'Dashboard'
-                     ]);
+                    return redirect()->route('seller');
                 } else {
                     return back()->with('fail', 'Không có quyền truy cập');
                 }

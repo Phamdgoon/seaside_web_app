@@ -50,7 +50,7 @@ Route::get('/verify-email', function () {
 
 //seller
 Route::prefix('seller1')->group(function () {
-    Route::get('', [DashboardController::class, 'index']);
+    Route::get('', [DashboardController::class, 'index'])->name('seller');
 
 });
 
