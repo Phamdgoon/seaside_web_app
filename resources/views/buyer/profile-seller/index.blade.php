@@ -68,9 +68,10 @@
                         <img src="{{ $productDetail->productImage->first()->url_image }}" alt="IMG-PRODUCT">
                         @endforeach
 
-                        <a href="{{ route('buyer.productDetail', ['id' => $product->id]) }}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+                        <a href="{{ route('buyer.productDetail', ['id' => $product->id]) }}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
                             Quick View
                         </a>
+
                     </div>
 
                     <div class="block2-txt flex-w flex-t p-t-14">

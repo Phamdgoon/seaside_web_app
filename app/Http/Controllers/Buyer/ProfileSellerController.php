@@ -4,11 +4,9 @@ namespace App\Http\Controllers\Buyer;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category_Child;
-use App\Models\Feedback;
 use App\Models\Product;
 use App\Models\ShopProfile;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class ProfileSellerController extends Controller
 {
