@@ -56,3 +56,16 @@ Route::prefix('seller1')->group(function () {
 
 Route::get('/profile-seller', [ProfileSellerController::class, 'getInforShop'])->name('profile-seller');
 Route::get('/product_detail', [ProductController::class, 'productDetail'])->name('buyer.productDetail');
+//seller-register/login
+use App\Http\Controllers\Auth\SellerController;
+Route::get('/seller/register', function () {
+    return view('auth.seller.register');
+})->name('seller.register');
+
+
+Route::post('/seller/login', [SellerController::class, 'login'])->name('login');
+Route::post('/seller/register', [SellerController::class, 'register'])->name('register');
+Route::get('/seller/login', function () {
+    return view('auth.seller.login');
+})->name('seller.login');
+Route::get('/logout', [SellerController::class, 'logout'])->name('logout');

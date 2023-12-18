@@ -37,25 +37,28 @@
     </li>
 
     <!-- User Dropdown Menu -->
+    @if (session('username'))
+    @php
+        $shopProfile = \App\Models\shopProfile::where('username', session('username'))->first();
+    @endphp
     <div class="user-panel d-flex text-center">
-      <img src="https://static.thenounproject.com/png/642902-200.png" class="img-circle" alt="User Image">
+        <img src="{{ $shopProfile->avt }}" class="img-circle" alt="User Image">
     </div>
     <li class="nav-item dropdown">
-      <a class="nav-link" data-toggle="dropdown" href="#" style="padding-left: 2px;">
-        Ten chu shop
-        <i class="fas fa-angle-down right"></i>
-      </a>
-      <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-        <div class="dropdown-divider"></div>
-        <a href="#" class="dropdown-item">Trang khách hàng
+        <a class="nav-link" data-toggle="dropdown" href="#" style="padding-left: 2px;">
+            {{ $shopProfile->username }}
+            <i class="fas fa-angle-down right"></i>
         </a>
-        <div class="dropdown-divider"></div>
-        <a href="#" class="dropdown-item"> Đăng xuất
-        </a>
-      </div>
-
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item">Trang khách hàng</a>
+            <div class="dropdown-divider"></div>
+            <a href="{{ route('logout') }}" class="dropdown-item"> Đăng xuất</a>
+        </div>
     </li>
-    <!-- Messages Dropdown Menu -->
+@endif
+
+   <!-- Messages Dropdown Menu -->
     <li class="nav-item dropdown">
       <a class="nav-link" data-toggle="dropdown" href="#">
         <i class="far fa-comments"></i>
