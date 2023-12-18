@@ -46,3 +46,6 @@ Route::get('/verify-email', function () {
 
 
 Route::get('/product_detail', [ProductController::class, 'productDetail'])->name('buyer.productDetail');
+Route::get('/cart', function () {
+    return view('buyer.cart.index');
+})->name('buyer.cart');
