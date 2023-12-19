@@ -13,6 +13,7 @@ use App\Models\Size_Product;
 use App\Models\Feedback;
 use App\Models\Feedback_Images;
 use App\Models\ShopProfile;
+use App\Models\Cart;
 
 class ProductController extends Controller
 {
@@ -198,6 +199,10 @@ class ProductController extends Controller
 
     public function productDetail(Request $request)
     {
+        $username = session('username');
+        $carts=Cart::Where('username',$username);
+        $countCart=$carts->count('id');
+        session()->put('countCart', $countCart);
         $id = $request->input('id');
         $products = Product::find($id);
         $priceByProduct = [];

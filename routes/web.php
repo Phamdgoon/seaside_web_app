@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Buyer\HomeController;
 use App\Http\Controllers\Buyer\ProductController;
+use App\Http\Controllers\Buyer\CartController;
 
 Route::get('/', [HomeController::class, 'index'])->name('buyer.home');
 
@@ -49,3 +50,13 @@ Route::get('/product_detail', [ProductController::class, 'productDetail'])->name
 Route::get('/cart', function () {
     return view('buyer.cart.index');
 })->name('buyer.cart');
+
+//  Route Cart
+
+Route::get('/cart', [CartController::class, 'index'])->name('client.cart.index');
+
+Route::delete('/remove-cart-item/{id}', [CartController::class, 'removeCartItem'])->name('remove.cart.item');
+
+Route::post('/update-cart-item/{id}', [CartController::class, 'updateCartItem'])->name('update.cart.item');
+
+Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
