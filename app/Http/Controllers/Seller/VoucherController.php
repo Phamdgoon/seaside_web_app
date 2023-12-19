@@ -126,6 +126,14 @@ class VoucherController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $voucher = Voucher::findOrFail($id);
+            $voucher->delete();
+
+            return redirect()->back()->with('success', 'Xóa voucher thành công');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Xóa voucher thất bại');
+        }
+
     }
 }

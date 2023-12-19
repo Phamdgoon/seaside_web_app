@@ -1,5 +1,5 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <a href="" class="brand-link d-flex justify-content-center align-items-center text-center text-white">
+    <a href="/seller1" class="brand-link d-flex justify-content-center align-items-center text-center text-white">
         <h5><b>SEASIDE</b> - Trang người bán</h5>
     </a>
     <div class="sidebar">
@@ -36,7 +36,7 @@
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="" class="nav-link text-white">
+                    <a href="/seller1/" class="nav-link text-white">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Dashboard
