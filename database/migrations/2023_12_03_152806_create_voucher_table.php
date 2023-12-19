@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('code')->primary();
             $table->string('name_shop')->nullable();
             $table->integer('discountPercentage')->nullable();
-            $table->decimal('discountAmount', 10, 2)->nullable();
+            $table->decimal('discountAmount')->nullable();
             $table->datetime('validFrom');
             $table->datetime('validTo');
             $table->integer('usageLimit');

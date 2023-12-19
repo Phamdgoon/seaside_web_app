@@ -15,4 +15,26 @@ class Voucher extends Model
     {
         return $this->belongsTo(ShopProfile::class, 'name_shop', 'name_shop');
     }
+
+    public function usedVoucherCount()
+    {
+        return Order_Detail::where('voucher_code', $this->code)->count();
+    }
+
+    public function isHappening()
+    {
+        $currentDate = now();
+        return $this->validFrom <= $currentDate && $this->validTo >= $currentDate;
+    }
+
+    public function isUpcoming()
+    {
+        $soonThreshold = now()->addDays(14); 
+        return $this->validFrom > now() && $this->validFrom <= $soonThreshold;
+    }
+
+    public function isFinished()
+    {
+        return $this->validTo < now();
+    }
 }

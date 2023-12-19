@@ -1,7 +1,7 @@
 @extends('seller.layouts.app')
 @section('title', 'Danh sách mã giảm giá')
 @section('content')
-<a href="" class="btn btn-success mb-3">Thêm mã giảm</a>
+<a href="/seller1/vouchers/create" class="btn btn-success mb-3">Thêm mã giảm</a>
 <section id="tabs" class="project-tab">
     <div class="row">
         <div class="col-md-12">
@@ -34,10 +34,10 @@
                                 <td>{{ $voucher->code }}</td>
                                 <td>{{ $voucher->discountPercentage }}</td>
                                 <td>{{ $voucher->discountAmount }}</td>
-                                <td>{{ $voucher->validFrom }}</td>
-                                <td>{{ $voucher->validTo }}</td>
+                                <td>{{ \Carbon\Carbon::parse($voucher->validFrom)->format('d-m-Y H:i:s') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($voucher->validTo)->format('d-m-Y H:i:s') }}</td>
                                 <td>{{ $voucher->usageLimit }}</td>
-                                <td>{{ $voucher->discountPercentage }}</td>
+                                <td>{{ $voucher->usedVoucherCount() }}</td>
                                 <td>
                                     <a href="" class="btn btn-warning">Edit</a>
                                     <button class="btn btn-delete btn-danger">Delete</button>
@@ -62,12 +62,25 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($vouchers as $voucher)
+                            @if ($voucher->isHappening())
                             <tr>
-                                <td><a href="#">Work 1</a></td>
-                                <td>Doe</td>
-                                <td>john@example.com</td>
+                                <td>{{ $voucher->code }}</td>
+                                <td>{{ $voucher->discountPercentage }}</td>
+                                <td>{{ $voucher->discountAmount }}</td>
+                                <td>{{ \Carbon\Carbon::parse($voucher->validFrom)->format('d-m-Y H:i:s') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($voucher->validTo)->format('d-m-Y H:i:s') }}</td>
+                                <td>{{ $voucher->usageLimit }}</td>
+                                <td>{{ $voucher->usedVoucherCount() }}</td>
+                                <td>
+                                    <a href="" class="btn btn-warning">Edit</a>
+                                    <button class="btn btn-delete btn-danger">Delete</button>
+                                </td>
                             </tr>
+                            @endif
+                            @endforeach
                         </tbody>
+
                     </table>
                 </div>
                 <div class="tab-pane fade" id="nav-upcoming" role="tabpanel" aria-labelledby="nav-upcoming-tab">
@@ -85,16 +98,29 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($vouchers as $voucher)
+                            @if ($voucher->isUpcoming())
                             <tr>
-                                <td><a href="#">Work 1</a></td>
-                                <td>Doe</td>
-                                <td>john@example.com</td>
+                                <td>{{ $voucher->code }}</td>
+                                <td>{{ $voucher->discountPercentage }}</td>
+                                <td>{{ $voucher->discountAmount }}</td>
+                                <td>{{ \Carbon\Carbon::parse($voucher->validFrom)->format('d-m-Y H:i:s') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($voucher->validTo)->format('d-m-Y H:i:s') }}</td>
+                                <td>{{ $voucher->usageLimit }}</td>
+                                <td>{{ $voucher->usedVoucherCount() }}</td>
+                                <td>
+                                    <a href="" class="btn btn-warning">Edit</a>
+                                    <button class="btn btn-delete btn-danger">Delete</button>
+                                </td>
                             </tr>
+                            @endif
+                            @endforeach
                         </tbody>
+
                     </table>
                 </div>
                 <div class="tab-pane fade" id="nav-finished" role="tabpanel" aria-labelledby="nav-upcoming-tab">
-                    <table class="table" cellspacing="0">
+                <table class="table" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>Code</th>
@@ -108,12 +134,25 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($vouchers as $voucher)
+                            @if ($voucher->isFinished())
                             <tr>
-                                <td><a href="#">ff 1</a></td>
-                                <td>Doe</td>
-                                <td>john@example.com</td>
+                                <td>{{ $voucher->code }}</td>
+                                <td>{{ $voucher->discountPercentage }}</td>
+                                <td>{{ $voucher->discountAmount }}</td>
+                                <td>{{ \Carbon\Carbon::parse($voucher->validFrom)->format('d-m-Y H:i:s') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($voucher->validTo)->format('d-m-Y H:i:s') }}</td>
+                                <td>{{ $voucher->usageLimit }}</td>
+                                <td>{{ $voucher->usedVoucherCount() }}</td>
+                                <td>
+                                    <a href="" class="btn btn-warning">Edit</a>
+                                    <button class="btn btn-delete btn-danger">Delete</button>
+                                </td>
                             </tr>
+                            @endif
+                            @endforeach
                         </tbody>
+
                     </table>
                 </div>
             </div>

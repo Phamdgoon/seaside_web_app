@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order_Detail;
 use App\Models\ShopProfile;
 use App\Models\Voucher;
 use Illuminate\Http\Request;
@@ -31,7 +32,7 @@ class VoucherController extends Controller
      */
     public function create()
     {
-        //
+        return view('seller.voucher.create');
     }
 
     /**

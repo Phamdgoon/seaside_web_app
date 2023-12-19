@@ -41,6 +41,30 @@ class VoucherTableSeeder extends Seeder
                 'updated_at' => Carbon::now()
             ],
             [
+                'code' => 'SEASIDE1212',
+                'name_shop' => 'Thời trang nam Seaside',
+                'discountPercentage' => 20,
+                'discountAmount' => null,
+                'validFrom' => '2023/12/10 00:00:00',
+                'validTo' => '2023/12/13 00:00:00',
+                'usageLimit' => '10',
+                'platformVoucher' => '1',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'code' => 'SEASIDE2512',
+                'name_shop' => 'Thời trang nam Seaside',
+                'discountPercentage' => 10,
+                'discountAmount' => null,
+                'validFrom' => '2023/12/24 00:00:00',
+                'validTo' => '2023/12/26 00:00:00',
+                'usageLimit' => '10',
+                'platformVoucher' => '1',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
                 'code' => 'UMI123',
                 'name_shop' => 'GIÀY UMI',
                 'discountPercentage' => 20,
