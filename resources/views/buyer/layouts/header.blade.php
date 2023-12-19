@@ -58,27 +58,25 @@
                     <form action="{{ route('buyer.product.search') }}" method="post">
                         @csrf
                         <div class="input-wrapper flex-w">
-                            <input type="text" name="search1" placeholder="Tìm kiếm..." value="@if (session('search')){{ session('search') }}@endif" class="search-input">
+                            <input type="text" name="search1" placeholder="Tìm kiếm..."
+                                value="@if (session('search')) {{ session('search') }} @endif"
+                                class="search-input">
                             <button type="submit" class="icon-search zmdi zmdi-search"></button>
                         </div>
                     </form>
-                    
-                    
+
+
                     <a href="#" class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
                         data-notify="0">
                         <i class="zmdi zmdi-favorite-outline"></i>
                     </a>
-                    <a href="#" class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
-                        data-notify="5">
-                        <i class="zmdi zmdi-shopping-cart"></i>
-                    </a>
-                    {{-- <a href="{{ route('buyer.cart.index') }}"
-                    class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
-                    data-notify="@if (session('countCart')) {{ session('countCart') }}
+                    <a href="{{ route('client.cart.index') }}"
+                        class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
+                        data-notify="@if (session('countCart')) {{ session('countCart') }}
                 @else
                     0 @endif">
-                    <i class="zmdi zmdi-shopping-cart"></i>
-                </a> --}}
+                        <i class="zmdi zmdi-shopping-cart"></i>
+                    </a>
                 </div>
 
                 {{-- @if (session('username'))

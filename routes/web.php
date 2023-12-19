@@ -19,6 +19,7 @@ use App\Http\Controllers\Buyer\ProfileSellerController;
 
 use App\Http\Controllers\Buyer\HomeController;
 use App\Http\Controllers\Buyer\ProductController;
+use App\Http\Controllers\Buyer\CartController;
 
 Route::get('/', [HomeController::class, 'index'])->name('buyer.home');
 
@@ -51,7 +52,6 @@ Route::get('/verify-email', function () {
 //seller
 Route::prefix('seller1')->group(function () {
     Route::get('', [DashboardController::class, 'index'])->name('seller');
-
 });
 
 Route::get('/profile-seller', [ProfileSellerController::class, 'getInforShop'])->name('profile-seller');
@@ -62,10 +62,23 @@ Route::get('/seller/register', function () {
     return view('auth.seller.register');
 })->name('seller.register');
 
-
 Route::post('/seller/login', [SellerController::class, 'login'])->name('login');
 Route::post('/seller/register', [SellerController::class, 'register'])->name('register');
 Route::get('/seller/login', function () {
     return view('auth.seller.login');
 })->name('seller.login');
 Route::get('/logout', [SellerController::class, 'logout'])->name('logout');
+Route::get('/product_detail', [ProductController::class, 'productDetail'])->name('buyer.productDetail');
+Route::get('/cart', function () {
+    return view('buyer.cart.index');
+})->name('buyer.cart');
+
+//  Route Cart
+
+Route::get('/cart', [CartController::class, 'index'])->name('client.cart.index');
+
+Route::delete('/remove-cart-item/{id}', [CartController::class, 'removeCartItem'])->name('remove.cart.item');
+
+Route::post('/update-cart-item/{id}', [CartController::class, 'updateCartItem'])->name('update.cart.item');
+
+Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');

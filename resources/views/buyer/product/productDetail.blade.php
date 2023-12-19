@@ -120,7 +120,7 @@
 
                         <!--  -->
                         {{-- {{ route('cart.add') }} --}}
-                        <form action="#" method="post" id="productForm">
+                        <form action="{{ route('cart.add') }}" method="post" id="productForm">
                             @csrf
                             <div class="p-t-33">
                                 <div class="flex-w flex-r-m p-b-10">
@@ -186,42 +186,13 @@
                             </div>
                         </form>
 
-                        {{-- <script>
+                        <script>
                             function submitForm(action) {
                                 var form = document.getElementById('productForm');
-                                form.action = action === 'buy_now' ? "{{ route('client.order.processOrder') }}" : "{{ route('cart.add') }}";
+                                form.action = action === 'buy_now' ? "{{ route('cart.add') }}" : "{{ route('cart.add') }}";
                                 form.submit();
                             }
-                        </script> --}}
-
-                        <!--  -->
-                        {{-- <div class="flex-w flex-m p-l-100 p-t-40 respon7">
-                            <div class="flex-m bor9 p-r-10 m-r-11">
-                                <a href="#"
-                                    class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100"
-                                    data-tooltip="Add to Wishlist">
-                                    <i class="zmdi zmdi-favorite"></i>
-                                </a>
-                            </div>
-
-                            <!-- Facebook Share -->
-                            <a href="" class="fs-14 cl13 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-                                onclick="shareOnFacebook()" data-tooltip="Chia sẻ trên Facebook">
-                                <i class="fa-brands fa-facebook"></i>
-                            </a>
-
-                            <!-- Twitter Share -->
-                            <a href="" class="fs-14 cl15 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-                                onclick="shareOnTwitter()" data-tooltip="Chia sẻ trên Twitter">
-                                <i class="fa-brands fa-square-twitter"></i>
-                            </a>
-
-                            <!-- Google Plus Share -->
-                            <a href="" class="fs-14 cl14 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-                                onclick="shareOnGooglePlus()" data-tooltip="Chia sẻ trên Google Plus">
-                                <i class="fa-brands fa-google-plus"></i>
-                            </a>
-                        </div> --}}
+                        </script>
                     </div>
                 </div>
             </div>
@@ -328,14 +299,15 @@
                         </div>
                     </div>
                     <div class="button-container filter-tope-group">
-                            
-                           
-                           
-                           
-                           
-                           
+
+
+
+
+
+
                         <div>
-                            <button class="flex-c-m stext-102 cl14 bg0 bor20 hov-btn3 p-lr-15  trans-04 how-active1" data-filter="*">
+                            <button class="flex-c-m stext-102 cl14 bg0 bor20 hov-btn3 p-lr-15  trans-04 how-active1"
+                                data-filter="*">
                                 Tất cả bình luận
                             </button>
                         </div>
