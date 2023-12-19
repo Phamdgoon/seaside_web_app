@@ -58,6 +58,10 @@ Route::prefix('seller1')->group(function () {
         Route::prefix('vouchers')->group(function () {
             Route::get('list','index');
             Route::get('create','create');
+            Route::post('create', 'store');
+            Route::get('update/{id}', 'edit');
+            Route::post('update/{id}', 'update');
+            Route::delete('delete/{id}', 'destroy');
         });
     });
     

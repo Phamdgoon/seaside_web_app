@@ -9,7 +9,8 @@ class Voucher extends Model
 {
     use HasFactory;
     protected $table = 'voucher';
-    protected $fillable = ['voucher_code', 'name_shop', 'discountPercentage', 'discountAmount', 'validFrom', 'validTo', 'usageLimit', 'platformVoucher', 'created_at', 'updated_at'];
+    protected $primaryKey = 'id';
+    protected $fillable = ['code', 'name_shop', 'discountPercentage', 'discountAmount', 'validFrom', 'validTo', 'usageLimit', 'platformVoucher', 'created_at', 'updated_at'];
 
     public function shopProfile()
     {

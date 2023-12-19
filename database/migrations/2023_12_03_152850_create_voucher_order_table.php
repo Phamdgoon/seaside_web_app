@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('voucher_order', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_order');
-            $table->string('voucher_code')->nullable();
+            $table->unsignedBigInteger('voucher_code')->nullable();
             $table->timestamps();
 
             $table->unique(['id_order', 'voucher_code']);
@@ -23,7 +23,7 @@ return new class extends Migration
             ->references('id')->on('order')->onUpdate('cascade')->onDelete('cascade');
 
             $table->foreign('voucher_code')
-            ->references('code')->on('voucher')->onUpdate('cascade')->onDelete('cascade');
+            ->references('id')->on('voucher')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
