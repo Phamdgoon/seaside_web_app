@@ -39,7 +39,7 @@
                                 <td>{{ $voucher->usageLimit }}</td>
                                 <td>{{ $voucher->usedVoucherCount() }}</td>
                                 <td>
-                                    <a href="" class="btn btn-warning">Edit</a>
+                                    <a href="/seller1/vouchers/update/{{ $voucher->id }}" class="btn btn-warning">Edit</a>
                                     <button class="btn btn-delete btn-danger">Delete</button>
                                 </td>
                             </tr>
@@ -73,7 +73,7 @@
                                 <td>{{ $voucher->usageLimit }}</td>
                                 <td>{{ $voucher->usedVoucherCount() }}</td>
                                 <td>
-                                    <a href="" class="btn btn-warning">Edit</a>
+                                    <a href="/seller1/vouchers/update/{{ $voucher->id }}" class="btn btn-warning">Edit</a>
                                     <button class="btn btn-delete btn-danger">Delete</button>
                                 </td>
                             </tr>
@@ -109,7 +109,7 @@
                                 <td>{{ $voucher->usageLimit }}</td>
                                 <td>{{ $voucher->usedVoucherCount() }}</td>
                                 <td>
-                                    <a href="" class="btn btn-warning">Edit</a>
+                                    <a href="/seller1/vouchers/update/{{ $voucher->id }}" class="btn btn-warning">Edit</a>
                                     <button class="btn btn-delete btn-danger">Delete</button>
                                 </td>
                             </tr>
@@ -145,7 +145,7 @@
                                 <td>{{ $voucher->usageLimit }}</td>
                                 <td>{{ $voucher->usedVoucherCount() }}</td>
                                 <td>
-                                    <a href="" class="btn btn-warning">Edit</a>
+                                    <a href="/seller1/vouchers/update/{{ $voucher->id }}" class="btn btn-warning">Edit</a>
                                     <button class="btn btn-delete btn-danger">Delete</button>
                                 </td>
                             </tr>

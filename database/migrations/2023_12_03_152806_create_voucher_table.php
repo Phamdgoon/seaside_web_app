@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('voucher', function (Blueprint $table) {
-            $table->string('code')->primary();
+            $table->id();
+            $table->string('code')->unique();
             $table->string('name_shop')->nullable();
             $table->integer('discountPercentage')->nullable();
             $table->decimal('discountAmount')->nullable();

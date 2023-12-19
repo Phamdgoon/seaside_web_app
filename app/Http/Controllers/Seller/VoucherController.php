@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Voucher\CreateVoucherRequest;
+use App\Http\Requests\Voucher\UpdateVoucherRequest;
 use App\Models\Order_Detail;
 use App\Models\ShopProfile;
 use App\Models\Voucher;
@@ -26,7 +27,7 @@ class VoucherController extends Controller
     {
         $user = auth()->user();
         $shopProfile = ShopProfile::where('username', $user->username)->first();
-        $vouchers = $shopProfile->vouchers()->orderBy('created_at', 'asc')->paginate(4);
+        $vouchers = $shopProfile->vouchers()->paginate(4);
 
         return view('seller.voucher.index', compact('vouchers'));
     }
@@ -63,9 +64,7 @@ class VoucherController extends Controller
 
             Session::flash('success', 'Thêm voucher thành công');
         } catch (\Exception $err) {
-            // Rollback transaction in case of any error
             DB::rollBack();
-            // If an error occurs after the main product is saved, redirect back
             Session::flash('error', 'Thêm voucher lỗi');
             // \Log::error($err->getMessage());
             // dd($err->getMessage());
@@ -88,15 +87,38 @@ class VoucherController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = auth()->user();
+        $shopProfile = ShopProfile::where('username', $user->username)->first();
+        $voucher = $shopProfile->vouchers()->findOrFail($id);
+
+        return view('seller.voucher.update', compact('voucher'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateVoucherRequest $request, string $id)
     {
-        //
+        try {
+            $voucher = Voucher::findOrFail($id);
+            
+            $voucher->code = $request->input('code');
+            $voucher->discountPercentage = $request->input('discountPercentage');
+            $voucher->discountAmount = $request->input('discountAmount');
+            $voucher->validFrom = $request->input('validFrom');
+            $voucher->validTo = $request->input('validTo');
+            $voucher->usageLimit = $request->input('usageLimit');
+            $voucher->save();
+
+            Session::flash('success', 'Cập nhật voucher thành công');
+        } catch (\Exception $err) {
+            Session::flash('error', 'Cập nhật voucher lỗi');
+            // \Log::error($err->getMessage());
+            // dd($err->getMessage());
+            return redirect()->back()->withInput();
+        }
+
+        return redirect()->intended('/seller1/vouchers/list');
     }
 
     /**
