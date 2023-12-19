@@ -1,16 +1,23 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <a href="" class="brand-link d-flex justify-content-center align-items-center text-center">
+    <a href="" class="brand-link d-flex justify-content-center align-items-center text-center text-white">
         <h5><b>SEASIDE</b> - Trang người bán</h5>
     </a>
     <div class="sidebar">
+
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            @if (session('username'))
+            @php
+            $shopProfile = \App\Models\shopProfile::where('username', session('username'))->first();
+            @endphp
             <div class="image">
-                <img src="https://down-tx-vn.img.susercontent.com/2153b0f9c25fc516ca0ba291f8ba35f1_tn" class="img-circle elevation-2" alt="Shop Image">
+                <img src="{{ $shopProfile->avt}}" class="img-circle elevation-2" alt="Shop Image" style="width: 50px; height: 50px">
             </div>
             <div class="info">
-                <a href="#" class="d-block">Ten shop</a>
+                <h6 href="" class="d-block text-white" >{{ $shopProfile->name_shop}}</h6>
             </div>
+            @endif
         </div>
+
         <!-- SidebarSearch Form -->
         <div class="form-inline">
             <div class="input-group" data-widget="sidebar-search">
@@ -29,7 +36,7 @@
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="" class="nav-link ">
+                    <a href="" class="nav-link text-white">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Dashboard
@@ -37,21 +44,21 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="" class="nav-link">
+                    <a href="" class="nav-link text-white">
                         <i class="nav-icon fas fa-bars"></i>
                         <p> Danh Mục</p>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="" class="nav-link">
+                    <a href="" class="nav-link text-white">
                         <i class="nav-icon fas fa-box-open"></i>
                         <p> Sản Phẩm </p>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="#" class="nav-link text-white">
                         <i class="nav-icon fas fa-users"></i>
                         <p> Khách hàng
                         </p>
@@ -59,20 +66,22 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-cart-plus"></i>
-                        <p> Giỏ Hàng </p>
+                    <a href="#" class="nav-link text-white">
+                        <i class="nav-icon fas fa-file-invoice-dollar"></i>
+                        <p> Đơn hàng </p>
                     </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Danh Sách Đơn Hàng</p>
-                            </a>
-                        </li>
-                    </ul>
-
-
+                </li>
+                <li class="nav-item">
+                    <a href="/seller1/vouchers/list" class="nav-link text-white">
+                        <i class="nav-icon fas fa-tag"></i>
+                        <p> Mã giảm giá </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link text-white">
+                        <i class="nav-icon fas fa-store"></i>
+                        <p> Thông tin shop </p>
+                    </a>
                 </li>
             </ul>
         </nav>

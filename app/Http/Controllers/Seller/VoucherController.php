@@ -3,17 +3,28 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order_Detail;
 use App\Models\ShopProfile;
+use App\Models\Voucher;
 use Illuminate\Http\Request;
 
-class DashboardController extends Controller
+class VoucherController extends Controller
 {
+    protected $voucher;
+
+    public function __construct(Voucher $voucher)
+    {
+        $this->voucher = $voucher;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('seller.dashboard.index');
+        $user = auth()->user();
+        $shopProfile = ShopProfile::where('username', $user->username)->first();
+        $vouchers = $shopProfile->vouchers()->paginate(4);
+        return view('seller.voucher.index', compact('vouchers'));
     }
 
     /**
@@ -21,7 +32,7 @@ class DashboardController extends Controller
      */
     public function create()
     {
-        //
+        return view('seller.voucher.create');
     }
 
     /**

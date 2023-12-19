@@ -17,10 +17,10 @@ class VoucherTableSeeder extends Seeder
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         DB::table('voucher')->insert([
             [
-                'code' => 'UMITET2024123',
-                'name_shop' => 'UMI SHOES',
-                'discountPercentage' => '10',
-                'discountAmount' => '20',
+                'code' => 'SEASIDE2024123',
+                'name_shop' => 'Thời trang nam Seaside',
+                'discountPercentage' => null,
+                'discountAmount' => '20000',
                 'validFrom' => '2023/12/11 00:00:00',
                 'validTo' => '2024/1/11 00:00:00',
                 'usageLimit' => '15',
@@ -29,41 +29,65 @@ class VoucherTableSeeder extends Seeder
                 'updated_at' => Carbon::now()
             ],
             [
-                'code' => 'HAVANA2512',
-                'name_shop' => 'HAVANA FASHION',
-                'discountPercentage' => '15',
-                'discountAmount' => '30',
-                'validFrom' => '2023/12/25 00:00:00',
-                'validTo' => '2023/12/30 00:00:00',
-                'usageLimit' => '25',
+                'code' => 'SEASIDE2024',
+                'name_shop' => 'Thời trang nam Seaside',
+                'discountPercentage' => 10,
+                'discountAmount' => null,
+                'validFrom' => '2023/12/18 00:00:00',
+                'validTo' => '2024/1/18 00:00:00',
+                'usageLimit' => '10',
                 'platformVoucher' => '1',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [
-                'code' => 'MENFASHION123',
-                'name_shop' => 'MEN FASHION',
-                'discountPercentage' => '20',
-                'discountAmount' => '40',
-                'validFrom' => '2023/12/15 00:00:00',
-                'validTo' => '2023/12/25 00:00:00',
-                'usageLimit' => '5',
-                'platformVoucher' => '1',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ],
-            [
-                'code' => 'ROGERTET2024',
-                'name_shop' => 'ROGE.VN',
-                'discountPercentage' => '15',
-                'discountAmount' => '25',
+                'code' => 'SEASIDE1212',
+                'name_shop' => 'Thời trang nam Seaside',
+                'discountPercentage' => 20,
+                'discountAmount' => null,
                 'validFrom' => '2023/12/10 00:00:00',
-                'validTo' => '2024/1/10 00:00:00',
-                'usageLimit' => '30',
+                'validTo' => '2023/12/13 00:00:00',
+                'usageLimit' => '10',
                 'platformVoucher' => '1',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
-            ]
+            ],
+            [
+                'code' => 'SEASIDE2512',
+                'name_shop' => 'Thời trang nam Seaside',
+                'discountPercentage' => 10,
+                'discountAmount' => null,
+                'validFrom' => '2023/12/24 00:00:00',
+                'validTo' => '2023/12/26 00:00:00',
+                'usageLimit' => '10',
+                'platformVoucher' => '1',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'code' => 'UMI123',
+                'name_shop' => 'GIÀY UMI',
+                'discountPercentage' => 20,
+                'discountAmount' => null,
+                'validFrom' => '2023/12/18 00:00:00',
+                'validTo' => '2024/1/18 00:00:00',
+                'usageLimit' => '15',
+                'platformVoucher' => '1',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'code' => 'SS112024',
+                'name_shop' => null,
+                'discountPercentage' => 15,
+                'discountAmount' => null,
+                'validFrom' => '2023/12/15 00:00:00',
+                'validTo' => '2024/1/5 00:00:00',
+                'usageLimit' => '20',
+                'platformVoucher' => '0',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
 
         ]);
     }

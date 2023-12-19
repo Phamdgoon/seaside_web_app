@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('size')->nullable();
             $table->decimal('price', 10, 2);
             $table->string('status');
+            $table->string('voucher_code')->nullable();
             $table->timestamps();
 
             $table->unique(['id_order', 'id_product_detail']);
@@ -28,6 +29,9 @@ return new class extends Migration
 
             $table->foreign('id_product_detail')
             ->references('id')->on('product_detail')->onUpdate('cascade')->onDelete('cascade');
+
+            $table->foreign('voucher_code')
+            ->references('code')->on('voucher')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

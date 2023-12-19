@@ -19,6 +19,7 @@ use App\Http\Controllers\Buyer\ProfileSellerController;
 
 use App\Http\Controllers\Buyer\HomeController;
 use App\Http\Controllers\Buyer\ProductController;
+use App\Http\Controllers\Seller\VoucherController;
 
 Route::get('/', [HomeController::class, 'index'])->name('buyer.home');
 
@@ -53,11 +54,26 @@ Route::middleware(['SellerMiddleware'])->group(function () {
 Route::prefix('seller1')->group(function () {
     Route::get('', [DashboardController::class, 'index'])->name('seller');
 
+    Route::controller(VoucherController::class)->group(function() {
+        Route::prefix('vouchers')->group(function () {
+            Route::get('list','index');
+            Route::get('create','create');
+        });
+    });
+    
+
 });
 });
 
+
+
+//
 Route::get('/profile-seller', [ProfileSellerController::class, 'getInforShop'])->name('profile-seller');
 Route::get('/product_detail', [ProductController::class, 'productDetail'])->name('buyer.productDetail');
+
+
+
+
 //seller-register/login
 use App\Http\Controllers\Auth\SellerController;
 Route::get('/seller/register', function () {

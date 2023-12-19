@@ -15,10 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('name_category_child');
             $table->unsignedBigInteger('id_category');
+            $table->string('name_shop');
             $table->timestamps();
 
             $table->foreign('id_category')
             ->references('id')->on('categories')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('name_shop')
+            ->references('name_shop')->on('shop_profile')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

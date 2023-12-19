@@ -19,19 +19,19 @@ class FeedbackImageTableSeeder extends Seeder
         DB::table('feedback_image')->insert([
             [
                 'id_feedback' => '1',
-                'url_image' => 'https://i.pinimg.com/564x/a9/c0/ed/a9c0eda54134f2860f430326135c2fbb.jpg',
+                'url_image' => 'https://lzd-img-global.slatic.net/g/ff/kf/S05cd6ff908244fbfbf2a104124881b6eI.jpg_720x720q80.jpg',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [
                 'id_feedback' => '2',
-                'url_image' => 'https://i.pinimg.com/564x/99/fc/7f/99fc7fd57818266c7e88749b453b9841.jpg',
+                'url_image' => 'https://sakurafashion.vn/upload/a/4959-torano-7242.jpg',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [
                 'id_feedback' => '3',
-                'url_image' => 'https://i.pinimg.com/564x/ea/3f/3f/ea3f3f0df6beb8e35b122b5cb9809440.jpg',
+                'url_image' => 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lll2dq3yxgsve5_tn',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]

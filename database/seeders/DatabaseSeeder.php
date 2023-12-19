@@ -33,8 +33,8 @@ class DatabaseSeeder extends Seeder
             ShippingAddressSeeder::class,
             OrderTableSeeder::class,
             CartTableSeeder::class,
-            OrderDetailTableSeeder::class,
             VoucherTableSeeder::class,
+            OrderDetailTableSeeder::class,
             VoucherOrderTableSeeder::class,
             FeedbackTableSeeder::class,
             FeedbackImageTableSeeder::class

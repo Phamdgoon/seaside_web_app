@@ -21,4 +21,9 @@ class Order_Detail extends Model
     {
         return $this->hasMany(Feedback::class, 'id_order_detail');
     }
+
+    public function voucher()
+    {
+        return $this->belongsTo(Voucher::class, 'voucher_code', 'code');
+    }
 }
