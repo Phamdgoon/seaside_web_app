@@ -49,9 +49,11 @@ Route::get('/verify-email', function () {
 
 
 //seller
+Route::middleware(['SellerMiddleware'])->group(function () {
 Route::prefix('seller1')->group(function () {
     Route::get('', [DashboardController::class, 'index'])->name('seller');
 
+});
 });
 
 Route::get('/profile-seller', [ProfileSellerController::class, 'getInforShop'])->name('profile-seller');
