@@ -21,4 +21,9 @@ class ShopProfile extends Model
     {
         return $this->hasMany(Category_Child::class, 'name_shop', 'name_shop');
     }
+
+    public function vouchers()
+    {
+        return $this->hasMany(Voucher::class, 'name_shop', 'name_shop');
+    }
 }

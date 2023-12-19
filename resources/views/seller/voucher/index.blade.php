@@ -29,11 +29,21 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($vouchers as $voucher)
                             <tr>
-                                <td><a href="#">Work 1</a></td>
-                                <td>Doe</td>
-                                <td>john@example.com</td>
+                                <td>{{ $voucher->code }}</td>
+                                <td>{{ $voucher->discountPercentage }}</td>
+                                <td>{{ $voucher->discountAmount }}</td>
+                                <td>{{ $voucher->validFrom }}</td>
+                                <td>{{ $voucher->validTo }}</td>
+                                <td>{{ $voucher->usageLimit }}</td>
+                                <td>{{ $voucher->discountPercentage }}</td>
+                                <td>
+                                    <a href="" class="btn btn-warning">Edit</a>
+                                    <button class="btn btn-delete btn-danger">Delete</button>
+                                </td>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

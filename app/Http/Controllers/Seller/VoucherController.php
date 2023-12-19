@@ -3,16 +3,27 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
+use App\Models\ShopProfile;
+use App\Models\Voucher;
 use Illuminate\Http\Request;
 
 class VoucherController extends Controller
 {
+    protected $voucher;
+
+    public function __construct(Voucher $voucher)
+    {
+        $this->voucher = $voucher;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('seller.voucher.index');
+        $user = auth()->user();
+        $shopProfile = ShopProfile::where('username', $user->username)->first();
+        $vouchers = $shopProfile->vouchers()->paginate(4);
+        return view('seller.voucher.index', compact('vouchers'));
     }
 
     /**

@@ -37,24 +37,24 @@
     </li>
 
     <!-- User Dropdown Menu -->
-    <div class="user-panel d-flex text-center">
-      <img src="https://static.thenounproject.com/png/642902-200.png" class="img-circle" alt="User Image">
-    </div>
+    @if (session('username'))
+    @php
+    $shopProfile = \App\Models\shopProfile::where('username', session('username'))->first();
+    @endphp
     <li class="nav-item dropdown">
-      <a class="nav-link" data-toggle="dropdown" href="#" style="padding-left: 2px;">
-        Ten chu shop
+      <a class="nav-link text-dark" data-toggle="dropdown" href="#" style="padding-left: 2px;">
+        {{ $shopProfile->username }}
         <i class="fas fa-angle-down right"></i>
       </a>
       <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
         <div class="dropdown-divider"></div>
-        <a href="#" class="dropdown-item">Trang khách hàng
-        </a>
+        <a href="#" class="dropdown-item">Trang khách hàng</a>
         <div class="dropdown-divider"></div>
-        <a href="#" class="dropdown-item"> Đăng xuất
-        </a>
+        <a href="{{ route('logout') }}" class="dropdown-item"> Đăng xuất</a>
       </div>
-
     </li>
+    @endif
+
     <!-- Messages Dropdown Menu -->
     <li class="nav-item dropdown">
       <a class="nav-link" data-toggle="dropdown" href="#">
