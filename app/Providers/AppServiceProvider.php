@@ -1,10 +1,9 @@
 <?php
 
 namespace App\Providers;
-
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\DB;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,9 +20,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        if ($this->app->isLocal()) {
-            DB::connection()->enableQueryLog();
-        }
-        Schema::defaultStringLength(191);
+        Paginator::useBootstrapFive();
+
+        Validator::extend('exclusive_discount', function ($attribute, $value, $parameters, $validator) {
+            $otherField = $parameters[0];
+            $otherValue = $validator->getData()[$otherField];
+
+            return ($value === null && $otherValue !== null) || ($value !== null && $otherValue === null);
+        });
+
+        
     }
 }

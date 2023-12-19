@@ -22,6 +22,7 @@ use App\Http\Controllers\Buyer\ProductController;
 use App\Http\Controllers\Buyer\CartController;
 use App\Http\Controllers\Buyer\OrderController;
 use App\Http\Controllers\Buyer\PaymentController;
+use App\Http\Controllers\Seller\VoucherController;
 
 Route::get('/', [HomeController::class, 'index'])->name('buyer.home');
 
@@ -52,12 +53,28 @@ Route::get('/verify-email', function () {
 
 
 //seller
+Route::middleware(['SellerMiddleware'])->group(function () {
 Route::prefix('seller1')->group(function () {
     Route::get('', [DashboardController::class, 'index'])->name('seller');
-});
 
+    Route::controller(VoucherController::class)->group(function() {
+        Route::prefix('vouchers')->group(function () {
+            Route::get('list','index');
+            Route::get('create','create');
+            Route::post('create', 'store');
+            Route::get('update/{id}', 'edit');
+            Route::post('update/{id}', 'update');
+            Route::delete('delete/{id}', 'destroy');
+        });
+    });
+    
+
+});
+});
+//
 Route::get('/profile-seller', [ProfileSellerController::class, 'getInforShop'])->name('profile-seller');
 Route::get('/product_detail', [ProductController::class, 'productDetail'])->name('buyer.productDetail');
+
 //seller-register/login
 use App\Http\Controllers\Auth\SellerController;
 Route::get('/seller/register', function () {
@@ -69,6 +86,7 @@ Route::post('/seller/register', [SellerController::class, 'register'])->name('re
 Route::get('/seller/login', function () {
     return view('auth.seller.login');
 })->name('seller.login');
+//seller-logout
 Route::get('/logout', [SellerController::class, 'logout'])->name('logout');
 Route::get('/product_detail', [ProductController::class, 'productDetail'])->name('buyer.productDetail');
 Route::get('/cart', function () {

@@ -68,5 +68,7 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         // ...
         'Buyer.middleware' => \App\Http\Middleware\BuyerMiddleware::class,
+        'SellerMiddleware' => \App\Http\Middleware\SellerMiddleware::class,    
+        
     ];
 }

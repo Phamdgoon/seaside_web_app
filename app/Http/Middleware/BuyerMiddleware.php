@@ -22,7 +22,7 @@ class BuyerMiddleware
             # code...
             return $next($request);
         } else {
-            return redirect()->route('buyer.home');
+            return redirect()->route('buyer.login');
         }
         
     }

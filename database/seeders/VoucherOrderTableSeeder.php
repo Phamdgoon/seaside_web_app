@@ -17,20 +17,20 @@ class VoucherOrderTableSeeder extends Seeder
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         DB::table('voucher_order')->insert([
             [
-                'id_order_detail' => '1', 
-                'code' => 'UMITET2024123', 
+                'id_order' => '1', 
+                'voucher_code' => null, 
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [
-                'id_order_detail' => '2', 
-                'code' => 'MENFASHION123', 
+                'id_order' => '2', 
+                'voucher_code' => null, 
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [
-                'id_order_detail' => '3', 
-                'code' => 'HAVANA2512', 
+                'id_order' => '3', 
+                'voucher_code' => null, 
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]

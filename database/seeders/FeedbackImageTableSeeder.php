@@ -19,19 +19,25 @@ class FeedbackImageTableSeeder extends Seeder
         DB::table('feedback_image')->insert([
             [
                 'id_feedback' => '1',
-                'url_image' => 'https://i.pinimg.com/564x/a9/c0/ed/a9c0eda54134f2860f430326135c2fbb.jpg',
+                'url_image' => 'https://product.hstatic.net/200000690725/product/53270166792_50ec588b05_k_85dd51d769a6422b8228c48d3ad037b3_master.jpg',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [
                 'id_feedback' => '2',
-                'url_image' => 'https://i.pinimg.com/564x/99/fc/7f/99fc7fd57818266c7e88749b453b9841.jpg',
+                'url_image' => 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lortwohbgfv481',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [
                 'id_feedback' => '3',
-                'url_image' => 'https://i.pinimg.com/564x/ea/3f/3f/ea3f3f0df6beb8e35b122b5cb9809440.jpg',
+                'url_image' => 'https://down-bs-vn.img.susercontent.com/vn-11134103-7qukw-lg0v5omdcmei22.webp',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id_feedback' => '4',
+                'url_image' => 'https://down-bs-vn.img.susercontent.com/vn-11134103-7qukw-lfvcspjtl46i2d.webp',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]

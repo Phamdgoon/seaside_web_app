@@ -39,26 +39,23 @@
     <!-- User Dropdown Menu -->
     @if (session('username'))
     @php
-        $shopProfile = \App\Models\shopProfile::where('username', session('username'))->first();
+    $shopProfile = \App\Models\shopProfile::where('username', session('username'))->first();
     @endphp
-    <div class="user-panel d-flex text-center">
-        <img src="{{ $shopProfile->avt }}" class="img-circle" alt="User Image">
-    </div>
     <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#" style="padding-left: 2px;">
-            {{ $shopProfile->username }}
-            <i class="fas fa-angle-down right"></i>
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">Trang khách hàng</a>
-            <div class="dropdown-divider"></div>
-            <a href="{{ route('logout') }}" class="dropdown-item"> Đăng xuất</a>
-        </div>
+      <a class="nav-link text-dark" data-toggle="dropdown" href="#" style="padding-left: 2px;">
+        {{ $shopProfile->username }}
+        <i class="fas fa-angle-down right"></i>
+      </a>
+      <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+        <div class="dropdown-divider"></div>
+        <a href="#" class="dropdown-item">Trang khách hàng</a>
+        <div class="dropdown-divider"></div>
+        <a href="{{ route('logout') }}" class="dropdown-item"> Đăng xuất</a>
+      </div>
     </li>
-@endif
+    @endif
 
-   <!-- Messages Dropdown Menu -->
+    <!-- Messages Dropdown Menu -->
     <li class="nav-item dropdown">
       <a class="nav-link" data-toggle="dropdown" href="#">
         <i class="far fa-comments"></i>

@@ -32,7 +32,14 @@ class FeedbackTableSeeder extends Seeder
             ],
             [
                 'id_order_detail' => '3', 
-                'message' => 'Sản phẩm tốt, giao hàng nhanh, shipper thân thiện, sẽ quay lại ủng hộ.  ', 
+                'message' => 'Giao hàng nhanh, shipper thân thiện nhưng sai màu huhu :(( mình đặt be mà giao đen.', 
+                'star' => '3',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id_order_detail' => '4', 
+                'message' => 'Giao hàng nhanh, đúng mẫu, sẽ tiếp tục ủng hộ shop.', 
                 'star' => '5',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
