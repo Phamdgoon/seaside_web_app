@@ -20,6 +20,8 @@ use App\Http\Controllers\Buyer\ProfileSellerController;
 use App\Http\Controllers\Buyer\HomeController;
 use App\Http\Controllers\Buyer\ProductController;
 use App\Http\Controllers\Buyer\CartController;
+use App\Http\Controllers\Buyer\OrderController;
+use App\Http\Controllers\Buyer\PaymentController;
 
 Route::get('/', [HomeController::class, 'index'])->name('buyer.home');
 
@@ -73,6 +75,9 @@ Route::get('/cart', function () {
     return view('buyer.cart.index');
 })->name('buyer.cart');
 
+
+Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+Route::middleware(['Buyer.middleware'])->group(function () {
 //  Route Cart
 
 Route::get('/cart', [CartController::class, 'index'])->name('client.cart.index');
@@ -81,4 +86,25 @@ Route::delete('/remove-cart-item/{id}', [CartController::class, 'removeCartItem'
 
 Route::post('/update-cart-item/{id}', [CartController::class, 'updateCartItem'])->name('update.cart.item');
 
-Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+//  Route Order Product
+Route::get('/order-product', function () {
+    return view('buyer.order.orderProduct');
+});
+
+Route::post('/order-product', [OrderController::class, 'ProcessOrder'])->name('client.order.processOrder');
+
+// routes/web.php
+Route::post('/saveOrder', [OrderController::class, 'SaveOrder'])->name('saveOrder');
+
+
+Route::get('/saveOrderOnline', [OrderController::class, 'saveOrderOnline'])->name('saveOrderOnline');
+
+Route::post('/vnpay_payment', [PaymentController::class, 'vnpayPayment'])->name('vnpay.payment');
+
+Route::post('/paypal_payment', [PaymentController::class, 'pay'])->name('paypal.payment');
+
+Route::get('/success', [PaymentController::class, 'success'])->name('success');
+
+Route::get('/error', [PaymentController::class, 'error']);
+});
+

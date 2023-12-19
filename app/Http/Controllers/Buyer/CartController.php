@@ -91,7 +91,7 @@ class CartController extends Controller
         // Redirect back or to the cart page
         return redirect()->back()->with('success', 'Đã thêm sản phẩm vào giỏ hàng');
         } else {
-            return redirect()->route('login')->with('error', 'Please log in first.');
+            return redirect()->route('buyer.login')->with('error', 'Please log in first.');
         }    
     }
 }

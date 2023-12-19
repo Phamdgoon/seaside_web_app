@@ -18,7 +18,7 @@ class VoucherTableSeeder extends Seeder
         DB::table('voucher')->insert([
             [
                 'code' => 'UMITET2024123',
-                'name_shop' => 'UMI SHOES',
+                'name_shop' => 'GIÀY UMI',
                 'discountPercentage' => '10',
                 'discountAmount' => '20',
                 'validFrom' => '2023/12/11 00:00:00',
@@ -30,7 +30,7 @@ class VoucherTableSeeder extends Seeder
             ],
             [
                 'code' => 'HAVANA2512',
-                'name_shop' => 'HAVANA FASHION',
+                'name_shop' => 'GIÀY UMI',
                 'discountPercentage' => '15',
                 'discountAmount' => '30',
                 'validFrom' => '2023/12/25 00:00:00',

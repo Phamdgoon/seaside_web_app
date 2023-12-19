@@ -189,7 +189,7 @@
                         <script>
                             function submitForm(action) {
                                 var form = document.getElementById('productForm');
-                                form.action = action === 'buy_now' ? "{{ route('cart.add') }}" : "{{ route('cart.add') }}";
+                                form.action = action === 'buy_now' ? "{{ route('client.order.processOrder') }}" : "{{ route('cart.add') }}";
                                 form.submit();
                             }
                         </script>
