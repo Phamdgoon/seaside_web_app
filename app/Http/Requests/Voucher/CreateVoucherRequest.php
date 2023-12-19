@@ -22,10 +22,13 @@ class CreateVoucherRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => 'required|unique',
-            'usageLimit' => 'required',
-            'validFrom' => 'required',
-            'validTo' => 'required'
+            'code' => 'required|unique:voucher',
+            'usageLimit' => 'required|numeric|min:1',
+            'discountPercentage' => 'nullable|numeric|min:0|max:100|exclusive_discount:discountAmount',
+            'discountAmount' => 'nullable|numeric|min:0|exclusive_discount:discountPercentage',
+
+            'validFrom' => 'required|date',
+            'validTo' => 'required|date|after:validFrom',
         ];
     }
 }

@@ -57,6 +57,7 @@ Route::prefix('seller1')->group(function () {
         Route::prefix('vouchers')->group(function () {
             Route::get('list','index');
             Route::get('create','create');
+            Route::post('create', 'store');
         });
     });
     

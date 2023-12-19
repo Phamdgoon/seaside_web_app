@@ -154,9 +154,11 @@
                         </tbody>
 
                     </table>
+                    
                 </div>
             </div>
         </div>
     </div>
 </section>
+{{ $vouchers->links() }}
 @endsection

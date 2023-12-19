@@ -1,7 +1,10 @@
 @extends('seller.layouts.app')
 @section('title', 'Thêm mã giảm')
 @section('content')
-<a href="/seller1/vouchers/list" class="btn btn-success mb-2">Danh sách mã giảm</a>
+<div class="mb-3">
+<i class="fas fa-angle-left"></i>
+<a href="/seller1/vouchers/list" class="text-dark">Danh sách mã giảm</a>
+</div>
 <form action="" method="POST" enctype="multipart/form-data">
     <div class="">
         <div class="row">
@@ -51,7 +54,7 @@
         <div class="col-md-6">
                 <div class="form-group">
                     <label>Thời gian bắt đầu <span class="text-danger">*</span></label>
-                    <input type="datetime-local" name="validFrom" class="form-control" placeholder="Nhập thời gian bắt đầu" value="{{ old('validFrom') }}" min="{{ now()->toDateTimeLocalString() }}">
+                    <input type="datetime-local" name="validFrom" class="form-control" placeholder="Nhập thời gian bắt đầu" value="{{ old('validFrom') }}" min="{{ now()->format('Y-m-d\TH:i') }}">
                     @error('validFrom')
                     <span class="text-danger"> {{ $message }}</span>
                     @enderror
@@ -60,7 +63,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Thời gian kết thúc <span class="text-danger">*</span></label>
-                    <input type="datetime-local" name="validTo" class="form-control" placeholder="Nhập thời gian kết thúc" value="{{ old('validTo') }}" min="{{ now()->toDateTimeLocalString() }}">
+                    <input type="datetime-local" name="validTo" class="form-control" placeholder="Nhập thời gian kết thúc" value="{{ old('validTo') }}" min="{{ now()->format('Y-m-d\TH:i') }}">
                     @error('validTo')
                     <span class="text-danger"> {{ $message }}</span>
                     @enderror
