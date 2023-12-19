@@ -24,7 +24,7 @@ class CartController extends Controller
             $carts = Cart::join('product_detail', 'cart.id_product_detail', '=', 'product_detail.id')
             ->join('product_image', 'product_detail.id', '=', 'product_image.id_product_detail')
             ->join('product', 'product_detail.id_product', '=', 'product.id')
-            ->select('cart.*', 'product.name_product', 'product_detail.name_product_detail', 'product_detail.price', 'product_image.url_image')
+            ->select('cart.*', 'product.name_product', 'product_detail.name_product_detail', 'product_detail.price', 'product_image.url_image','product.name_shop')
             ->where('cart.username', '=', $username)
             ->get();
 

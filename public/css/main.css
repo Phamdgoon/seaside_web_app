@@ -1871,7 +1871,7 @@ input.num-product::-webkit-inner-spin-button {
   min-width: 680px;
 }
 
-.table-shopping-cart tr {
+.able-shopping-cartt tr {
   border-top: 1px solid #e6e6e6;
   border-bottom: 1px solid #e6e6e6;
 }
@@ -3521,4 +3521,10 @@ img {
 .title-table-cart{
   background-color: #bd1111;
   border: 1px;
+}
+.row-cart{
+  background-color: #b8d9df;
+  padding-bottom: 10px;
+  border: 1px #f4f4f4;
+  
 }
