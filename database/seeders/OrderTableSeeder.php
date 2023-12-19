@@ -44,7 +44,15 @@ class OrderTableSeeder extends Seeder
                 'payment_methods' => 'Thanh toán qua PayPal',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
+            ],
+            [
+                'username' => 'quochung',
+                'id_shipping_address' => '1',
+                'payment_methods' => 'Thanh toán khi nhận hàng',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
             ]
+
         ]);
     }
 }

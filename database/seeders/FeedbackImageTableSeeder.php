@@ -19,19 +19,25 @@ class FeedbackImageTableSeeder extends Seeder
         DB::table('feedback_image')->insert([
             [
                 'id_feedback' => '1',
-                'url_image' => 'https://lzd-img-global.slatic.net/g/ff/kf/S05cd6ff908244fbfbf2a104124881b6eI.jpg_720x720q80.jpg',
+                'url_image' => 'https://product.hstatic.net/200000690725/product/53270166792_50ec588b05_k_85dd51d769a6422b8228c48d3ad037b3_master.jpg',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [
                 'id_feedback' => '2',
-                'url_image' => 'https://sakurafashion.vn/upload/a/4959-torano-7242.jpg',
+                'url_image' => 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lortwohbgfv481',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [
                 'id_feedback' => '3',
-                'url_image' => 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lll2dq3yxgsve5_tn',
+                'url_image' => 'https://down-bs-vn.img.susercontent.com/vn-11134103-7qukw-lg0v5omdcmei22.webp',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id_feedback' => '4',
+                'url_image' => 'https://down-bs-vn.img.susercontent.com/vn-11134103-7qukw-lfvcspjtl46i2d.webp',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]
