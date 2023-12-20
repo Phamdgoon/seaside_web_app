@@ -127,3 +127,7 @@ Route::get('/success', [PaymentController::class, 'success'])->name('success');
 Route::get('/error', [PaymentController::class, 'error']);
 });
 
+//Admin
+Route::get('/admin', function () {
+    return view('admin.home.index');
+})->name('admin.home');
