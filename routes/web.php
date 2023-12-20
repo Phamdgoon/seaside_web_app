@@ -22,6 +22,7 @@ use App\Http\Controllers\Buyer\ProductController;
 use App\Http\Controllers\Buyer\CartController;
 use App\Http\Controllers\Buyer\OrderController;
 use App\Http\Controllers\Buyer\PaymentController;
+use App\Http\Controllers\Seller\CategoryChildController;
 use App\Http\Controllers\Seller\VoucherController;
 
 Route::get('/', [HomeController::class, 'index'])->name('buyer.home');
@@ -65,6 +66,13 @@ Route::prefix('seller1')->group(function () {
             Route::get('update/{id}', 'edit');
             Route::post('update/{id}', 'update');
             Route::delete('delete/{id}', 'destroy');
+        });
+    });
+
+    Route::controller(CategoryChildController::class)->group(function() {
+        Route::prefix('categories-child')->group(function () {
+            Route::get('list','index');
+            Route::post('list','store');
         });
     });
     

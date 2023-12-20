@@ -17,7 +17,7 @@ class ShopProfile extends Model
         return $this->hasMany(Product::class, 'name_shop', 'name_shop');
     }
 
-    public function category_childs()
+    public function categories_child()
     {
         return $this->hasMany(Category_Child::class, 'name_shop', 'name_shop');
     }

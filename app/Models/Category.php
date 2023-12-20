@@ -11,4 +11,9 @@ class Category extends Model
     protected $table = 'categories'; // Tên của bảng trong cơ sở dữ liệu
     protected $primaryKey = 'id'; // Khóa chính của bảng
     protected $fillable = ['name_category','url_category','created_at','updated_at'];
+
+    public function categories_child()
+    {
+        return $this->hasMany(Category_Child::class, 'name_shop', 'name_shop');
+    }
 }
