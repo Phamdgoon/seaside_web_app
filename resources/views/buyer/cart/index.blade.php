@@ -6,7 +6,7 @@
         <nav>
             <ol class="breadcrumb ">
                 <li class="breadcrumb-item"><a href="{{ route('buyer.home') }}">
-                        <p>Trang chủ</p>
+                        <p>Home</p>
                     </a></li>
                 <li class="breadcrumb-item " aria-current="page">Giỏ hàng</li>
             </ol>
