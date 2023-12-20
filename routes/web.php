@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Seller\DashboardController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\AdminController;
 use App\Http\Controllers\Buyer\ProfileSellerController;
 
 use App\Http\Controllers\Buyer\HomeController;
@@ -128,6 +129,21 @@ Route::get('/error', [PaymentController::class, 'error']);
 });
 
 //Admin
-Route::get('/admin', function () {
-    return view('admin.home.index');
-})->name('admin.home');
+
+Route::get('/admin/login', function () {
+    return view('auth.admin.login');
+})->name('admin.login');
+
+Route::post('/admin/login', [AdminController::class, 'login'])->name('login');
+Route::get('/logout', [AdminController::class, 'logout'])->name('logout');
+
+Route::middleware(['AdminMiddleware'])->group(function () {
+    Route::prefix('Admin')->group(function () {
+       
+        Route::get('/admin', function () {
+            return view('admin.home.index');
+        })->name('admin.home');
+        
+    
+    });
+});

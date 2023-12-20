@@ -36,11 +36,11 @@
     <!-- User Dropdown Menu -->
     @if (session('username'))
     @php
-    $shopProfile = \App\Models\shopProfile::where('username', session('username'))->first();
+    $user = \App\Models\User::where('username', session('username'))->first();
     @endphp
     <li class="nav-item dropdown">
       <a class="nav-link text-dark" data-toggle="dropdown" href="#" style="padding-left: 2px;">
-        {{ $shopProfile->username }}
+        {{ $user->username }}
         <i class="fas fa-angle-down right"></i>
       </a>
       <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">

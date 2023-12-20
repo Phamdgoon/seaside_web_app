@@ -7,13 +7,13 @@
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             @if (session('username'))
             @php
-            $shopProfile = \App\Models\shopProfile::where('username', session('username'))->first();
+            $user = \App\Models\User::where('username', session('username'))->first();
             @endphp
             <div class="image">
-                <img src="{{ $shopProfile->avt}}" class="img-circle elevation-2" alt="Shop Image" style="width: 50px; height: 50px">
+                <img src="https://png.pngtree.com/png-vector/20191125/ourmid/pngtree-beautiful-admin-roles-line-vector-icon-png-image_2035379.jpg" class="img-circle elevation-2" alt="Shop Image" style="width: 30px; height: 30px">
             </div>
             <div class="info">
-                <h6 href="" class="d-block text-white" >{{-- $shopProfile->name_shop --}}</h6>
+                <h6 href="" class="d-block text-white" >{{ $user->username }}</h6>
             </div>
             @endif
         </div>
