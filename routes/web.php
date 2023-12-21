@@ -115,6 +115,9 @@ Route::get('/cart', function () {
 
 
 Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+
+Route::post('/order-product', [OrderController::class, 'ProcessOrder'])->name('client.order.processOrder');
+
 Route::middleware(['Buyer.middleware'])->group(function () {
     //  Route Cart
 
