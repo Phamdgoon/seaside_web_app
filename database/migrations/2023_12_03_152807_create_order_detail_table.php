@@ -21,8 +21,6 @@ return new class extends Migration
             $table->string('status');
             $table->unsignedBigInteger('voucher_code')->nullable();
             $table->timestamps();
-
-            $table->unique(['id_order', 'id_product_detail']);
             
             $table->foreign('id_order')
             ->references('id')->on('order')->onUpdate('cascade')->onDelete('cascade');

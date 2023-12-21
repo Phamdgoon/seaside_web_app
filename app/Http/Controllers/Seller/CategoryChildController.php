@@ -42,12 +42,13 @@ class CategoryChildController extends Controller
      */
     public function store(CreateCategoryChildRequest $request)
     {
+        
         try {
-            $nameShop = $request->nameShop;
+            $idShop = $request->idShop;
             Category_Child::create([
                 'name_category_child' => $request->input('name_category_child'),
                 'id_category' => $request->input('id_category'),
-                'name_shop' => $nameShop,
+                'id_shop' => $idShop,
             ]);
 
             Session::flash('success', 'Thêm danh mục thành công');

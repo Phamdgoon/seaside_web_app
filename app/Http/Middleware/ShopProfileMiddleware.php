@@ -22,8 +22,9 @@ class ShopProfileMiddleware
         if ($user) {
             $shopProfile = ShopProfile::where('username', $user->username)->first();
             if ($shopProfile) {
+                $idShop = $shopProfile->id;
                 $nameShop = $shopProfile->name_shop;
-                $request->merge(compact('user', 'shopProfile', 'nameShop'));
+                $request->merge(compact('user', 'shopProfile', 'nameShop', 'idShop'));
             }
         }
 

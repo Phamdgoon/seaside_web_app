@@ -91,7 +91,7 @@ Route::middleware(['SellerMiddleware'])->group(function () {
     });
 });
 //
-Route::get('/profile-seller', [ProfileSellerController::class, 'getInforShop'])->name('profile-seller');
+Route::get('/profile-seller', [ProfileSellerController::class, 'getInfoShop'])->name('profile-seller');
 Route::get('/product_detail', [ProductController::class, 'productDetail'])->name('buyer.productDetail');
 
 //seller-register/login

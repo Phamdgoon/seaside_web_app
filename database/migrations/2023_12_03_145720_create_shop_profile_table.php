@@ -12,12 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('shop_profile', function (Blueprint $table) {
-            $table->string('name_shop')->primary();
+            $table->id();
+            $table->string('name_shop');
             $table->string('username');
-            $table->string('address');
+            $table->string('address')->nullable();;
             $table->string('description')->nullable();
-            $table->string('cover_image');
-            $table->string('avt');
+            $table->string('cover_image')->nullable();;
+            $table->string('avt')->nullable();
             $table->timestamps();
             
             $table->foreign('username')
