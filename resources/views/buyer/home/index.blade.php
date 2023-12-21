@@ -70,7 +70,7 @@
                 @foreach ($categorys as $category)
                     <div style="width: 16.6%">
                         <div class="block1 wrap-pic-w">
-                            <img src="{{ $category->url_category }}" alt="IMG-BANNER">
+                            <img src="{{ $category->url_category }}" alt="IMG-BANNER" style="width: 180px;height: 180px;">
 
                             <a href="{{ route('buyer.product', ['id' => $category->id, 'name_category' => $category->name_category]) }}"
                                 class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">

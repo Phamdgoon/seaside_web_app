@@ -44,7 +44,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="" class="nav-link text-white">
+                    <a href="/admin/category" class="nav-link text-white">
                         <i class="nav-icon fas fa-bars"></i>
                         <p> Danh Mục</p>
                     </a>

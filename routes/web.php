@@ -23,7 +23,10 @@ use App\Http\Controllers\Buyer\ProductController;
 use App\Http\Controllers\Buyer\CartController;
 use App\Http\Controllers\Buyer\OrderController;
 use App\Http\Controllers\Buyer\PaymentController;
+
 use App\Http\Controllers\Seller\VoucherController;
+
+use App\Http\Controllers\Admin\CategoryController;
 
 Route::get('/', [HomeController::class, 'index'])->name('buyer.home');
 
@@ -146,4 +149,16 @@ Route::middleware(['AdminMiddleware'])->group(function () {
         
     
     });
+    
+Route::get('/admin/category', [CategoryController::class, 'index'])->name('admin.category');
+Route::delete('/admin/category/delete/{id}', [CategoryController::class, 'destroy'])->name('admin.category.delete');
+Route::get('/admin/addCategory', function () {
+    return view('admin.category.add');
+})->name('admin.addCategory');
+Route::post('/category/store', [CategoryController::class, 'storeCategory'])->name('admin.category.store');
+Route::get('/admin/editCategory/{id}', [CategoryController::class, 'editCategory'])->name('admin.editCategory');
+Route::put('/admin/updateCategory/{id}', [CategoryController::class, 'updateCategory'])->name('admin.updateCategory');
 });
+
+
+
