@@ -11,12 +11,10 @@
                     <div class="card-header">
                         <h3 class="card-title">Chỉnh sửa danh mục</h3>
                     </div>
-                    <!-- form start -->
                     <form action="/admin/updateCategory/{{ $category->id }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="card-body">
-                            <!-- Thêm các trường cần chỉnh sửa -->
                             <div class="form-group">
                                 <label for="category_name">Tên danh mục:</label>
                                 <input type="text" name="category_name" value="{{ $category->name_category }}" class="form-control" required>

@@ -7,16 +7,22 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Category;
+use App\Models\Category_Child;
 
 class CategoryController extends Controller
 {
+    
     public function index()
     {
         $categorys = Category::orderBy('id', 'desc')->get();
+    
+        $categorys->load('categoryChildren');
+    
         return view('admin.category.category', [
             'categorys' => $categorys,
         ]);
     }
+    
 
     public function destroy($id)
     {

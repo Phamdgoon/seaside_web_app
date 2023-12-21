@@ -16,6 +16,7 @@
                         <th>Stt</th>
                         <th>Tên danh mục</th>
                         <th>Hình ảnh</th>
+                        <th>Số lượng</th>
                         <th>Thao tác</th>
                     </tr>
                 </thead>
@@ -27,15 +28,24 @@
                     <tr>
                         <td class="align-middle text-center">{{$count++}}</td>
                         <td class="align-middle text-center">{{$category->name_category}}</td>
-                        <td class="align-middle text-center"><img width="100px" height="100px" src="{{$category->url_category}}" alt=""></td>
+                        <td class="align-middle text-center">
+                            <img width="100px" height="100px" src="{{$category->url_category}}" alt="">
+                        </td>
+                        <td class="align-middle text-center">
+                            {{ $category->categoryChildren->count() }}
+                        </td>
                         <td class="align-middle text-center">                            
                             <a href="{{ route('admin.editCategory', $category->id) }}" class="btn btn-warning">Edit</a>
 
-                            <form class="delete-form" action="/admin/category/delete/{{ $category->id }}" method="POST" style="display: inline;" onsubmit="return confirmDelete()">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-delete btn-danger">Delete</button>
-                            </form>
+                            @if ($category->categoryChildren->count() == 0)
+                                <form class="delete-form" action="/admin/category/delete/{{ $category->id }}" method="POST" style="display: inline;" onsubmit="return confirmDelete()">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-delete btn-danger">Delete</button>
+                                </form>
+                            @else
+                                <button class="btn btn-danger" disabled>Delete</button>
+                            @endif
 
                             <script>
                                 function confirmDelete() {
