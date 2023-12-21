@@ -24,8 +24,8 @@ class CategoryChildController extends Controller
     {
         $shopProfile = $request->shopProfile;
         $categories_child = $shopProfile->categories_child()->oldest('id')->paginate(5);
-        $categories = Category::get(['id', 'name_category']);
-        return view('seller.category-child.index', compact('categories_child', 'categories'));
+
+        return view('seller.category-child.index', compact('categories_child'));
     }
 
     /**
@@ -33,7 +33,8 @@ class CategoryChildController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::get(['id', 'name_category']);
+        return view('seller.category-child.create', compact('categories'));
     }
 
     /**
@@ -48,7 +49,7 @@ class CategoryChildController extends Controller
                 'id_category' => $request->input('id_category'),
                 'name_shop' => $nameShop,
             ]);
-    
+
             Session::flash('success', 'Thêm danh mục thành công');
         } catch (\Exception $err) {
             DB::rollBack();
@@ -57,7 +58,7 @@ class CategoryChildController extends Controller
             dd($err->getMessage());
             return redirect()->back()->withInput();
         }
-    
+
         return redirect()->back();
     }
 
@@ -72,9 +73,14 @@ class CategoryChildController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id, Request $request)
     {
-        //
+        $nameShop = $request->nameShop;
+        $shopProfile = $request->shopProfile;
+        $categories_child = $shopProfile->categories_child()->findOrFail($id);
+        $categories = Category::get(['id', 'name_category']);
+
+        return view('seller.category-child.update', compact('categories_child', 'categories'));
     }
 
     /**
@@ -82,7 +88,22 @@ class CategoryChildController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $categories_child = Category_Child::findOrFail($id);
+
+            $categories_child->name_category_child = $request->input('name_category_child');
+            $categories_child->id_category = $request->input('id_category');
+            $categories_child->save();
+
+            Session::flash('success', 'Cập nhật danh mục thành công');
+        } catch (\Exception $err) {
+            Session::flash('error', 'Cập nhật danh mục lỗi');
+            // \Log::error($err->getMessage());
+            // dd($err->getMessage());
+            return redirect()->back()->withInput();
+        }
+
+        return redirect()->intended('/seller1/categories-child/list');
     }
 
     /**

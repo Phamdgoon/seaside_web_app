@@ -72,7 +72,10 @@ Route::prefix('seller1')->group(function () {
     Route::controller(CategoryChildController::class)->group(function() {
         Route::prefix('categories-child')->group(function () {
             Route::get('list','index');
-            Route::post('list','store');
+            Route::get('create','create');
+            Route::post('create','store');
+            Route::get('update/{id}', 'edit');
+            Route::post('update/{id}', 'update');
         });
     });
     

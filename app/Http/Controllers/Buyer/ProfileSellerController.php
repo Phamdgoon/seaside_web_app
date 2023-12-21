@@ -28,7 +28,11 @@ class ProfileSellerController extends Controller
         $products = $shopProfileInfos->pluck('products')->flatten();
 
         // Lấy danh sách danh mục con (category_child) từ các sản phẩm
-        $category_childs = $products->pluck('category_child')->flatten()->unique();
+        //$category_childs = $products->pluck('category_child')->flatten()->unique();
+        //$categories_child = $shopProfileInfos->categories_child()->get();
+        foreach ($shopProfileInfos as $shopProfile) {
+            $categories_child = $shopProfile->categories_child()->get();
+        }
 
         // Tính trung bình số sao cho từng sản phẩm
         $averageRatingsPerProduct = [];
@@ -51,6 +55,6 @@ class ProfileSellerController extends Controller
 
         $averageRatingForShop = $allRatings->isNotEmpty() ? $allRatings->avg() : 0;
 
-        return view('buyer.profile-seller.index', compact('shopProfileInfos', 'nameShop', 'category_childs', 'products', 'averageRatingForShop'));
+        return view('buyer.profile-seller.index', compact('shopProfileInfos', 'nameShop', 'products', 'categories_child', 'averageRatingForShop'));
     }
 }
