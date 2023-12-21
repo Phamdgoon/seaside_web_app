@@ -111,6 +111,13 @@ class CategoryChildController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $categories_child = Category_Child::findOrFail($id);
+            $categories_child->delete();
+
+            return redirect()->back()->with('success', 'Xóa danh mục thành công');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Xóa danh mục thất bại');
+        }
     }
 }

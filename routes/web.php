@@ -76,6 +76,7 @@ Route::prefix('seller1')->group(function () {
             Route::post('create','store');
             Route::get('update/{id}', 'edit');
             Route::post('update/{id}', 'update');
+            Route::delete('delete/{id}', 'destroy');
         });
     });
     

@@ -20,7 +20,19 @@
             <td>{{ $category_child->category->name_category }}</td>
             <td>
                 <a href="/seller1/categories-child/update/{{ $category_child->id }}" class="btn btn-warning">Edit</a>
-                <button class="btn btn-delete btn-danger">Delete</button>
+                <form id="delete-form" action="/seller1/categories-child/delete/{{ $category_child->id }}" method="POST" style="display: inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="button" class="btn btn-delete btn-danger" onclick="confirmDelete()">Delete</button>
+                </form>
+
+                <script>
+                    function confirmDelete() {
+                        if (confirm('Bạn có chắc chắn muốn xóa danh mục này?')) {
+                            document.getElementById('delete-form').submit();
+                        }
+                    }
+                </script>
             </td>
         </tr>
         @endforeach
