@@ -6,10 +6,10 @@
         <div>
             <div class="cover-container">
                 <div class="px-4 pt-0 pb-4 cover">
-                    <div class="blur-background" style="background-image: url('{{ $shopProfileInfo->cover_image }}');"></div>
+                    <div class="blur-background" style="background-image: url('images/seller/info-shop/{{ $shopProfileInfo->cover_image }}');"></div>
                     <div class="media align-items-end profile-head">
                         <div class="profile mr-3">
-                            <img src="{{ $shopProfileInfo->avt }}" alt="..." class="avt-shop rounded mb-2 img-thumbnail">
+                            <img src="{{ asset('images/seller/info-shop/' . $shopProfileInfo->avt) }}" alt="..." class="avt-shop rounded mb-2 img-thumbnail">
                             <a href="#" class="btn btn-outline-dark btn-sm btn-block">Theo dõi</a>
                         </div>
                         <div class="media-body mb-5 name-shop">

@@ -84,8 +84,8 @@ Route::middleware(['SellerMiddleware'])->group(function () {
         Route::controller(InfoShopController::class)->group(function () {
             Route::prefix('infos')->group(function () {
                 Route::get('info', 'index');
-                Route::get('update/{name_shop}', 'edit');
-                Route::post('update/{name_shop}', 'update');
+                Route::get('update/{id}', 'edit');
+                Route::post('update/{id}', 'update');
             });
         });
     });
