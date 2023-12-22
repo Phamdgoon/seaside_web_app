@@ -24,6 +24,8 @@ use App\Http\Controllers\Buyer\CartController;
 use App\Http\Controllers\Buyer\OrderController;
 use App\Http\Controllers\Buyer\PaymentController;
 
+use App\Http\Controllers\Seller\CategoryChildController;
+use App\Http\Controllers\Seller\InfoShopController;
 use App\Http\Controllers\Seller\VoucherController;
 
 use App\Http\Controllers\Admin\CategoryController;
@@ -59,29 +61,47 @@ Route::get('/verify-email', function () {
 
 //seller
 Route::middleware(['SellerMiddleware'])->group(function () {
-Route::prefix('seller1')->group(function () {
-    Route::get('', [DashboardController::class, 'index'])->name('seller');
+    Route::prefix('seller1')->group(function () {
+        Route::get('', [DashboardController::class, 'index'])->name('seller');
 
-    Route::controller(VoucherController::class)->group(function() {
-        Route::prefix('vouchers')->group(function () {
-            Route::get('list','index');
-            Route::get('create','create');
-            Route::post('create', 'store');
-            Route::get('update/{id}', 'edit');
-            Route::post('update/{id}', 'update');
-            Route::delete('delete/{id}', 'destroy');
+        Route::controller(VoucherController::class)->group(function () {
+            Route::prefix('vouchers')->group(function () {
+                Route::get('list', 'index');
+                Route::get('create', 'create');
+                Route::post('create', 'store');
+                Route::get('update/{id}', 'edit');
+                Route::post('update/{id}', 'update');
+                Route::delete('delete/{id}', 'destroy');
+            });
+        });
+
+        Route::controller(CategoryChildController::class)->group(function () {
+            Route::prefix('categories-child')->group(function () {
+                Route::get('list', 'index');
+                Route::get('create', 'create');
+                Route::post('create', 'store');
+                Route::get('update/{id}', 'edit');
+                Route::post('update/{id}', 'update');
+                Route::delete('delete/{id}', 'destroy');
+            });
+        });
+
+        Route::controller(InfoShopController::class)->group(function () {
+            Route::prefix('infos')->group(function () {
+                Route::get('info', 'index');
+                Route::get('update/{name_shop}', 'edit');
+                Route::post('update/{name_shop}', 'update');
+            });
         });
     });
-    
-
-});
 });
 //
-Route::get('/profile-seller', [ProfileSellerController::class, 'getInforShop'])->name('profile-seller');
+Route::get('/profile-seller', [ProfileSellerController::class, 'getInfoShop'])->name('profile-seller');
 Route::get('/product_detail', [ProductController::class, 'productDetail'])->name('buyer.productDetail');
 
 //seller-register/login
 use App\Http\Controllers\Auth\SellerController;
+
 Route::get('/seller/register', function () {
     return view('auth.seller.register');
 })->name('seller.register');
@@ -104,33 +124,36 @@ Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add')
 Route::post('/order-product', [OrderController::class, 'ProcessOrder'])->name('client.order.processOrder');
 
 Route::middleware(['Buyer.middleware'])->group(function () {
-//  Route Cart
+    //  Route Cart
 
-Route::get('/cart', [CartController::class, 'index'])->name('client.cart.index');
+    Route::get('/cart', [CartController::class, 'index'])->name('client.cart.index');
 
-Route::delete('/remove-cart-item/{id}', [CartController::class, 'removeCartItem'])->name('remove.cart.item');
+    Route::delete('/remove-cart-item/{id}', [CartController::class, 'removeCartItem'])->name('remove.cart.item');
 
-Route::post('/update-cart-item/{id}', [CartController::class, 'updateCartItem'])->name('update.cart.item');
+    Route::post('/update-cart-item/{id}', [CartController::class, 'updateCartItem'])->name('update.cart.item');
 
-//  Route Order Product
-Route::get('/order-product', function () {
-    return view('buyer.order.orderProduct');
+    //  Route Order Product
+    Route::get('/order-product', function () {
+        return view('buyer.order.orderProduct');
+    });
+
+    Route::post('/order-product', [OrderController::class, 'ProcessOrder'])->name('client.order.processOrder');
+
+    // routes/web.php
+    Route::post('/saveOrder', [OrderController::class, 'SaveOrder'])->name('saveOrder');
+
+
+    Route::get('/saveOrderOnline', [OrderController::class, 'saveOrderOnline'])->name('saveOrderOnline');
+
+    Route::post('/vnpay_payment', [PaymentController::class, 'vnpayPayment'])->name('vnpay.payment');
+
+    Route::post('/paypal_payment', [PaymentController::class, 'pay'])->name('paypal.payment');
+
+    Route::get('/success', [PaymentController::class, 'success'])->name('success');
+
+    Route::get('/error', [PaymentController::class, 'error']);
 });
 
-// routes/web.php
-Route::post('/saveOrder', [OrderController::class, 'SaveOrder'])->name('saveOrder');
-
-
-Route::get('/saveOrderOnline', [OrderController::class, 'saveOrderOnline'])->name('saveOrderOnline');
-
-Route::post('/vnpay_payment', [PaymentController::class, 'vnpayPayment'])->name('vnpay.payment');
-
-Route::post('/paypal_payment', [PaymentController::class, 'pay'])->name('paypal.payment');
-
-Route::get('/success', [PaymentController::class, 'success'])->name('success');
-
-Route::get('/error', [PaymentController::class, 'error']);
-});
 
 //Admin
 

@@ -1,10 +1,9 @@
 @extends('buyer.layouts.app')
-@section('title', $nameShop)
+@section('title', $shopProfileInfo->name_shop)
 @section('content')
 <section class="bg0 p-t-65 p-b-60">
     <div class="container">
         <div>
-            @foreach ($shopProfileInfos as $shopProfileInfo)
             <div class="cover-container">
                 <div class="px-4 pt-0 pb-4 cover">
                     <div class="blur-background" style="background-image: url('{{ $shopProfileInfo->cover_image }}');"></div>
@@ -41,7 +40,6 @@
                     </li>
                 </ul>
             </div>
-            @endforeach
         </div>
 
 
@@ -50,7 +48,7 @@
                 <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
                     Tất cả sản phẩm
                 </button>
-                @foreach ($category_childs as $category_child)
+                @foreach ($categories_child as $category_child)
                 <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".{{ $category_child->id }}">
                     {{ $category_child->name_category_child }}
                 </button>

@@ -18,7 +18,7 @@ class VoucherTableSeeder extends Seeder
         DB::table('voucher')->insert([
             [
                 'code' => 'SEASIDE2024123',
-                'name_shop' => 'Thời trang nam Seaside',
+                'id_shop' => 1,
                 'discountPercentage' => null,
                 'discountAmount' => '20000',
                 'validFrom' => '2023/12/11 00:00:00',
@@ -30,7 +30,7 @@ class VoucherTableSeeder extends Seeder
             ],
             [
                 'code' => 'SEASIDE2024',
-                'name_shop' => 'Thời trang nam Seaside',
+                'id_shop' => 1,
                 'discountPercentage' => 10,
                 'discountAmount' => null,
                 'validFrom' => '2023/12/18 00:00:00',
@@ -42,7 +42,7 @@ class VoucherTableSeeder extends Seeder
             ],
             [
                 'code' => 'SEASIDE1212',
-                'name_shop' => 'Thời trang nam Seaside',
+                'id_shop' => 1,
                 'discountPercentage' => 20,
                 'discountAmount' => null,
                 'validFrom' => '2023/12/10 00:00:00',
@@ -54,7 +54,7 @@ class VoucherTableSeeder extends Seeder
             ],
             [
                 'code' => 'SEASIDE2512',
-                'name_shop' => 'Thời trang nam Seaside',
+                'id_shop' => 1,
                 'discountPercentage' => 10,
                 'discountAmount' => null,
                 'validFrom' => '2023/12/24 00:00:00',
@@ -66,7 +66,7 @@ class VoucherTableSeeder extends Seeder
             ],
             [
                 'code' => 'UMI123',
-                'name_shop' => 'GIÀY UMI',
+                'id_shop' => 2,
                 'discountPercentage' => 20,
                 'discountAmount' => null,
                 'validFrom' => '2023/12/18 00:00:00',
@@ -78,7 +78,7 @@ class VoucherTableSeeder extends Seeder
             ],
             [
                 'code' => 'SS112024',
-                'name_shop' => null,
+                'id_shop' => null,
                 'discountPercentage' => 15,
                 'discountAmount' => null,
                 'validFrom' => '2023/12/15 00:00:00',

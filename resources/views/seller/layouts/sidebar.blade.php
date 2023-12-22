@@ -44,7 +44,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="" class="nav-link text-white">
+                    <a href="/seller1/categories-child/list" class="nav-link text-white">
                         <i class="nav-icon fas fa-bars"></i>
                         <p> Danh Mục</p>
                     </a>
@@ -78,7 +78,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link text-white">
+                    <a href="/seller1/infos/info" class="nav-link text-white">
                         <i class="nav-icon fas fa-store"></i>
                         <p> Thông tin shop </p>
                     </a>

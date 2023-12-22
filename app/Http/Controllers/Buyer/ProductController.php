@@ -109,14 +109,12 @@ class ProductController extends Controller
                 return $b['price'] <=> $a['price'];
             });
         } 
-        } else {
-            $searchQuery = session('search'); 
+        } else {$searchQuery = session('search'); 
             $products = Product::select('product.id', 'product.name_product', 'product.id_category_child', DB::raw('MIN(product_detail.price) as price'), DB::raw('MAX(product_image.url_image) as url_image'))
             ->leftJoin('product_detail', 'product.id', '=', 'product_detail.id_product')
             ->leftJoin('product_image', 'product_detail.id', '=', 'product_image.id_product_detail')
             ->groupBy('product.id', 'product.name_product', 'product.id_category_child')
-            ->where('product.name_product',  'LIKE', "%$searchQuery%")
-            ->get();
+            ->where('product.name_product', 'LIKE', "%$searchQuery%")->get();
             if ($products->isEmpty()) {
                 // Chia nhỏ câu thành mảng các từ
                 $words = explode(' ', $searchQuery);
@@ -130,8 +128,15 @@ class ProductController extends Controller
                     foreach ($words as $word) {
                         $query->orWhere('product.name_product', 'LIKE', "%$word%");
                     }
-                });                
+                });
+            }else{
+                $products = Product::select('product.id', 'product.name_product', 'product.id_category_child', DB::raw('MIN(product_detail.price) as price'), DB::raw('MAX(product_image.url_image) as url_image'))
+                ->leftJoin('product_detail', 'product.id', '=', 'product_detail.id_product')
+                ->leftJoin('product_image', 'product_detail.id', '=', 'product_image.id_product_detail')
+                ->groupBy('product.id', 'product.name_product', 'product.id_category_child')
+                ->where('product.name_product', 'LIKE', "%$searchQuery%");
             }
+            // Đặt các điều kiện về giá sau cùng
             if (session('price_from')) {
                 if (session('price_arrives')) {
                     $products->whereBetween('product_detail.price', [session('price_from'), session('price_arrives')]);
@@ -139,8 +144,11 @@ class ProductController extends Controller
                     $products->where('product_detail.price', '>=', session('price_from'));
                 }
             }
-        
-            $products = $products->get();
+            
+            // Lấy dữ liệu
+            $products = $products->get()->toArray();
+
+            // Sắp xếp mảng
             if ($sortOrder == 'asc') {
                 usort($products, function ($a, $b) {
                     return $a['price'] <=> $b['price'];
@@ -150,103 +158,114 @@ class ProductController extends Controller
                     return $b['price'] <=> $a['price'];
                 });
             }
+
+            
         }
         return view('buyer.product.product', [
             'products' => $products,
         ]);
     }
     public function priceFilter(Request $request)
-    {
-        // Validate the form input
-        $request->validate([
-            'price_from' => 'required|numeric|min:0',
-            'price_arrives' => 'nullable|numeric|min:0',
-        ]);
-        $priceFrom = $request->input('price_from');
-        $priceArrives = $request->input('price_arrives');
-        if (session('id_category')) {            
-            $categoryId = session('id_category');            
-            $category_Childs = Category_Child::where('id_category', $categoryId)->get();
-            $products = [];
+{
+    // Validate the form input
+    $request->validate([
+        'price_from' => 'required|numeric|min:0',
+        'price_arrives' => 'nullable|numeric|min:0',
+    ]);
 
-            foreach ($category_Childs as $categoryChild) {
-                $product = Product::select('product.id', 'product.name_product', 'product.id_category_child', DB::raw('MIN(product_detail.price) as price'), DB::raw('MAX(product_image.url_image) as url_image'))
-                    ->leftJoin('product_detail', 'product.id', '=', 'product_detail.id_product')
-                    ->leftJoin('product_image', 'product_detail.id', '=', 'product_image.id_product_detail')
-                    ->groupBy('product.id', 'product.name_product', 'product.id_category_child')
-                    ->where('product.id_category_child', $categoryChild->id);
-                    if ($priceArrives === null) {
-                            $product->where('product_detail.price', '>=', $priceFrom);
-                        } else {
-                            $product->whereBetween('product_detail.price', [$priceFrom, $priceArrives]);
-                        }
-                    // Kiểm tra nếu có sắp xếp
-                    if (session('sort')) {
-                        // Thực hiện sắp xếp theo giá
-                        if (session('sort') == 'asc') {
-                            $product->orderBy('price');
-                        } else {
-                            $product->orderByDesc('price');
-                        }
-                    }
+    $priceFrom = $request->input('price_from');
+    $priceArrives = $request->input('price_arrives');
+    $sortOrder = session('sort');
 
-                    $product = $product->get();
+    if (session('id_category')) {            
+        $categoryId = session('id_category');            
+        $category_Childs = Category_Child::where('id_category', $categoryId)->get();
+        $products = [];
 
-                $products = array_merge($products, $product->toArray());
-            }
-        } else {
-            
-            $searchQuery = session('search'); 
-            $products = Product::select('product.id', 'product.name_product', 'product.id_category_child', DB::raw('MIN(product_detail.price) as price'), DB::raw('MAX(product_image.url_image) as url_image'))
-            ->leftJoin('product_detail', 'product.id', '=', 'product_detail.id_product')
-            ->leftJoin('product_image', 'product_detail.id', '=', 'product_image.id_product_detail')
-            ->groupBy('product.id', 'product.name_product', 'product.id_category_child')
-            ->where('product.name_product',  'LIKE', "%$searchQuery%")
-            ->get();
-            if ($products->isEmpty()) {
-                // Chia nhỏ câu thành mảng các từ
-                $words = explode(' ', $searchQuery);
-                
-                // Tìm kiếm sử dụng mảng từ
-                $products = Product::select('product.id', 'product.name_product', 'product.id_category_child', DB::raw('MIN(product_detail.price) as price'), DB::raw('MAX(product_image.url_image) as url_image'))
+        foreach ($category_Childs as $categoryChild) {
+            $product = Product::select('product.id', 'product.name_product', 'product.id_category_child', DB::raw('MIN(product_detail.price) as price'), DB::raw('MAX(product_image.url_image) as url_image'))
                 ->leftJoin('product_detail', 'product.id', '=', 'product_detail.id_product')
                 ->leftJoin('product_image', 'product_detail.id', '=', 'product_image.id_product_detail')
                 ->groupBy('product.id', 'product.name_product', 'product.id_category_child')
-                -> where(function ($query) use ($words) {
+                ->where('product.id_category_child', $categoryChild->id);
+
+            if ($priceArrives === null) {
+                $product->where('product_detail.price', '>=', $priceFrom);
+            } else {
+                $product->whereBetween('product_detail.price', [$priceFrom, $priceArrives]);
+            }
+
+            // Kiểm tra nếu có sắp xếp
+            if ($sortOrder) {
+                // Thực hiện sắp xếp theo giá
+                $product->orderBy('price', $sortOrder);
+            }
+
+            $product = $product->get();
+
+            $products = array_merge($products, $product->toArray());
+        }
+    } else {  
+        $searchQuery = session('search'); 
+        $products = Product::select('product.id', 'product.name_product', 'product.id_category_child', DB::raw('MIN(product_detail.price) as price'), DB::raw('MAX(product_image.url_image) as url_image'))
+            ->leftJoin('product_detail', 'product.id', '=', 'product_detail.id_product')
+            ->leftJoin('product_image', 'product_detail.id', '=', 'product_image.id_product_detail')
+            ->groupBy('product.id', 'product.name_product', 'product.id_category_child')
+            ->where('product.name_product', 'LIKE', "%$searchQuery%");
+
+        if ($priceArrives === null) {
+            $products->where('product_detail.price', '>=', $priceFrom);
+        } else {
+            $products->whereBetween('product_detail.price', [$priceFrom, $priceArrives]);
+        }
+
+        // Kiểm tra nếu có sắp xếp
+        if ($sortOrder) {
+            // Thực hiện sắp xếp theo giá
+            $products->orderBy('price', $sortOrder);
+        }
+
+        $products = $products->get();
+
+        if ($products->isEmpty()) {
+            // Chia nhỏ câu thành mảng các từ
+            $words = explode(' ', $searchQuery);
+
+            // Tìm kiếm sử dụng mảng từ
+            $products = Product::select('product.id', 'product.name_product', 'product.id_category_child', DB::raw('MIN(product_detail.price) as price'), DB::raw('MAX(product_image.url_image) as url_image'))
+                ->leftJoin('product_detail', 'product.id', '=', 'product_detail.id_product')
+                ->leftJoin('product_image', 'product_detail.id', '=', 'product_image.id_product_detail')
+                ->groupBy('product.id', 'product.name_product', 'product.id_category_child')
+                ->where(function ($query) use ($words) {
                     foreach ($words as $word) {
                         $query->orWhere('product.name_product', 'LIKE', "%$word%");
                     }
-                });                
-            }
-            if (session('price_from')) {
-                if (session('price_arrives')) {
-                    $products->whereBetween('product_detail.price', [session('price_from'), session('price_arrives')]);
-                } else {
-                    $products->where('product_detail.price', '>=', session('price_from'));
-                }
-            }
-        
-            $products = $products->get();
-            if ($sortOrder == 'asc') {
-                usort($products, function ($a, $b) {
-                    return $a['price'] <=> $b['price'];
                 });
-            } else {
-                usort($products, function ($a, $b) {
-                    return $b['price'] <=> $a['price'];
-                });
-            }
-        }
 
-        session()->put('price_from', $priceFrom);
-        session()->put('price_arrives', $priceArrives);
-        // Kiểm tra nếu price_arrives là null
-        
-        
-        return view('buyer.product.product', [
-            'price_from' => $priceFrom, 'price_arrives' => $priceArrives, 'products' => $products
-        ]);
+            if ($priceArrives === null) {
+                $products->where('product_detail.price', '>=', $priceFrom);
+            } else {
+                $products->whereBetween('product_detail.price', [$priceFrom, $priceArrives]);
+            }
+
+            // Kiểm tra nếu có sắp xếp
+            if ($sortOrder) {
+                // Thực hiện sắp xếp theo giá
+                $products->orderBy('price', $sortOrder);
+            }
+
+            $products = $products->get();
+        }
     }
+
+    session()->put('price_from', $priceFrom);
+    session()->put('price_arrives', $priceArrives);
+
+    return view('buyer.product.product', [
+        'price_from' => $priceFrom, 'price_arrives' => $priceArrives, 'products' => $products
+    ]);
+}
+
 
     public function productDetail(Request $request)
     {
@@ -274,17 +293,17 @@ class ProductController extends Controller
             $size_Product = Size_Product::where('id_product_detail', $product_Detail->id)->get();
             $product_Images = Product_Images::whereIn('id_product_detail', $product_Details->pluck('id'))->get();
         }
-        $shopProfile=ShopProfile::where('name_shop',$products->name_shop)->get();
+        $shopProfile=ShopProfile::where('id',$products->id_shop)->get();
 
-        $productNumber = ShopProfile::join('product', 'shop_profile.name_shop', '=', 'product.name_shop')
-        ->where('shop_profile.name_shop', $products->name_shop)
-        ->count('shop_profile.name_shop');    
+        $productNumber = ShopProfile::join('product', 'shop_profile.id', '=', 'product.id_shop')
+        ->where('shop_profile.id', $products->id_shop)
+        ->count('shop_profile.id');    
 
         $feedbackNumber = Feedback::join('order_detail', 'order_detail.id', '=', 'feedback.id_order_detail')
         ->join('product_detail', 'product_detail.id', '=', 'order_detail.id_product_detail')
         ->join('product', 'product.id', '=', 'product_detail.id_product')
-        ->join('shop_profile', 'shop_profile.name_shop', '=', 'product.name_shop')
-        ->where('shop_profile.name_shop', $products->name_shop)
+        ->join('shop_profile', 'shop_profile.id', '=', 'product.id_shop')
+        ->where('shop_profile.id', $products->id_shop)
         ->count('feedback.id');
 
         $feedbackDatas = Feedback::join('order_detail', 'order_detail.id', '=', 'feedback.id_order_detail')

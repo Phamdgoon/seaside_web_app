@@ -70,5 +70,7 @@ class Kernel extends HttpKernel
         'Buyer.middleware' => \App\Http\Middleware\BuyerMiddleware::class,
         'SellerMiddleware' => \App\Http\Middleware\SellerMiddleware::class,    
         'AdminMiddleware' => \App\Http\Middleware\AdminMiddleware::class,    
+        'shopProfile' => \App\Http\Middleware\ShopProfileMiddleware::class,   
+        
     ];
 }

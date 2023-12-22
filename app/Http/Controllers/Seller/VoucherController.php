@@ -50,10 +50,10 @@ class VoucherController extends Controller
 
             // Query the ShopProfile model to get the name_shop
             $shopProfile = ShopProfile::where('username', $user->username)->first();
-            $nameShop = $shopProfile->name_shop;
+            $idShop = $shopProfile->id;
             Voucher::create([
                 'code' => $request->input('code'),
-                'name_shop' => $nameShop,
+                'id_shop' => $idShop,
                 'discountPercentage' => $request->input('discountPercentage'),
                 'discountAmount' => $request->input('discountAmount'),
                 'validFrom' => $request->input('validFrom'),
@@ -114,7 +114,7 @@ class VoucherController extends Controller
         } catch (\Exception $err) {
             Session::flash('error', 'Cập nhật voucher lỗi');
             // \Log::error($err->getMessage());
-            // dd($err->getMessage());
+            dd($err->getMessage());
             return redirect()->back()->withInput();
         }
 

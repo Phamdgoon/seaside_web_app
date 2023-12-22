@@ -17,7 +17,7 @@ class ProductSeeder extends Seeder
         DB::table('product')->insert([
             [
                 'name_product' => 'Áo Thun Nam Tay Ngắn Cổ Tròn',
-                'name_shop' => 'Thời trang nam Seaside',
+                'id_shop' => 1,
                 'id_category_child' => 3,
                 'description' => 'Áo thun trơn nam thời trang kiểu dáng, màu sắc đơn giản, tinh tế, thiết kế hiện đại, phù hợp với mọi lứa tuổi.
                 Áo nam chính hãng cao cấp với đường may tỉ mỉ, chắc chắn có độ bền cao trong quá trình sử dụng.
@@ -28,7 +28,7 @@ class ProductSeeder extends Seeder
             ],
             [
                 'name_product' => 'Áo khoác sơ mi nam chất liệu kaki cao cấp',
-                'name_shop' => 'Thời trang nam Seaside',
+                'id_shop' => 1,
                 'id_category_child' => 1,
                 'description' => '- Chất liệu: Nhung 
                 - Màu sắc: Đen, Rêu, Xám ghi, Be                
@@ -38,7 +38,7 @@ class ProductSeeder extends Seeder
             ],
             [
                 'name_product' => 'Áo khoác gió bomber nam cao cấp ',
-                'name_shop' => 'Thời trang nam Seaside',
+                'id_shop' => 1,
                 'id_category_child' => 1,
                 'description' => '+ Áo khoác gió bomber nam 2 lớp được may từ chất liệu vải gió cao cấp, độ bền cao, hội tụ đầy đủ tính năng chống thấm nước, cản gió giữ ấm vào mùa đông, chống bụi bẩn, chống bám mốc. 
                 + Áo khoác gió bomber nam với kiểu dáng thời trang bền đẹp, thoải mái, cùng màu sắc nam tính, dễ dàng phối hợp với nhiều trang phục khác nhau mang đến sự trẻ trung, năng động cho người mặc. 
@@ -48,7 +48,7 @@ class ProductSeeder extends Seeder
             ],
             [
                 'name_product' => 'Áo khoác phao Nam 3 lớp chần ngang chống thấm nước',
-                'name_shop' => 'Thời trang nam Seaside',
+                'id_shop' => 1,
                 'id_category_child' => 1,
                 'description' => 'Áo phao nam 3 lớp, thiết kế chần ngang, túi trang trí hai bên hông, khóa kéo trước, có mũ tháo rời. Áo được may từ chất liệu vải gió cao cấp, độ bền cao, hội tụ đầy đủ tính năng chống thấm nước, chống bụi bẩn, chống bám mốc, bên trong chần bông siêu nhẹ giúp giữ ấm cơ thể tốt. Áo khoác ngoài với kiểu dáng thời trang cùng màu sắc nam tính, dễ dàng phối hợp với nhiều trang phục khác nhau mang đến sự trẻ trung, năng động cho người mặc. ',
                 'created_at' => Carbon::now(),
@@ -56,7 +56,7 @@ class ProductSeeder extends Seeder
             ],
             [
                 'name_product' => 'Áo Thun T-Shirt Nam túi ngực',
-                'name_shop' => 'Thời trang nam Seaside',
+                'id_shop' => 1,
                 'id_category_child' => 3,
                 'description' => 'Áo được thiết kế tinh tế, đường may sắc nét, tạo hiệu ứng cuốn hút thị giác, mang đến vẻ đẹp nam tính, trẻ trung, năng động. Áo có độ co giãn tốt, tạo cảm giác dễ chịu khi mặc.',
                 'created_at' => Carbon::now(),
@@ -64,7 +64,7 @@ class ProductSeeder extends Seeder
             ],
             [
                 'name_product' => 'Bốt cao cổ nữ 15cm buộc dây kéo khóa',
-                'name_shop' => 'GIÀY UMI',
+                'id_shop' => 2,
                 'id_category_child' => 5,
                 'description' => '- Phần thân trên chất liệu da PU mềm mịn cao cấp đi rất êm chân, mang thoải mái đi lại cả ngày kết hợp phần cổ boot ôm chân tạo form dáng cực chuẩn đẹp, kéo dài chân nhìn đôi chân trông thon gọn hơn
                 - Phần Midsole (đế giữa)  rất êm, lót EVA
@@ -74,7 +74,7 @@ class ProductSeeder extends Seeder
             ],
             [
                 'name_product' => 'Giày Bốt Cao Cổ Da Mềm Cao gót',
-                'name_shop' => 'GIÀY UMI',
+                'id_shop' => 2,
                 'id_category_child' => 5,
                 'description' => '- Phần thân trên chất liệu da PU mềm mịn cao cấp đi rất êm chân, mang thoải mái đi lại cả ngày kết hợp phần cổ boot ôm chân tạo form dáng cực chuẩn đẹp, kéo dài chân nhìn đôi chân trông thon gọn hơn
                 - Phần Midsole (đế giữa)  rất êm, lót EVA
@@ -84,7 +84,7 @@ class ProductSeeder extends Seeder
             ],
             [
                 'name_product' => 'Giày thể thao nữ chất vải dáng basic',
-                'name_shop' => 'GIÀY UMI',
+                'id_shop' => 2,
                 'id_category_child' => 6,
                 'description' => '- Phần thân trên vải canvas mềm mịn cao cấp đi rất êm chân, mang thoải mái đi lại cả ngày 
                 - Phần Midsole (đế giữa)  lót EVA êm ái
@@ -94,7 +94,7 @@ class ProductSeeder extends Seeder
             ],
             [
                 'name_product' => 'Giày Thể Thao Nữ MOCNHO đế cao 4cm retro basic',
-                'name_shop' => 'GIÀY UMI',
+                'id_shop' => 2,
                 'id_category_child' => 6,
                 'description' => '- Phần thân trên vải canvas mềm mịn cao cấp đi rất êm chân, mang thoải mái đi lại cả ngày 
                 - Phần Midsole (đế giữa)  lót EVA êm ái
@@ -104,7 +104,7 @@ class ProductSeeder extends Seeder
             ],
             [
                 'name_product' => 'Giày Thể Thao Nữ HIHI Màu Trắng Đế Bằng nâu',
-                'name_shop' => 'GIÀY UMI',
+                'id_shop' => 2,
                 'id_category_child' => 6,
                 'description' => '- Phần thân trên vải canvas mềm mịn cao cấp đi rất êm chân, mang thoải mái đi lại cả ngày 
                 - Phần Midsole (đế giữa)  lót EVA êm ái
