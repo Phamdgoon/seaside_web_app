@@ -29,6 +29,7 @@ class SellerController extends Controller
             'account_name' => $request->username,
             'email' => $request->email,
             'password' => bcrypt($request->password),
+            'approved'=> 0,
             'avt' => 'https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png',
             'email_verification_token' => Str::random(60),
         ]);
@@ -37,13 +38,6 @@ class SellerController extends Controller
         $userPermission->username = $user->username;
         $userPermission->save();
 
-        $shopProfile = new ShopProfile();
-        $shopProfile->username = $user->username;
-        $shopProfile->name_shop = 'NameShop';
-        $shopProfile->address = 'Đà Nẵng';
-        $shopProfile->cover_image = 'https://inkythuatso.com/uploads/thumbnails/800/2023/03/9-anh-dai-dien-trang-inkythuatso-03-15-27-03.jpg';
-        $shopProfile->avt = 'https://inkythuatso.com/uploads/thumbnails/800/2023/03/9-anh-dai-dien-trang-inkythuatso-03-15-27-03.jpg';
-        $shopProfile->save();
         Mail::to($user->email)->send(new VerifyEmail($user));
 
         Log::info('Email sent successfully');
@@ -62,10 +56,12 @@ class SellerController extends Controller
             $user->email_verification_token = null;
             $user->save();
 
-            return redirect()->route('verify.email.custom')->with('success', 'Xác thực email thành công. Bạn có thể <a href="' . route('login') . '">Đăng nhập ngay</a>.');
+            return redirect()->route('verify.email.custom2')->with('success', 'Xác thực email thành công. Vui lòng <a href="' . route('complete.register') . '">cung cấp thông tin về cửa hàng</a> để hoàn tất đăng kí.');
+
+            // return redirect()->route('verify.email.custom')->with('success', 'Xác thực email thành công. Bạn có thể <a href="' . route('login') . '">Đăng nhập ngay</a>. ');
         }
 
-        return redirect()->route('verify.email.custom')->with('error', 'Link xác thực không hợp lệ hoặc email đã được xác thực.');
+        return redirect()->route('verify.email.custom2')->with('error', 'Link xác thực không hợp lệ hoặc email đã được xác thực.');
     }
 
     public function login(Request $request)
@@ -78,8 +74,8 @@ class SellerController extends Controller
         if (auth()->attempt($credentials)) {
             $user = auth()->user();
 
-            // Kiểm tra cả trường email_verified
-            if ($user->email_verified == 1) {
+            // Kiểm tra cả trường email_verified và approved
+            if ($user->email_verified == 1 && $user->approved == 1) {
                 $id_permission = User_Permission::where('username', $user->username)->value('id_permission');
                 session()->put('username', $user->username);
 
@@ -89,15 +85,18 @@ class SellerController extends Controller
                     return back()->with('fail', 'Không có quyền truy cập');
                 }
             } else {
-                // Người dùng chưa xác thực email
+                // Người dùng chưa xác thực email hoặc chưa được phê duyệt
                 auth()->logout(); // Đăng xuất người dùng
-                return back()->with('fail', 'Vui lòng xác thực email trước khi đăng nhập.');
+                if ($user->email_verified != 1) {
+                    return back()->with('fail', 'Vui lòng xác thực email trước khi đăng nhập.');
+                } elseif ($user->approved != 1) {
+                    return back()->with('fail', 'Tài khoản chưa được phê duyệt.');
+                }
             }
         } else {
             return back()->with('fail', 'Sai tên đăng nhập hoặc mật khẩu');
         }
     }
-
     public function logout()
     {
         Auth::logout();

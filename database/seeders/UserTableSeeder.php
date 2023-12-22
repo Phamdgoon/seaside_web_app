@@ -20,8 +20,9 @@ class UserTableSeeder extends Seeder
                 'username' => 'duchoang',              
                 'email' => 'duchoang02@gmail.com', 
                 'phone_number' => '0123456789',                 
-                'password' => bcrypt('ABC12345'),             
-                'email_verified' => 1,
+                'password' => bcrypt('ABC12345'), 
+                'approved' => null,            
+                'email_verified' => 1,            
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -29,7 +30,8 @@ class UserTableSeeder extends Seeder
                 'username' => 'haily', 
                 'email' => 'haily02@gmail.com', 
                 'phone_number' => '0223456789', 
-                'password' => bcrypt('ABC12345'),              
+                'password' => bcrypt('ABC12345'), 
+                'approved' => 1,
                 'email_verified' => 1,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
@@ -39,6 +41,7 @@ class UserTableSeeder extends Seeder
                 'email' => 'phamdgoon02@gmail.com', 
                 'phone_number' => '0323456789',            
                 'password' => bcrypt('ABC12345'),
+                'approved' => 1,
                 'email_verified' => 1,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
@@ -48,6 +51,7 @@ class UserTableSeeder extends Seeder
                 'email' => 'quochung02@gmail.com', 
                 'phone_number' => '0423456789',
                 'password' => bcrypt('ABC12345'),
+                'approved' => 1,
                 'email_verified' => 1,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
@@ -57,6 +61,7 @@ class UserTableSeeder extends Seeder
                 'email' => 'hongkhanh02@gmail.com', 
                 'phone_number' => '0523456789', 
                 'password' => bcrypt('ABC12345'),
+                'approved' => 0,
                 'email_verified' => 1,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
@@ -66,7 +71,8 @@ class UserTableSeeder extends Seeder
                 'email' => 'thaonguyet02@gmail.com', 
                 'phone_number' => '0123456789', 
                 'password' => bcrypt('ABC12345'),
-                'email_verified' => 1,
+                'approved' => 1,
+                'email_verified' => 1,             
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],

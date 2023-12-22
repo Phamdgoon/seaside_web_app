@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Seller\DashboardController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\SellerController;
 use App\Http\Controllers\Buyer\ProfileSellerController;
 
 use App\Http\Controllers\Buyer\HomeController;
@@ -23,6 +24,7 @@ use App\Http\Controllers\Buyer\CartController;
 use App\Http\Controllers\Buyer\OrderController;
 use App\Http\Controllers\Buyer\PaymentController;
 use App\Http\Controllers\Seller\VoucherController;
+
 
 Route::get('/', [HomeController::class, 'index'])->name('buyer.home');
 
@@ -51,6 +53,11 @@ Route::get('/verify-email', function () {
     return view('emails.verify-email');
 })->name('verify.email.custom');
 
+Route::get('/email/verify/{token}', [SellerController::class, 'verifyEmail'])->name('verify.email');
+Route::get('/verify-email2', function () {
+    return view('emails.vertify-email2');
+})->name('verify.email.custom2');
+
 
 //seller
 Route::middleware(['SellerMiddleware'])->group(function () {
@@ -76,18 +83,24 @@ Route::get('/profile-seller', [ProfileSellerController::class, 'getInforShop'])-
 Route::get('/product_detail', [ProductController::class, 'productDetail'])->name('buyer.productDetail');
 
 //seller-register/login
-use App\Http\Controllers\Auth\SellerController;
+
 Route::get('/seller/register', function () {
     return view('auth.seller.register');
 })->name('seller.register');
 
 Route::post('/seller/login', [SellerController::class, 'login'])->name('login');
+//seller-register
 Route::post('/seller/register', [SellerController::class, 'register'])->name('register');
+Route::get('/seller/complete-register',function(){
+    return view('auth/seller/complete-register');
+})->name('complete.register');
+//login-seller
 Route::get('/seller/login', function () {
     return view('auth.seller.login');
 })->name('seller.login');
 //seller-logout
 Route::get('/logout', [SellerController::class, 'logout'])->name('logout');
+//
 Route::get('/product_detail', [ProductController::class, 'productDetail'])->name('buyer.productDetail');
 Route::get('/cart', function () {
     return view('buyer.cart.index');
