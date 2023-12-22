@@ -24,6 +24,7 @@ use App\Http\Controllers\Buyer\CartController;
 use App\Http\Controllers\Buyer\OrderController;
 use App\Http\Controllers\Buyer\PaymentController;
 use App\Http\Controllers\Seller\VoucherController;
+use App\Http\Controllers\Admin\ApproveController;
 
 Route::get('/', [HomeController::class, 'index'])->name('buyer.home');
 
@@ -55,22 +56,20 @@ Route::get('/verify-email', function () {
 
 //seller
 Route::middleware(['SellerMiddleware'])->group(function () {
-Route::prefix('seller1')->group(function () {
-    Route::get('', [DashboardController::class, 'index'])->name('seller');
+    Route::prefix('seller1')->group(function () {
+        Route::get('', [DashboardController::class, 'index'])->name('seller');
 
-    Route::controller(VoucherController::class)->group(function() {
-        Route::prefix('vouchers')->group(function () {
-            Route::get('list','index');
-            Route::get('create','create');
-            Route::post('create', 'store');
-            Route::get('update/{id}', 'edit');
-            Route::post('update/{id}', 'update');
-            Route::delete('delete/{id}', 'destroy');
+        Route::controller(VoucherController::class)->group(function () {
+            Route::prefix('vouchers')->group(function () {
+                Route::get('list', 'index');
+                Route::get('create', 'create');
+                Route::post('create', 'store');
+                Route::get('update/{id}', 'edit');
+                Route::post('update/{id}', 'update');
+                Route::delete('delete/{id}', 'destroy');
+            });
         });
     });
-    
-
-});
 });
 //
 Route::get('/profile-seller', [ProfileSellerController::class, 'getInforShop'])->name('profile-seller');
@@ -78,6 +77,7 @@ Route::get('/product_detail', [ProductController::class, 'productDetail'])->name
 
 //seller-register/login
 use App\Http\Controllers\Auth\SellerController;
+
 Route::get('/seller/register', function () {
     return view('auth.seller.register');
 })->name('seller.register');
@@ -100,50 +100,47 @@ Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add')
 Route::post('/order-product', [OrderController::class, 'ProcessOrder'])->name('client.order.processOrder');
 
 Route::middleware(['Buyer.middleware'])->group(function () {
-//  Route Cart
+    //  Route Cart
 
-Route::get('/cart', [CartController::class, 'index'])->name('client.cart.index');
+    Route::get('/cart', [CartController::class, 'index'])->name('client.cart.index');
 
-Route::delete('/remove-cart-item/{id}', [CartController::class, 'removeCartItem'])->name('remove.cart.item');
+    Route::delete('/remove-cart-item/{id}', [CartController::class, 'removeCartItem'])->name('remove.cart.item');
 
-Route::post('/update-cart-item/{id}', [CartController::class, 'updateCartItem'])->name('update.cart.item');
+    Route::post('/update-cart-item/{id}', [CartController::class, 'updateCartItem'])->name('update.cart.item');
 
-//  Route Order Product
-Route::get('/order-product', function () {
-    return view('buyer.order.orderProduct');
-});
+    //  Route Order Product
+    Route::get('/order-product', function () {
+        return view('buyer.order.orderProduct');
+    });
 
-// routes/web.php
-Route::post('/saveOrder', [OrderController::class, 'SaveOrder'])->name('saveOrder');
+    // routes/web.php
+    Route::post('/saveOrder', [OrderController::class, 'SaveOrder'])->name('saveOrder');
 
 
-Route::get('/saveOrderOnline', [OrderController::class, 'saveOrderOnline'])->name('saveOrderOnline');
+    Route::get('/saveOrderOnline', [OrderController::class, 'saveOrderOnline'])->name('saveOrderOnline');
 
-Route::post('/vnpay_payment', [PaymentController::class, 'vnpayPayment'])->name('vnpay.payment');
+    Route::post('/vnpay_payment', [PaymentController::class, 'vnpayPayment'])->name('vnpay.payment');
 
-Route::post('/paypal_payment', [PaymentController::class, 'pay'])->name('paypal.payment');
+    Route::post('/paypal_payment', [PaymentController::class, 'pay'])->name('paypal.payment');
 
-Route::get('/success', [PaymentController::class, 'success'])->name('success');
+    Route::get('/success', [PaymentController::class, 'success'])->name('success');
 
-Route::get('/error', [PaymentController::class, 'error']);
+    Route::get('/error', [PaymentController::class, 'error']);
 });
 
 //Admin
-
 Route::get('/admin/login', function () {
     return view('auth.admin.login');
 })->name('admin.login');
-
 Route::post('/admin/login', [AdminController::class, 'login'])->name('login');
 Route::get('/logout', [AdminController::class, 'logout'])->name('logout');
 
 Route::middleware(['AdminMiddleware'])->group(function () {
-    Route::prefix('Admin')->group(function () {
-       
+    Route::prefix('')->group(function () {
         Route::get('/admin', function () {
             return view('admin.home.index');
         })->name('admin.home');
-        
-    
+        Route::get('/admin/approve', [ApproveController::class, 'index'])->name('admin.approve');
+        Route::post('/admin/approve/{username}', [ApproveController::class, 'update'])->name('admin.approve.update');
     });
 });
