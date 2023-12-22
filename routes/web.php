@@ -27,6 +27,7 @@ use App\Http\Controllers\Buyer\PaymentController;
 use App\Http\Controllers\Seller\VoucherController;
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\VoucherAdminController;
 
 Route::get('/', [HomeController::class, 'index'])->name('buyer.home');
 
@@ -141,12 +142,11 @@ Route::post('/admin/login', [AdminController::class, 'login'])->name('login');
 Route::get('/logout', [AdminController::class, 'logout'])->name('logout');
 
 Route::middleware(['AdminMiddleware'])->group(function () {
-    Route::prefix('Admin')->group(function () {
+    Route::prefix('')->group(function () {
        
         Route::get('/admin', function () {
             return view('admin.home.index');
         })->name('admin.home');
-        
     
     });
     
@@ -161,4 +161,12 @@ Route::put('/admin/updateCategory/{id}', [CategoryController::class, 'updateCate
 });
 
 
+Route::get('/admin/vouchers/list', [VoucherAdminController::class, 'index']);
+Route::get('/admin/vouchers/create', function () {
+    return view('admin.voucher.create');
+})->name('admin.addVoucher');
 
+Route::post('/voucher/store', [VoucherAdminController::class, 'store'])->name('admin.voucher.store');
+Route::delete('/admin/vouchers/delete/{id}', [VoucherAdminController::class, 'destroy'])->name('admin.vouchers.delete');
+Route::get('/admin/vouchers/update/{id}', [VoucherAdminController::class, 'edit'])->name('admin.editVouchers');
+Route::post('/admin/vouchers/{id}', [VoucherAdminController::class, 'update'])->name('admin.updateVouchers');

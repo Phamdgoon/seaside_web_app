@@ -36,7 +36,7 @@
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="/seller1/" class="nav-link text-white">
+                    <a href="/admin" class="nav-link text-white">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Dashboard
@@ -59,7 +59,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="/seller1/vouchers/list" class="nav-link text-white">
+                    <a href="/admin/vouchers/list" class="nav-link text-white">
                         <i class="nav-icon fas fa-tag"></i>
                         <p> Mã giảm giá </p>
                     </a>
