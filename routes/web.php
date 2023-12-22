@@ -181,8 +181,6 @@ Route::get('/admin/addCategory', function () {
 Route::post('/category/store', [CategoryController::class, 'storeCategory'])->name('admin.category.store');
 Route::get('/admin/editCategory/{id}', [CategoryController::class, 'editCategory'])->name('admin.editCategory');
 Route::put('/admin/updateCategory/{id}', [CategoryController::class, 'updateCategory'])->name('admin.updateCategory');
-});
-
 
 Route::get('/admin/vouchers/list', [VoucherAdminController::class, 'index']);
 Route::get('/admin/vouchers/create', function () {
@@ -193,3 +191,6 @@ Route::post('/voucher/store', [VoucherAdminController::class, 'store'])->name('a
 Route::delete('/admin/vouchers/delete/{id}', [VoucherAdminController::class, 'destroy'])->name('admin.vouchers.delete');
 Route::get('/admin/vouchers/update/{id}', [VoucherAdminController::class, 'edit'])->name('admin.editVouchers');
 Route::post('/admin/vouchers/{id}', [VoucherAdminController::class, 'update'])->name('admin.updateVouchers');
+});
+
+
