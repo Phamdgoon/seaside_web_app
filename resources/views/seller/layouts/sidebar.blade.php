@@ -10,7 +10,7 @@
             $shopProfile = \App\Models\shopProfile::where('username', session('username'))->first();
             @endphp
             <div class="image">
-                <img src="{{ $shopProfile->avt}}" class="img-circle elevation-2" alt="Shop Image" style="width: 50px; height: 50px">
+                <img src="{{ asset('images/seller/info-shop/' . $shopProfile->avt) }}" class="img-circle elevation-2" alt="Shop Image" style="width: 50px; height: 50px">
             </div>
             <div class="info">
                 <h6 href="" class="d-block text-white" >{{ $shopProfile->name_shop}}</h6>
@@ -44,7 +44,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="" class="nav-link text-white">
+                    <a href="/seller1/categories-child/list" class="nav-link text-white">
                         <i class="nav-icon fas fa-bars"></i>
                         <p> Danh Mục</p>
                     </a>
@@ -78,7 +78,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link text-white">
+                    <a href="/seller1/infos/info" class="nav-link text-white">
                         <i class="nav-icon fas fa-store"></i>
                         <p> Thông tin shop </p>
                     </a>

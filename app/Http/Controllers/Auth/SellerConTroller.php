@@ -38,6 +38,13 @@ class SellerController extends Controller
         $userPermission->username = $user->username;
         $userPermission->save();
 
+        $shopProfile = new ShopProfile();
+        $shopProfile->username = $user->username;
+        $shopProfile->name_shop = 'NameShop';
+        $shopProfile->address = '';
+        $shopProfile->cover_image = 'cover-default.jpg';
+        $shopProfile->avt = 'avt-default.jpg';
+        $shopProfile->save();
         Mail::to($user->email)->send(new VerifyEmail($user));
 
         Log::info('Email sent successfully');

@@ -71,7 +71,6 @@
                </div>
                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-            <a href="{{ route('logout') }}">Logout</a>
          </div>
          <!-- ./col -->
       </div>

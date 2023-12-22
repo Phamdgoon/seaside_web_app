@@ -203,7 +203,7 @@
                     <div>
                         <a href="#" style="height: 100%; color: #bf6d72;" class="nav-link">
                             <div class="small-avatar-container">
-                                <img name="avt" src="{{ $profile->avt }}" alt="Avatar của Shop"
+                                <img name="avt" src="{{ asset('images/seller/info-shop/' . $profile->avt) }}" alt="Avatar của Shop"
                                     class="rounded-circle small-avatar-shop">
                             </div>
                         </a>
@@ -217,7 +217,7 @@
                                 </button>
                             </div>
                             <div class="m-l-10">
-                                <a href="{{ route('profile-seller', ['name_shop' => $profile['name_shop']]) }}" class="flex-c-m stext-102 cl8 bg0 bor20 hov-btn3 p-lr-15 p-tb-3 trans-04">
+                                <a href="{{ route('profile-seller', ['id' => $profile['id']]) }}" class="flex-c-m stext-102 cl8 bg0 bor20 hov-btn3 p-lr-15 p-tb-3 trans-04">
                                     <i class="fas fa-store p-r-3"></i>Xem shop
                                 </a>
                             </div>

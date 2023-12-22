@@ -274,17 +274,17 @@ class ProductController extends Controller
             $size_Product = Size_Product::where('id_product_detail', $product_Detail->id)->get();
             $product_Images = Product_Images::whereIn('id_product_detail', $product_Details->pluck('id'))->get();
         }
-        $shopProfile=ShopProfile::where('name_shop',$products->name_shop)->get();
+        $shopProfile=ShopProfile::where('id',$products->id_shop)->get();
 
-        $productNumber = ShopProfile::join('product', 'shop_profile.name_shop', '=', 'product.name_shop')
-        ->where('shop_profile.name_shop', $products->name_shop)
-        ->count('shop_profile.name_shop');    
+        $productNumber = ShopProfile::join('product', 'shop_profile.id', '=', 'product.id_shop')
+        ->where('shop_profile.id', $products->id_shop)
+        ->count('shop_profile.id');    
 
         $feedbackNumber = Feedback::join('order_detail', 'order_detail.id', '=', 'feedback.id_order_detail')
         ->join('product_detail', 'product_detail.id', '=', 'order_detail.id_product_detail')
         ->join('product', 'product.id', '=', 'product_detail.id_product')
-        ->join('shop_profile', 'shop_profile.name_shop', '=', 'product.name_shop')
-        ->where('shop_profile.name_shop', $products->name_shop)
+        ->join('shop_profile', 'shop_profile.id', '=', 'product.id_shop')
+        ->where('shop_profile.id', $products->id_shop)
         ->count('feedback.id');
 
         $feedbackDatas = Feedback::join('order_detail', 'order_detail.id', '=', 'feedback.id_order_detail')

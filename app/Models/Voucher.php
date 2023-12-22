@@ -10,11 +10,11 @@ class Voucher extends Model
     use HasFactory;
     protected $table = 'voucher';
     protected $primaryKey = 'id';
-    protected $fillable = ['code', 'name_shop', 'discountPercentage', 'discountAmount', 'validFrom', 'validTo', 'usageLimit', 'platformVoucher', 'created_at', 'updated_at'];
+    protected $fillable = ['code', 'id_shop', 'discountPercentage', 'discountAmount', 'validFrom', 'validTo', 'usageLimit', 'platformVoucher', 'created_at', 'updated_at'];
 
     public function shopProfile()
     {
-        return $this->belongsTo(ShopProfile::class, 'name_shop', 'name_shop');
+        return $this->belongsTo(ShopProfile::class, 'id_shop', 'id');
     }
 
     public function usedVoucherCount()
