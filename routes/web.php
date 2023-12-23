@@ -40,7 +40,6 @@ Route::post('/product_sort', [ProductController::class, 'sort'])->name('buyer.pr
 Route::post('/product_price', [ProductController::class, 'priceFilter'])->name('buyer.product.price');
 Route::get('/', [HomeController::class, 'index'])->name('buyer.home');
 
-
 Route::post('/buyer/login', [AuthController::class, 'login'])->name('login');
 Route::post('/buyer/register', [AuthController::class, 'register'])->name('register');
 Route::get('/buyer/login', function () {
@@ -76,6 +75,17 @@ Route::middleware(['SellerMiddleware'])->group(function () {
             });
         });
 
+        Route::controller(CategoryChildController::class)->group(function () {
+            Route::prefix('categories-child')->group(function () {
+                Route::get('list', 'index');
+                Route::get('create', 'create');
+                Route::post('create', 'store');
+                Route::get('update/{id}', 'edit');
+                Route::post('update/{id}', 'update');
+                Route::delete('delete/{id}', 'destroy');
+            });
+        });
+
         Route::controller(InfoShopController::class)->group(function () {
             Route::prefix('infos')->group(function () {
                 Route::get('info', 'index');
@@ -84,6 +94,9 @@ Route::middleware(['SellerMiddleware'])->group(function () {
             });
         });
     });
+    Route::get('/seller/confirm', function () {
+        return view('auth.seller.confirm');
+    })->name('auth.seller.confirm');
 });
 //
 Route::get('/profile-seller', [ProfileSellerController::class, 'getInfoShop'])->name('profile-seller');
@@ -129,7 +142,6 @@ Route::middleware(['Buyer.middleware'])->group(function () {
 
     Route::post('/order-product', [OrderController::class, 'ProcessOrder'])->name('client.order.processOrder');
 
-
     // routes/web.php
     Route::post('/saveOrder', [OrderController::class, 'SaveOrder'])->name('saveOrder');
 
@@ -145,6 +157,7 @@ Route::middleware(['Buyer.middleware'])->group(function () {
     Route::get('/error', [PaymentController::class, 'error']);
 });
 
+
 //Admin
 Route::get('/admin/login', function () {
     return view('auth.admin.login');
@@ -159,6 +172,11 @@ Route::middleware(['AdminMiddleware'])->group(function () {
             return view('admin.home.index');
         })->name('admin.home');
     
+        Route::get('/admin', function () {
+            return view('admin.home.index');
+        })->name('admin.home');
+        Route::get('/admin/approve', [ApproveController::class, 'index'])->name('admin.approve');
+        Route::post('/admin/approve/{username}', [ApproveController::class, 'update'])->name('admin.approve.update');
     });
     
 Route::get('/admin/category', [CategoryController::class, 'index'])->name('admin.category');
@@ -179,9 +197,9 @@ Route::post('/voucher/store', [VoucherAdminController::class, 'store'])->name('a
 Route::delete('/admin/vouchers/delete/{id}', [VoucherAdminController::class, 'destroy'])->name('admin.vouchers.delete');
 Route::get('/admin/vouchers/update/{id}', [VoucherAdminController::class, 'edit'])->name('admin.editVouchers');
 Route::post('/admin/vouchers/{id}', [VoucherAdminController::class, 'update'])->name('admin.updateVouchers');
-        Route::get('/admin', function () {
-            return view('admin.home.index');
-        })->name('admin.home');
-        Route::get('/admin/approve', [ApproveController::class, 'index'])->name('admin.approve');
-        Route::post('/admin/approve/{username}', [ApproveController::class, 'update'])->name('admin.approve.update');
 });
+
+
+Route::get('/create-shop', [SellerController::class, 'create'])->name('create.shop');
+Route::post('/store-shop', [SellerController::class, 'store'])->name('shop.store');
+Route::get('/changeChannel', [SellerController::class, 'changeChannel'])->name('seller.changeChannel');
