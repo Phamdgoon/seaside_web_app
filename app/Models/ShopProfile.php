@@ -26,4 +26,8 @@ class ShopProfile extends Model
     {
         return $this->hasMany(Voucher::class, 'id_shop', 'id');
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'username', 'username');
+    }
 }

@@ -51,7 +51,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="#" class="nav-link text-white">
+                    <a href="/admin/approve" class="nav-link text-white">
                         <i class="nav-icon fas fa-users"></i>
                         <p> Người bán
                         </p>

@@ -27,6 +27,7 @@ use App\Http\Controllers\Buyer\PaymentController;
 use App\Http\Controllers\Seller\CategoryChildController;
 use App\Http\Controllers\Seller\InfoShopController;
 use App\Http\Controllers\Seller\VoucherController;
+use App\Http\Controllers\Admin\ApproveController;
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\VoucherAdminController;
@@ -66,17 +67,6 @@ Route::middleware(['SellerMiddleware'])->group(function () {
 
         Route::controller(VoucherController::class)->group(function () {
             Route::prefix('vouchers')->group(function () {
-                Route::get('list', 'index');
-                Route::get('create', 'create');
-                Route::post('create', 'store');
-                Route::get('update/{id}', 'edit');
-                Route::post('update/{id}', 'update');
-                Route::delete('delete/{id}', 'destroy');
-            });
-        });
-
-        Route::controller(CategoryChildController::class)->group(function () {
-            Route::prefix('categories-child')->group(function () {
                 Route::get('list', 'index');
                 Route::get('create', 'create');
                 Route::post('create', 'store');
@@ -139,6 +129,7 @@ Route::middleware(['Buyer.middleware'])->group(function () {
 
     Route::post('/order-product', [OrderController::class, 'ProcessOrder'])->name('client.order.processOrder');
 
+
     // routes/web.php
     Route::post('/saveOrder', [OrderController::class, 'SaveOrder'])->name('saveOrder');
 
@@ -154,13 +145,10 @@ Route::middleware(['Buyer.middleware'])->group(function () {
     Route::get('/error', [PaymentController::class, 'error']);
 });
 
-
 //Admin
-
 Route::get('/admin/login', function () {
     return view('auth.admin.login');
 })->name('admin.login');
-
 Route::post('/admin/login', [AdminController::class, 'login'])->name('login');
 Route::get('/logout', [AdminController::class, 'logout'])->name('logout');
 
@@ -191,6 +179,9 @@ Route::post('/voucher/store', [VoucherAdminController::class, 'store'])->name('a
 Route::delete('/admin/vouchers/delete/{id}', [VoucherAdminController::class, 'destroy'])->name('admin.vouchers.delete');
 Route::get('/admin/vouchers/update/{id}', [VoucherAdminController::class, 'edit'])->name('admin.editVouchers');
 Route::post('/admin/vouchers/{id}', [VoucherAdminController::class, 'update'])->name('admin.updateVouchers');
+        Route::get('/admin', function () {
+            return view('admin.home.index');
+        })->name('admin.home');
+        Route::get('/admin/approve', [ApproveController::class, 'index'])->name('admin.approve');
+        Route::post('/admin/approve/{username}', [ApproveController::class, 'update'])->name('admin.approve.update');
 });
-
-
