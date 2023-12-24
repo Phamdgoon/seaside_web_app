@@ -58,7 +58,6 @@ class SellerController extends Controller
             $user->email_verified = true;
             $user->email_verification_token = null;
             $user->save();
-            session()->flush();
             return redirect()->route('verify.email.custom2')->with('success', 'Xác thực email thành công. Vui lòng <a href="' . route('create.shop') . '">cung cấp thông tin về cửa hàng</a> để hoàn tất đăng kí.');
 
         }

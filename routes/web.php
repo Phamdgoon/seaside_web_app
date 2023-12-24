@@ -104,6 +104,8 @@ Route::middleware(['SellerMiddleware'])->group(function () {
     Route::get('/seller/confirm', function () {
         return view('auth.seller.confirm');
     })->name('auth.seller.confirm');
+    
+    Route::get('/create-shop', [SellerController::class, 'create'])->name('create.shop');
 });
 //
 Route::get('/profile-seller', [ProfileSellerController::class, 'getInfoShop'])->name('profile-seller');
@@ -207,6 +209,5 @@ Route::post('/admin/vouchers/{id}', [VoucherAdminController::class, 'update'])->
 });
 
 
-Route::get('/create-shop', [SellerController::class, 'create'])->name('create.shop');
 Route::post('/store-shop', [SellerController::class, 'store'])->name('shop.store');
 Route::get('/changeChannel', [SellerController::class, 'changeChannel'])->name('seller.changeChannel');

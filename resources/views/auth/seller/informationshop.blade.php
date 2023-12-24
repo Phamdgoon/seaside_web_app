@@ -20,6 +20,15 @@
 <body>
 
 <div class="container">
+    @if (session('username'))
+        @php
+            $user = \App\Models\User::where('username', session('username'))->first();
+        @endphp
+        <div class="info">
+            <h6>{{ $user->username }}</h6>
+        </div>
+    @endif
+    <a href="{{ route('logout') }}">đăng xuất</a>
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
