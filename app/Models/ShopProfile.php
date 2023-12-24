@@ -10,7 +10,7 @@ class ShopProfile extends Model
     use HasFactory;
 
     protected $table = 'shop_profile';
-    protected $fillable = ['id', 'username', 'name_shop', 'address', 'description', 'cover_image', 'avt', 'created_at', 'updated_at'];
+    protected $fillable = ['id', 'approved','username', 'name_shop', 'address', 'description', 'cover_image', 'avt', 'created_at', 'updated_at'];
 
     public function products()
     {

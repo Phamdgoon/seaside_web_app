@@ -16,7 +16,7 @@
                         <th>Stt</th>
                         <th>Tên danh mục</th>
                         <th>Hình ảnh</th>
-                        <th>Số lượng</th>
+                        <th>Số lượng đăng ký</th>
                         <th>Thao tác</th>
                     </tr>
                 </thead>
@@ -32,7 +32,8 @@
                             <img width="100px" height="100px" src="{{$category->url_category}}" alt="">
                         </td>
                         <td class="align-middle text-center">
-                            {{ $category->categoryChildren->count() }}
+                            <a href="">{{ $category->categoryChildren->count() }}</a>
+                            
                         </td>
                         <td class="align-middle text-center">                            
                             <a href="{{ route('admin.editCategory', $category->id) }}" class="btn btn-warning">Edit</a>

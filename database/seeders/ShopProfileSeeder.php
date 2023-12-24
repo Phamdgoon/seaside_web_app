@@ -16,6 +16,7 @@ class ShopProfileSeeder extends Seeder
     {
         DB::table('shop_profile')->insert([
             [
+                'approved' => 1,
                 'name_shop' => 'Thời trang nam Seaside',
                 'username' => 'hongkhanh',
                 'address' => '41 Cao Thắng, Hải Châu, Đà Nẵng',
@@ -25,6 +26,7 @@ class ShopProfileSeeder extends Seeder
                 'updated_at' => Carbon::now()
             ],
             [
+                'approved' => 1,
                 'name_shop' => 'GIÀY UMI',
                 'username' => 'thaonguyet',
                 'address' => '50 Lê Duẩn, Thanh Khê, Đà Nẵng',
