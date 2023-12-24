@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Seller\DashboardController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\AdminController;
+use App\Http\Controllers\Auth\SellerController;
 use App\Http\Controllers\Buyer\ProfileSellerController;
 
 use App\Http\Controllers\Buyer\HomeController;
@@ -57,6 +58,12 @@ Route::get('/email/verify/{token}', [AuthController::class, 'verifyEmail'])->nam
 Route::get('/verify-email', function () {
     return view('emails.verify-email');
 })->name('verify.email.custom');
+
+Route::get('/email/verify/{token}', [SellerController::class, 'verifyEmail'])->name('verify.email');
+Route::get('/verify-email2', function () {
+    return view('emails.vertify-email2');
+})->name('verify.email.custom2');
+
 
 
 //seller
@@ -103,7 +110,7 @@ Route::get('/profile-seller', [ProfileSellerController::class, 'getInfoShop'])->
 Route::get('/product_detail', [ProductController::class, 'productDetail'])->name('buyer.productDetail');
 
 //seller-register/login
-use App\Http\Controllers\Auth\SellerController;
+
 
 Route::get('/seller/register', function () {
     return view('auth.seller.register');

@@ -59,10 +59,11 @@ class SellerController extends Controller
             $user->email_verification_token = null;
             $user->save();
             session()->flush();
-            return redirect()->route('verify.email.custom')->with('success', 'Xác thực email thành công. Bạn có thể <a href="' . route('create.shop') . '">Cập nhật thông tin shop</a>.');
+            return redirect()->route('verify.email.custom2')->with('success', 'Xác thực email thành công. Vui lòng <a href="' . route('create.shop') . '">cung cấp thông tin về cửa hàng</a> để hoàn tất đăng kí.');
+
         }
 
-        return redirect()->route('verify.email.custom')->with('error', 'Link xác thực không hợp lệ hoặc email đã được xác thực.');
+        return redirect()->route('verify.email.custom2')->with('error', 'Link xác thực không hợp lệ hoặc email đã được xác thực.');
     }
 
     public function login(Request $request)
