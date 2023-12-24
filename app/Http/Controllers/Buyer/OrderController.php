@@ -70,7 +70,7 @@ class OrderController extends Controller
         $orderDetail->status = 'Chờ duyệt'; 
         $orderDetail->save();
 
-        return redirect()->route('buyer.home')->with('ok', 'Đã đặt hàng thành công');
+        return redirect()->route('view')->with('ok', 'Đã đặt hàng thành công');
 
     }
 
@@ -106,7 +106,7 @@ class OrderController extends Controller
         $orderDetail->price = $vnp_Amount/100; 
         $orderDetail->status = 'Chờ duyệt'; 
         $orderDetail->save();
-        return redirect()->route('buyer.home')->with('ok', 'Đã đặt hàng thành công');
+        return redirect()->route('view')->with('ok', 'Đã đặt hàng thành công');
     }
 
     }

@@ -114,7 +114,7 @@
                             {{ $buyerProfile->username }}
                         </a>
                         <div id="userDropdown" class="dropdown-menu">
-                            <a href="#" class="dropdown-item"><i class="fa-solid fa-user"></i> Thông
+                            <a href="{{ route('profile') }}" class="dropdown-item"><i class="fa-solid fa-user"></i> Thông
                                 tin cá nhân</a>
                             <a href="{{ route('logout') }}" class="dropdown-item" data-toggle="modal"
                                 data-target="#logoutModal">

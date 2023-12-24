@@ -23,6 +23,7 @@ use App\Http\Controllers\Buyer\ProductController;
 use App\Http\Controllers\Buyer\CartController;
 use App\Http\Controllers\Buyer\OrderController;
 use App\Http\Controllers\Buyer\PaymentController;
+use App\Http\Controllers\Buyer\UserProfileController;
 
 use App\Http\Controllers\Seller\CategoryChildController;
 use App\Http\Controllers\Seller\InfoShopController;
@@ -143,6 +144,21 @@ Route::middleware(['Buyer.middleware'])->group(function () {
     Route::get('/success', [PaymentController::class, 'success'])->name('success');
 
     Route::get('/error', [PaymentController::class, 'error']);
+
+    
+    Route::get('/profile', [UserProfileController::class, 'showProfile'])->name('profile');
+
+    Route::get('/password', [UserProfileController::class, 'showPassword'])->name('password');
+
+    Route::get('/view', [UserProfileController::class, 'showView'])->name('view');
+
+    Route::get('/settings', [UserProfileController::class, 'showSettings']);
+
+    Route::post('/profile/update', [UserProfileController::class, 'updateProfile'])->name('profile.update');
+
+    Route::post('/profile/update-password', [UserProfileController::class, 'updatePassword'])->name('update.password');
+
+    Route::post('/confirm-received/{id}', [UserProfileController::class, 'confirmReceived'])->name('confirm.received');
 });
 
 //Admin
