@@ -23,7 +23,7 @@ class SellerController extends Controller
             'email' => 'required|string|email|unique:user|max:255',
             'password' => 'required|string|min:8|confirmed',
             'phone_number' => 'nullable|string|regex:/^\d{10}$/',
-           
+
         ]);
 
         $user = User::create([
@@ -79,23 +79,26 @@ class SellerController extends Controller
 
             // Kiểm tra cả trường email_verified
             if ($user->email_verified == 1) {
-                $id_permission = User_Permission::where('username', $user->username)->value('id_permission');
+                $id_permission = User_Permission::where('username', $user->username)->pluck('id_permission')->toArray();
                 session()->put('username', $user->username);
 
-                if ($id_permission == 2) {
+                if (in_array(2, $id_permission)) {
                     $shopProfile = ShopProfile::where('username', $user->username)->first();
+                    if ($user->createStore == 0) {
 
-                    if ($shopProfile && $shopProfile->approved == 1) {
-                        if ($user->createStore == 0) {
-                            return redirect()->route('create.shop');
-                        } else {
-                            return redirect()->route('seller');
-                        }
+                        return redirect()->route('create.shop');
                     } else {
-                        return redirect()->route('auth.seller.confirm');
+
+                        if ($shopProfile && $shopProfile->approved == 1) {
+
+                            return redirect()->route('seller');
+                        } else {
+
+                            return redirect()->route('auth.seller.confirm');
+                        }
                     }
                 } else {
-                    
+
                     return back()->with('fail', 'Không có quyền truy cập');
                 }
             } else {
@@ -167,13 +170,30 @@ class SellerController extends Controller
         if (session()->has('username')) {
             $id_permissions = User_Permission::where('username', $username)->pluck('id_permission')->toArray();
             if (in_array(2, $id_permissions)) {
+                $shopProfile = ShopProfile::where('username', $username)->first();
                 if ($createStore == 0) {
+
                     return redirect()->route('create.shop');
                 } else {
-                    return redirect()->route('seller');
+
+                    if ($shopProfile && $shopProfile->approved == 1) {
+
+                        return redirect()->route('seller');
+                    } else {
+
+                        return redirect()->route('auth.seller.confirm');
+                    }
                 }
             } else {
-                return redirect()->route('register');
+                $userPermission = new User_Permission();
+                $userPermission->id_permission = 2;
+                $userPermission->username = $username;
+                $userPermission->save();
+
+                $user = User::where('username', $username)->first();
+                $user->update(['createStore' => 0]);
+
+                return redirect()->route('create.shop');
             }
         } else {
             return redirect()->route('seller.login')->with('error', 'Please log in first.');
