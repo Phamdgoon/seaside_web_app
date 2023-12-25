@@ -92,9 +92,10 @@ class SellerController extends Controller
                             return redirect()->route('seller');
                         }
                     } else {
-                        return back()->with('fail', 'Cửa hàng chưa được phê duyệt hoặc không có quyền truy cập.');
+                        return redirect()->route('auth.seller.confirm');
                     }
                 } else {
+                    
                     return back()->with('fail', 'Không có quyền truy cập');
                 }
             } else {
