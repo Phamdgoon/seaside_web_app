@@ -38,10 +38,11 @@ class AuthController extends Controller
 
             // Kiểm tra cả trường email_verified
             if ($user->email_verified == 1) {
-                $id_permission = User_Permission::where('username', $user->username)->value('id_permission');
+                $permissions = User_Permission::where('username', $user->username)->pluck('id_permission')->toArray();
                 session()->put('username', $user->username);
-
-                if ($id_permission == 3) {
+            
+                // Kiểm tra nếu có ít nhất một quyền là 3
+                if (in_array(3, $permissions)) {
                     return redirect()->intended('');
                 } else {
                     return back()->with('fail', 'Không có quyền truy cập');
@@ -50,7 +51,7 @@ class AuthController extends Controller
                 // Người dùng chưa xác thực email
                 auth()->logout(); // Đăng xuất người dùng
                 return back()->with('fail', 'Vui lòng xác thực email trước khi đăng nhập.');
-            }
+            }            
         } else {
             return back()->with('fail', 'Sai tên đăng nhập hoặc mật khẩu');
         }
@@ -99,8 +100,8 @@ class AuthController extends Controller
             $user->email_verified = true;
             $user->email_verification_token = null;
             $user->save();
-
-            return redirect()->route('verify.email.custom')->with('success', 'Xác thực email thành công. Bạn có thể <a href="' . route('login') . '">Đăng nhập ngay</a>.');
+            session()->flush();
+            return redirect()->route('verify.email.custom')->with('success', 'Xác thực email thành công. Bạn có thể <a href="' . route('buyer.login') . '">Đăng nhập ngay</a>.');
         }
 
         return redirect()->route('verify.email.custom')->with('error', 'Link xác thực không hợp lệ hoặc email đã được xác thực.');

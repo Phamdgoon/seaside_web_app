@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('shop_profile', function (Blueprint $table) {
             $table->id();
-            $table->boolean('approved')->nullable();
             $table->string('name_shop');
             $table->string('username');
             $table->string('address')->nullable();;
             $table->string('description')->nullable();
             $table->string('cover_image')->nullable();;
             $table->string('avt')->nullable();
+            $table->boolean('approved')->nullable();
             $table->timestamps();
             
             $table->foreign('username')

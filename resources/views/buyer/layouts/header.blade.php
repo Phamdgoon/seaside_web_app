@@ -24,7 +24,7 @@
         <div class="top-bar">
             <div class="content-topbar flex-sb-m h-full container">
                 <div class="left-top-bar flex-w h-full">
-                    <a href="#" class="flex-c-m trans-04 p-lr-25">
+                    <a href="{{ route('seller.changeChannel') }}" class="flex-c-m trans-04 p-lr-25">
                         Kênh người bán
                     </a>
 

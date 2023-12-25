@@ -24,6 +24,7 @@
                     <h2 class="form_title title">Tạo tài khoản người bán</h2>
                     <input class="form__input" type="text" name="username" placeholder="Tên đăng nhập" required>
                     <input class="form__input" type="text" name="email" placeholder="Email" required>
+                    <input class="form__input" type="text" name="phone_number" placeholder="Số điện thoại" required>
                     <div class="input-wrapper">
                         <input class="form__input" id="password" type="password" name="password" placeholder="Mật khẩu"
                             required>

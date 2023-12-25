@@ -24,17 +24,10 @@ class CartController extends Controller
             $carts = Cart::join('product_detail', 'cart.id_product_detail', '=', 'product_detail.id')
             ->join('product_image', 'product_detail.id', '=', 'product_image.id_product_detail')
             ->join('product', 'product_detail.id_product', '=', 'product.id')
-            ->select('cart.*', 'product.name_product', 'product_detail.name_product_detail', 'product_detail.price', 'product_image.url_image','product.name_shop')
+            ->select('cart.*', 'product.name_product', 'product_detail.name_product_detail', 'product_detail.price', 'product_image.url_image','product.id_shop')
             ->where('cart.username', '=', $username)
             ->get();
 
-            // $carts = Cart::join('product_detail', 'cart.id_product_detail', '=', 'product_detail.id')
-            // ->join('product_images', 'product_detail.id', '=', 'product_images.id_product_detail')
-            // ->join('images', 'images.id', '=', 'product_images.id_image')
-            // ->join('product', 'product_detail.id_product', '=', 'product.id')
-            // ->select('cart.*', 'product.name_product', 'product_detail.color', 'product_detail.price', 'images.image')
-            // ->where('username',)
-            // ->get();
             return view('Buyer.cart.index', [
             'carts' => $carts,
             ]);
