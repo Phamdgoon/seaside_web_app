@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->string('cover_image')->nullable();;
             $table->string('avt')->nullable();
+            $table->string('approved')->nullable();
             $table->timestamps();
             
             $table->foreign('username')

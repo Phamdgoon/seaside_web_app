@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('phone_number')->nullable();
             $table->string('password');
             $table->boolean('createStore')->nullable();
-            $table->boolean('approved')->nullable();
             $table->string('email_verification_token')->nullable();
             $table->boolean('email_verified')->default(false);
             $table->rememberToken();

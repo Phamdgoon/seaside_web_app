@@ -136,6 +136,7 @@ class SellerController extends Controller
             $shop->username = $username;
             $shop->address = $request->input('address');
             $shop->description = $request->input('description');
+            $shop->approved = 0;
 
             if ($request->hasFile('cover_image')) {
                 $imagePath = $request->file('cover_image')->store('profile_images', 'public');
