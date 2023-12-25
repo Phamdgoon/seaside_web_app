@@ -22,25 +22,28 @@ class SellerController extends Controller
             'username' => 'required|string|max:255',
             'email' => 'required|string|email|unique:user|max:255',
             'password' => 'required|string|min:8|confirmed',
+            'phone_number' => 'nullable|string|regex:/^\d{10}$/',
+           
         ]);
 
         $user = User::create([
             'username' => $request->username,
             'account_name' => $request->username,
             'email' => $request->email,
+            'phone_number' => $request->phone_number,
             'password' => bcrypt($request->password),
             'createStore' => 0,
             'avt' => 'https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png',
             'email_verification_token' => Str::random(60),
         ]);
-        
+
         session()->put('username', $request->username);
         $userPermission = new User_Permission();
         $userPermission->id_permission = 2;
         $userPermission->username = $user->username;
         $userPermission->save();
 
-        
+
         Mail::to($user->email)->send(new VerifyEmail($user));
 
         Log::info('Email sent successfully');
@@ -59,7 +62,6 @@ class SellerController extends Controller
             $user->email_verification_token = null;
             $user->save();
             return redirect()->route('verify.email.custom2')->with('success', 'Xác thực email thành công. Vui lòng <a href="' . route('create.shop') . '">cung cấp thông tin về cửa hàng</a> để hoàn tất đăng kí.');
-
         }
 
         return redirect()->route('verify.email.custom2')->with('error', 'Link xác thực không hợp lệ hoặc email đã được xác thực.');
@@ -81,12 +83,17 @@ class SellerController extends Controller
                 session()->put('username', $user->username);
 
                 if ($id_permission == 2) {
-                    if ($user->createStore == 0) {                        
-                        return redirect()->route('create.shop');
-                    } else {                        
-                        return redirect()->route('seller');
+                    $shopProfile = ShopProfile::where('username', $user->username)->first();
+
+                    if ($shopProfile && $shopProfile->approved == 1) {
+                        if ($user->createStore == 0) {
+                            return redirect()->route('create.shop');
+                        } else {
+                            return redirect()->route('seller');
+                        }
+                    } else {
+                        return back()->with('fail', 'Cửa hàng chưa được phê duyệt hoặc không có quyền truy cập.');
                     }
-                    
                 } else {
                     return back()->with('fail', 'Không có quyền truy cập');
                 }
@@ -109,10 +116,8 @@ class SellerController extends Controller
 
     public function create()
     {
-        
-        return view('auth.seller.informationshop', [
-            
-        ]);
+
+        return view('auth.seller.informationshop', []);
     }
     public function store(Request $request)
     {
@@ -125,7 +130,7 @@ class SellerController extends Controller
         ]);
 
         $username = session('username');
-        
+
         $user = User::where('username', $username)->first();
 
         if ($user) {
@@ -158,7 +163,7 @@ class SellerController extends Controller
     {
         $username = session('username');
         $createStore = User::where('username', $username)->value('createStore');
-        if(session()->has('username')) {
+        if (session()->has('username')) {
             $id_permissions = User_Permission::where('username', $username)->pluck('id_permission')->toArray();
             if (in_array(2, $id_permissions)) {
                 if ($createStore == 0) {
@@ -171,8 +176,6 @@ class SellerController extends Controller
             }
         } else {
             return redirect()->route('seller.login')->with('error', 'Please log in first.');
-            
         }
     }
-
 }

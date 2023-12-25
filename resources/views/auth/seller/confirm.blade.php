@@ -21,7 +21,7 @@
                     <div class="form-group">
                         <label class = "form__label" for="">Status:</label>
 
-                        <h3> Đang chờ duyệt</h3>
+                        <h3 class="h3"> Đang chờ duyệt</h3>
                     </div>
                     <div class="form-group">
                         <label class = "form__label" for="">Shop's name:</label>
@@ -72,30 +72,7 @@
                             </div>                        
                         @endif
                     </div>
-                    <div class="form-group">
-                        <label class = "form__label" for="">Shop's name:</label>
-                        @if (session('username'))
-                            @php
-                                $shopProfile = \App\Models\shopProfile::where('username', session('username'))->first();
-                            @endphp
-                            <div class="info">
-                                <h6>{{ $shopProfile->name_shop }}</h6>
-                            </div>                           
-                        @endif
-                    </div>
-                    <div class="form-group">
-                        <label class = "form__label" for="">Description:</label>
-
-                        @if (session('username'))
-                            @php
-                                $shopProfile = \App\Models\shopProfile::where('username', session('username'))->first();
-                            @endphp
-                            <div class="info">
-                                <h6>{{ $shopProfile->description }}</h6>
-                            </div>                            
-                        @endif
-                    </div>
-                   
+                                                       
 
                     <a href="{{ route('logout') }}">đăng xuất</a>
                     

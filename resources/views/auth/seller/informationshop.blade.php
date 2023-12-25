@@ -25,7 +25,7 @@
     <div class="main">
         <div class="container">         
             <div class="form-container">
-                    <div class="title" >Shop Profile</div>
+                    <div class="title" >Create Shop Profile</div>
                     <form method="POST" action="{{ route('shop.store') }}" enctype="multipart/form-data">
                         @csrf
 
