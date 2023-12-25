@@ -28,6 +28,8 @@ use App\Http\Controllers\Buyer\UserProfileController;
 use App\Http\Controllers\Seller\CategoryChildController;
 use App\Http\Controllers\Seller\InfoShopController;
 use App\Http\Controllers\Seller\VoucherController;
+use App\Http\Controllers\Seller\SellerProductController;
+
 use App\Http\Controllers\Admin\ApproveController;
 
 use App\Http\Controllers\Admin\CategoryController;
@@ -77,6 +79,16 @@ Route::middleware(['SellerMiddleware'])->group(function () {
             });
         });
 
+        Route::controller(CategoryChildController::class)->group(function () {
+            Route::prefix('categories-child')->group(function () {
+                Route::get('list', 'index');
+                Route::get('create', 'create');
+                Route::post('create', 'store');
+                Route::get('update/{id}', 'edit');
+                Route::post('update/{id}', 'update');
+                Route::delete('delete/{id}', 'destroy');
+            });
+        });
         Route::controller(InfoShopController::class)->group(function () {
             Route::prefix('infos')->group(function () {
                 Route::get('info', 'index');
@@ -85,6 +97,10 @@ Route::middleware(['SellerMiddleware'])->group(function () {
             });
         });
     });
+    Route::get('/seller/product', [SellerProductController::class, 'index'])->name('seller.product.index');
+    Route::get('/create/product', [SellerProductController::class, 'create'])->name('seller.product.create');
+    Route::post('/products', [SellerProductController::class, 'store'])->name('products.store');
+
 });
 //
 Route::get('/profile-seller', [ProfileSellerController::class, 'getInfoShop'])->name('profile-seller');

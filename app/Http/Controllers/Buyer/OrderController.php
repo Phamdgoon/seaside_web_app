@@ -10,6 +10,7 @@ use App\Models\Product;
 use App\Models\Product_Images;
 use App\Models\Order;
 use App\Models\Order_Detail;
+use App\Models\Size_Product;
 use App\Models\ShippingAddress;
 
 class OrderController extends Controller
@@ -70,6 +71,13 @@ class OrderController extends Controller
         $orderDetail->status = 'Chờ duyệt'; 
         $orderDetail->save();
 
+        $size_Product = Size_Product::where([
+            ['id_product_detail', $productDetail->id],
+            ['size', $size],
+        ])->first();
+        $size_Product->product_number -= $quantity;
+        $size_Product->save();        
+
         return redirect()->route('view')->with('ok', 'Đã đặt hàng thành công');
 
     }
@@ -106,6 +114,13 @@ class OrderController extends Controller
         $orderDetail->price = $vnp_Amount/100; 
         $orderDetail->status = 'Chờ duyệt'; 
         $orderDetail->save();
+
+        $size_Product = Size_Product::where([
+            ['id_product_detail', $idProductDetail],
+            ['size', $size],
+        ])->first();
+        $size_Product->product_number -= $quantity;
+        $size_Product->save();  
         return redirect()->route('view')->with('ok', 'Đã đặt hàng thành công');
     }
 
