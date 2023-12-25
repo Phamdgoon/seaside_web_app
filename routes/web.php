@@ -96,11 +96,15 @@ Route::middleware(['SellerMiddleware'])->group(function () {
                 Route::post('update/{name_shop}', 'update');
             });
         });
-    });
-    Route::get('/seller/product', [SellerProductController::class, 'index'])->name('seller.product.index');
-    Route::get('/create/product', [SellerProductController::class, 'create'])->name('seller.product.create');
-    Route::post('/products', [SellerProductController::class, 'store'])->name('products.store');
 
+        Route::controller(SellerProductController::class)->group(function () {
+            Route::prefix('products')->group(function () {
+                Route::get('list', 'index');
+                Route::get('create', 'create');
+                Route::post('create', 'store');
+            });
+        });
+    });
 });
 //
 Route::get('/profile-seller', [ProfileSellerController::class, 'getInfoShop'])->name('profile-seller');
@@ -161,7 +165,7 @@ Route::middleware(['Buyer.middleware'])->group(function () {
 
     Route::get('/error', [PaymentController::class, 'error']);
 
-    
+
     Route::get('/profile', [UserProfileController::class, 'showProfile'])->name('profile');
 
     Route::get('/password', [UserProfileController::class, 'showPassword'])->name('password');
@@ -186,34 +190,33 @@ Route::get('/logout', [AdminController::class, 'logout'])->name('logout');
 
 Route::middleware(['AdminMiddleware'])->group(function () {
     Route::prefix('')->group(function () {
-       
+
         Route::get('/admin', function () {
             return view('admin.home.index');
         })->name('admin.home');
-    
     });
-    
-Route::get('/admin/category', [CategoryController::class, 'index'])->name('admin.category');
-Route::delete('/admin/category/delete/{id}', [CategoryController::class, 'destroy'])->name('admin.category.delete');
-Route::get('/admin/addCategory', function () {
-    return view('admin.category.add');
-})->name('admin.addCategory');
-Route::post('/category/store', [CategoryController::class, 'storeCategory'])->name('admin.category.store');
-Route::get('/admin/editCategory/{id}', [CategoryController::class, 'editCategory'])->name('admin.editCategory');
-Route::put('/admin/updateCategory/{id}', [CategoryController::class, 'updateCategory'])->name('admin.updateCategory');
 
-Route::get('/admin/vouchers/list', [VoucherAdminController::class, 'index']);
-Route::get('/admin/vouchers/create', function () {
-    return view('admin.voucher.create');
-})->name('admin.addVoucher');
+    Route::get('/admin/category', [CategoryController::class, 'index'])->name('admin.category');
+    Route::delete('/admin/category/delete/{id}', [CategoryController::class, 'destroy'])->name('admin.category.delete');
+    Route::get('/admin/addCategory', function () {
+        return view('admin.category.add');
+    })->name('admin.addCategory');
+    Route::post('/category/store', [CategoryController::class, 'storeCategory'])->name('admin.category.store');
+    Route::get('/admin/editCategory/{id}', [CategoryController::class, 'editCategory'])->name('admin.editCategory');
+    Route::put('/admin/updateCategory/{id}', [CategoryController::class, 'updateCategory'])->name('admin.updateCategory');
 
-Route::post('/voucher/store', [VoucherAdminController::class, 'store'])->name('admin.voucher.store');
-Route::delete('/admin/vouchers/delete/{id}', [VoucherAdminController::class, 'destroy'])->name('admin.vouchers.delete');
-Route::get('/admin/vouchers/update/{id}', [VoucherAdminController::class, 'edit'])->name('admin.editVouchers');
-Route::post('/admin/vouchers/{id}', [VoucherAdminController::class, 'update'])->name('admin.updateVouchers');
-        Route::get('/admin', function () {
-            return view('admin.home.index');
-        })->name('admin.home');
-        Route::get('/admin/approve', [ApproveController::class, 'index'])->name('admin.approve');
-        Route::post('/admin/approve/{username}', [ApproveController::class, 'update'])->name('admin.approve.update');
+    Route::get('/admin/vouchers/list', [VoucherAdminController::class, 'index']);
+    Route::get('/admin/vouchers/create', function () {
+        return view('admin.voucher.create');
+    })->name('admin.addVoucher');
+
+    Route::post('/voucher/store', [VoucherAdminController::class, 'store'])->name('admin.voucher.store');
+    Route::delete('/admin/vouchers/delete/{id}', [VoucherAdminController::class, 'destroy'])->name('admin.vouchers.delete');
+    Route::get('/admin/vouchers/update/{id}', [VoucherAdminController::class, 'edit'])->name('admin.editVouchers');
+    Route::post('/admin/vouchers/{id}', [VoucherAdminController::class, 'update'])->name('admin.updateVouchers');
+    Route::get('/admin', function () {
+        return view('admin.home.index');
+    })->name('admin.home');
+    Route::get('/admin/approve', [ApproveController::class, 'index'])->name('admin.approve');
+    Route::post('/admin/approve/{username}', [ApproveController::class, 'update'])->name('admin.approve.update');
 });

@@ -60,7 +60,7 @@ class CategoryChildController extends Controller
             return redirect()->back()->withInput();
         }
 
-        return redirect()->back();
+        return redirect()->intended('/seller1/categories-child/list');
     }
 
     /**

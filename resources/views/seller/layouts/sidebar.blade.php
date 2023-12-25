@@ -51,7 +51,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="/seller/product" class="nav-link text-white">
+                    <a href="/seller1/products/list" class="nav-link text-white">
                         <i class="nav-icon fas fa-box-open"></i>
                         <p> Sản Phẩm </p>
                     </a>
