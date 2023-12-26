@@ -22,6 +22,7 @@ class ShopProfileSeeder extends Seeder
                 'address' => '41 Cao Thắng, Hải Châu, Đà Nẵng',
                 'cover_image' => 'cover-ttnss.jpg',
                 'avt' => 'avt-ttnss.jpg',
+                'approved'=> 0,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -32,6 +33,7 @@ class ShopProfileSeeder extends Seeder
                 'address' => '50 Lê Duẩn, Thanh Khê, Đà Nẵng',
                 'cover_image' => 'cover-gum.jpg',
                 'avt' => 'avt-gum.jpg',
+                'approved'=> 0,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],

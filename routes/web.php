@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Seller\DashboardController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\AdminController;
+use App\Http\Controllers\Auth\SellerController;
 use App\Http\Controllers\Buyer\ProfileSellerController;
 
 use App\Http\Controllers\Buyer\HomeController;
@@ -43,7 +44,6 @@ Route::post('/product_sort', [ProductController::class, 'sort'])->name('buyer.pr
 Route::post('/product_price', [ProductController::class, 'priceFilter'])->name('buyer.product.price');
 Route::get('/', [HomeController::class, 'index'])->name('buyer.home');
 
-
 Route::post('/buyer/login', [AuthController::class, 'login'])->name('login');
 Route::post('/buyer/register', [AuthController::class, 'register'])->name('register');
 Route::get('/buyer/login', function () {
@@ -62,6 +62,12 @@ Route::get('/verify-email', function () {
     return view('emails.verify-email');
 })->name('verify.email.custom');
 
+Route::get('/email/verify/{token}', [SellerController::class, 'verifyEmail'])->name('verify.email');
+Route::get('/verify-email2', function () {
+    return view('emails.vertify-email2');
+})->name('verify.email.custom2');
+
+
 
 //seller
 Route::middleware(['SellerMiddleware'])->group(function () {
@@ -70,6 +76,17 @@ Route::middleware(['SellerMiddleware'])->group(function () {
 
         Route::controller(VoucherController::class)->group(function () {
             Route::prefix('vouchers')->group(function () {
+                Route::get('list', 'index');
+                Route::get('create', 'create');
+                Route::post('create', 'store');
+                Route::get('update/{id}', 'edit');
+                Route::post('update/{id}', 'update');
+                Route::delete('delete/{id}', 'destroy');
+            });
+        });
+
+        Route::controller(CategoryChildController::class)->group(function () {
+            Route::prefix('categories-child')->group(function () {
                 Route::get('list', 'index');
                 Route::get('create', 'create');
                 Route::post('create', 'store');
@@ -105,13 +122,18 @@ Route::middleware(['SellerMiddleware'])->group(function () {
             });
         });
     });
+    Route::get('/seller/confirm', function () {
+        return view('auth.seller.confirm'); 
+    })->name('auth.seller.confirm');
+    
+    Route::get('/create-shop', [SellerController::class, 'create'])->name('create.shop');
 });
 //
 Route::get('/profile-seller', [ProfileSellerController::class, 'getInfoShop'])->name('profile-seller');
 Route::get('/product_detail', [ProductController::class, 'productDetail'])->name('buyer.productDetail');
 
 //seller-register/login
-use App\Http\Controllers\Auth\SellerController;
+
 
 Route::get('/seller/register', function () {
     return view('auth.seller.register');
@@ -150,7 +172,6 @@ Route::middleware(['Buyer.middleware'])->group(function () {
 
     Route::post('/order-product', [OrderController::class, 'ProcessOrder'])->name('client.order.processOrder');
 
-
     // routes/web.php
     Route::post('/saveOrder', [OrderController::class, 'SaveOrder'])->name('saveOrder');
 
@@ -181,6 +202,7 @@ Route::middleware(['Buyer.middleware'])->group(function () {
     Route::post('/confirm-received/{id}', [UserProfileController::class, 'confirmReceived'])->name('confirm.received');
 });
 
+
 //Admin
 Route::get('/admin/login', function () {
     return view('auth.admin.login');
@@ -194,6 +216,12 @@ Route::middleware(['AdminMiddleware'])->group(function () {
         Route::get('/admin', function () {
             return view('admin.home.index');
         })->name('admin.home');
+    
+        Route::get('/admin', function () {
+            return view('admin.home.index');
+        })->name('admin.home');
+        Route::get('/admin/approve', [ApproveController::class, 'index'])->name('admin.approve');
+        Route::post('/admin/approve/{username}', [ApproveController::class, 'update'])->name('admin.approve.update');
     });
 
     Route::get('/admin/category', [CategoryController::class, 'index'])->name('admin.category');
@@ -219,4 +247,12 @@ Route::middleware(['AdminMiddleware'])->group(function () {
     })->name('admin.home');
     Route::get('/admin/approve', [ApproveController::class, 'index'])->name('admin.approve');
     Route::post('/admin/approve/{username}', [ApproveController::class, 'update'])->name('admin.approve.update');
+Route::post('/voucher/store', [VoucherAdminController::class, 'store'])->name('admin.voucher.store');
+Route::delete('/admin/vouchers/delete/{id}', [VoucherAdminController::class, 'destroy'])->name('admin.vouchers.delete');
+Route::get('/admin/vouchers/update/{id}', [VoucherAdminController::class, 'edit'])->name('admin.editVouchers');
+Route::post('/admin/vouchers/{id}', [VoucherAdminController::class, 'update'])->name('admin.updateVouchers');
 });
+
+
+Route::post('/store-shop', [SellerController::class, 'store'])->name('shop.store');
+Route::get('/changeChannel', [SellerController::class, 'changeChannel'])->name('seller.changeChannel');
