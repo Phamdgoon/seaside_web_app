@@ -203,7 +203,7 @@
                     <div>
                         <a href="#" style="height: 100%; color: #bf6d72;" class="nav-link">
                             <div class="small-avatar-container">
-                                <img name="avt" src="{{ $profile->avt }}" alt="Avatar của Shop"
+                                <img name="avt" src="{{ asset('images/seller/info-shop/' . $profile->avt) }}" alt="Avatar của Shop"
                                     class="rounded-circle small-avatar-shop">
                             </div>
                         </a>

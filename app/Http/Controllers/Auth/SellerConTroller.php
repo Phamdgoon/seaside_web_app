@@ -40,9 +40,9 @@ class SellerController extends Controller
         $shopProfile = new ShopProfile();
         $shopProfile->username = $user->username;
         $shopProfile->name_shop = 'NameShop';
-        $shopProfile->address = 'Đà Nẵng';
-        $shopProfile->cover_image = 'https://inkythuatso.com/uploads/thumbnails/800/2023/03/9-anh-dai-dien-trang-inkythuatso-03-15-27-03.jpg';
-        $shopProfile->avt = 'https://inkythuatso.com/uploads/thumbnails/800/2023/03/9-anh-dai-dien-trang-inkythuatso-03-15-27-03.jpg';
+        $shopProfile->address = '';
+        $shopProfile->cover_image = 'cover-default.jpg';
+        $shopProfile->avt = 'avt-default.jpg';
         $shopProfile->save();
         Mail::to($user->email)->send(new VerifyEmail($user));
 

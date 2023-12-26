@@ -6,7 +6,7 @@
         <b>Thông tin shop</b>
     </div>
     <div class="col-md-8 ml-auto">
-        <a href="/seller1/infos/update/{{ $shopProfiles->name_shop }}" class="btn btn-success">Chỉnh sửa</a>
+        <a href="/seller1/infos/update/{{ $shopProfiles->id }}" class="btn btn-success">Chỉnh sửa</a>
     </div>
 
 </div>
@@ -31,7 +31,7 @@
         <p>Ảnh đại diện</p>
     </div>
     <div class="col-md-8">
-        <img src="{{ $shopProfiles->avt}}" style="width: 100px; height: 100px">
+        <img src="{{ asset('images/seller/info-shop/' . $shopProfiles->avt) }} " style="width: 100px; height: 100px">
     </div>
 </div>
 <div class="row mt-3">
@@ -39,7 +39,7 @@
         <p>Ảnh bìa</p>
     </div>
     <div class="col-md-8">
-        <img src="{{ $shopProfiles->cover_image}}" style="width: 200px; height: 100px">
+        <img src="{{ asset('images/seller/info-shop/' . $shopProfiles->cover_image) }}" style="width: 200px; height: 100px">
     </div>
 </div>
 @endsection
