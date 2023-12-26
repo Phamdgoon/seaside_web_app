@@ -19,12 +19,11 @@ class AdminMiddleware
     {
         if (session()->has('username')) {
             $username = session('username');
-            $user = User::where('username', $username)->first();
-            if ( $user->id_role == 1) {
-               
-                return redirect()->route('admin.home');
-            }else{
+            $user = User_Permission::where('username', $username)->first();
+            if ( $user->id_permission == 1) {               
                 return $next($request);
+            }else{
+                return redirect()->route('admin.login');
             }
         }
     

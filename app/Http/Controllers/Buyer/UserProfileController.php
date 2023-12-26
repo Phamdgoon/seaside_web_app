@@ -134,7 +134,7 @@ class UserProfileController extends Controller
             ->join('product_detail', 'order_detail.id_product_detail', '=', 'product_detail.id')
             ->join('product_image', 'product_detail.id', '=', 'product_image.id_product_detail')
             ->join('product', 'product_detail.id_product', '=', 'product.id')
-            ->select('product.name_product', 'product_detail.name_product_detail', 'product_image.url_image', 'product_detail.price as productPrice','order.payment_methods', 'order_detail.*')
+            ->select('product.name_product','product.id as idProduct', 'product_detail.name_product_detail', 'product_image.url_image', 'product_detail.price as productPrice','order.payment_methods', 'order_detail.*')
             ->where('order.username', '=',$username ) // Chắc chắn thay thế 'buyer_profile.username' bằng biến hoặc giá trị thích hợp
             ->get();
         

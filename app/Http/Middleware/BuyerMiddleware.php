@@ -19,8 +19,12 @@ class BuyerMiddleware
     {
         $username = session('username');
         if (session()->has('username')) {
-            # code...
-            return $next($request);
+            $id_permission = User_Permission::where('username', $username)->pluck('id_permission')->toArray();
+            if ( in_array(3, $id_permission)) {               
+                return $next($request);
+            }else{
+                return redirect()->route('buyer.login');
+            }
         } else {
             return redirect()->route('buyer.login');
         }

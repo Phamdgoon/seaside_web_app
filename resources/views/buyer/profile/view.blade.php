@@ -34,7 +34,6 @@
         display: flex;
         margin-bottom: 5px;
     }
-
 </style>
 @section('content1')
     @if (session('ok'))
@@ -55,12 +54,12 @@
             @foreach ($orderDetails as $orderDetail)
                 <fieldset>
                     <legend><b>{{ \Illuminate\Support\Str::limit($orderDetail->name_product, 60, ' ...') }}</b>
-                        <p>{{ $orderDetail->payment_methods }}</p>
+                        <p>{{ $orderDetail->status }}</p>
                     </legend>
                     <div>
                         <img src="{{ $orderDetail->url_image }}" alt="">
                         <div>
-                            <p>Kiểu: {{ $orderDetail->name_product_detail }}</p>
+                            <p style="width: 250px">Kiểu: {{ $orderDetail->name_product_detail }}</p>
                             <p>Size: {{ $orderDetail->size }}</p>
                             <p>Giá: {{ number_format($orderDetail->productPrice, 0, ',', ',') }}</p>
                             <p>Số lượng: {{ $orderDetail->quantity }}</p>
@@ -70,9 +69,7 @@
                         <p>Thành tiền: <span
                                 style="color: crimson;font-size: 20px">{{ number_format($orderDetail->price, 0, ',', ',') }}
                                 đ</span></p>
-                        @if ($orderDetail->orderStatus != 'Thanh toán khi nhận hàng')
-                            <p style="margin-top: 10px">( {{ $orderDetail->orderStatus }} )</p>
-                        @endif
+                        <p style="margin-top: 10px">( {{ $orderDetail->payment_methods }} )</p>
                     </div>
                     <div style="width:220px">
                         @if ($orderDetail->status == 'Đã giao hàng')
@@ -88,7 +85,7 @@
                         @else
                             @if ($orderDetail->status == 'Đã nhận hàng')
                                 <div>
-                                    <a href="{{ route('client.product.detail', ['id' => $orderDetail->product_id]) }}"
+                                    <a href="{{ route('buyer.productDetail', ['id' => $orderDetail->idProduct]) }}"
                                         class="flex-c-m stext-101 cl0  bg10 bor1 hov-btn1 p-lr-15 trans-04">
                                         Mua lại
                                     </a>
@@ -96,7 +93,7 @@
                             @else
                                 <div>
                                     <label>
-                                        {{$orderDetail->status}}
+                                        {{ $orderDetail->status }}
                                     </label>
                                 </div>
                             @endif

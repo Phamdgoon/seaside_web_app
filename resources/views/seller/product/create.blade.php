@@ -87,7 +87,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Size</label>
-                                    <input type="number" name="product_details[0][sizes][]" class="form-control" placeholder="Nhập size">
+                                    <input type="text" name="product_details[0][sizes][]" class="form-control" placeholder="Nhập size">
                                 </div>
                             </div>
                             <div class="col-md-6">

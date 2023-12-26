@@ -217,9 +217,6 @@ Route::middleware(['AdminMiddleware'])->group(function () {
             return view('admin.home.index');
         })->name('admin.home');
     
-        Route::get('/admin', function () {
-            return view('admin.home.index');
-        })->name('admin.home');
         Route::get('/admin/approve', [ApproveController::class, 'index'])->name('admin.approve');
         Route::post('/admin/approve/{username}', [ApproveController::class, 'update'])->name('admin.approve.update');
     });

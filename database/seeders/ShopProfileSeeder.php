@@ -22,7 +22,7 @@ class ShopProfileSeeder extends Seeder
                 'address' => '41 Cao Thắng, Hải Châu, Đà Nẵng',
                 'cover_image' => 'https://img.danhsachcuahang.com/image/2019/05/undefined-1556899015-5ccc64c7cba28.jpg',
                 'avt' => 'https://tamanh.net/wp-content/uploads/2022/08/mo-cua-hang-quan-ao-nam.jpg',
-                'approved'=> 0,
+                'approved'=> 1,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -33,7 +33,7 @@ class ShopProfileSeeder extends Seeder
                 'address' => '50 Lê Duẩn, Thanh Khê, Đà Nẵng',
                 'cover_image' => 'https://standboothvietnam.com/wp-content/uploads/2023/09/thiet-ke-shop-giay-dep.jpg',
                 'avt' => 'https://down-bs-vn.img.susercontent.com/2153b0f9c25fc516ca0ba291f8ba35f1_tn',
-                'approved'=> 0,
+                'approved'=> 1,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],

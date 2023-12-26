@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\User;
+use App\Models\User_Permission;
 
 class SellerMiddleWare
 {
@@ -18,16 +19,15 @@ class SellerMiddleWare
     {
         if (session()->has('username')) {
             $username = session('username');
-            $user = User::where('username', $username)->first();
-            if ( $user->id_role == 2) {
-               
-                return redirect()->route('seller');
-            }else{
+            $id_permission = User_Permission::where('username', $username)->pluck('id_permission')->toArray();
+            if ( in_array(2, $id_permission)) {               
                 return $next($request);
+            }else{
+                return redirect()->route('seller.login');
             }
+        }else{
+            
+            return redirect()->route('seller.login');
         }
-    
- 
-        return redirect()->route('seller.login');
     }
 }
