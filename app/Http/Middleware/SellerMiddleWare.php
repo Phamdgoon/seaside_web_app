@@ -20,14 +20,16 @@ class SellerMiddleWare
             $username = session('username');
             $user = User::where('username', $username)->first();
             if ( $user->id_role == 2) {
-               
-                return redirect()->route('seller');
+                $user = User_Permission::where('username', $username)->first();
+                if ( $user->id_permission == 2) {               
+                    return $next($request);
+                }else{
+                    return redirect()->route('seller.login');
+                }
             }else{
-                return $next($request);
+                
+                return redirect()->route('seller.login');
             }
         }
-    
- 
-        return redirect()->route('seller.login');
     }
 }

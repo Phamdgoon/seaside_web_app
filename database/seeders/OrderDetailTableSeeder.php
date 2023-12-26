@@ -23,7 +23,7 @@ class OrderDetailTableSeeder extends Seeder
                 'quantity' => '1',
                 'size' => 'M',
                 'price' => '315000.00',
-                'status' => '',
+                'status' => 'Đã giao hàng',
                 'voucher_code' => null,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
@@ -34,7 +34,7 @@ class OrderDetailTableSeeder extends Seeder
                 'quantity' => '1',
                 'size' => 'M',
                 'price' => '259000.00',
-                'status' => '',
+                'status' => 'Đã nhận hàng',
                 'voucher_code' => null,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
@@ -45,7 +45,7 @@ class OrderDetailTableSeeder extends Seeder
                 'quantity' => '1',
                 'size' => 'S',
                 'price' => '299000.00',
-                'status' => '',
+                'status' => 'Đã nhận hàng',
                 'voucher_code' => null,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
@@ -56,7 +56,7 @@ class OrderDetailTableSeeder extends Seeder
                 'quantity' => '1',
                 'size' => 'M',
                 'price' => '289000.00',
-                'status' => '',
+                'status' => 'Đã nhận hàng',
                 'voucher_code' => null,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
