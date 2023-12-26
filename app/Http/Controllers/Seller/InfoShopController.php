@@ -7,6 +7,7 @@ use App\Http\Requests\Seller\UpdateInfoshopRequest;
 use App\Models\ShopProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class InfoShopController extends Controller
 {
@@ -69,35 +70,36 @@ class InfoShopController extends Controller
             $infoShop->address = $request->input('address');
 
             $file_name_avt = $infoShop->avt;
+
             if ($request->hasFile('image_upload_avt')) {
                 $file = $request->file('image_upload_avt');
-                $ext = $file->extension();
-                $file_name_avt = 'avt-' . uniqid() . '.' . $ext;;
-                $file->move(public_path('images/seller/info-shop'), $file_name_avt);
-                $infoShop->avt = $file_name_avt;
+                $file_name_avt = 'avt-' . uniqid() . '.' . $file->extension();
+
+                $path = $file->storeAs('public/seller/info-shop', $file_name_avt);
+
+                $infoShop->update(['avt' => Storage::url($path)]);
             }
 
             $file_name_cover = $infoShop->cover_image;
             if ($request->hasFile('image_upload_cover')) {
                 $file = $request->file('image_upload_cover');
-                $ext = $file->extension();
-                $file_name_cover = 'cover-' . uniqid() . '.' . $ext;;
-                $file->move(public_path('images/seller/info-shop'), $file_name_cover);
-                $infoShop->cover_image = $file_name_cover;
+                $file_name_cover = 'cover-' . uniqid() . '.' . $file->extension();
+                $path = $file->storeAs('public/seller/info-shop', $file_name_cover);
+                $infoShop->update(['cover_image' => Storage::url($path)]);
             }
+
 
             $infoShop->save();
 
             Session::flash('success', 'Cập thông tin shop thành công');
         } catch (\Exception $err) {
             Session::flash('error', 'Cập thông tin shop lỗi');
-            // \Log::error($err->getMessage());
-            // dd($err->getMessage());
             return redirect()->back()->withInput();
         }
 
         return redirect()->intended('/seller1/infos/info');
     }
+
 
     /**
      * Remove the specified resource from storage.

@@ -10,7 +10,7 @@
             $shopProfile = \App\Models\shopProfile::where('username', session('username'))->first();
             @endphp
             <div class="image">
-                <img src="{{ asset('images/seller/info-shop/' . $shopProfile->avt) }}" class="img-circle elevation-2" alt="Shop Image" style="width: 50px; height: 50px">
+                <img src="{{ $shopProfile->avt }}" class="img-circle elevation-2" alt="Shop Image" style="width: 50px; height: 50px">
             </div>
             <div class="info">
                 <h6 href="" class="d-block text-white" >{{ $shopProfile->name_shop}}</h6>

@@ -35,7 +35,7 @@
         </div>
         <div class="col-md-8">
             <input type="file" accept="image/*" name="image_upload_avt" id="image-input-avt" class="form-control">
-            <img src="{{ asset('images/seller/info-shop/' . $shopProfiles->avt) }}" id="show-image-avt" alt="" width="100px" height="100px">
+            <img src="{{ $shopProfiles->avt }}" id="show-image-avt" alt="" width="100px" height="100px">
             @error('image_upload_avt')
             <span class="text-danger"> {{ $message }}</span>
             @enderror
@@ -47,7 +47,7 @@
         </div>
         <div class="col-md-8">
             <input type="file" accept="image/*" name="image_upload_cover" id="image-input-cover" class="form-control">
-            <img src="{{ asset('images/seller/info-shop/' . $shopProfiles->cover_image) }}" id="show-image-cover" style="width: 200px; height: 100px">
+            <img src="{{ $shopProfiles->cover_image }}" id="show-image-cover" style="width: 200px; height: 100px">
             @error('image_upload_cover')
             <span class="text-danger"> {{ $message }}</span>
             @enderror

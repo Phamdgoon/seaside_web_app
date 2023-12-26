@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('account_name');
             $table->string('gender')->default('Khác');
             $table->string('birth_day')->nullable();
-            $table->string('avt');
+            $table->string('avt')->nullable();;
             $table->timestamps();
             
             $table->foreign('username')
