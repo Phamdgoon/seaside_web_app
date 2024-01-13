@@ -171,6 +171,9 @@ Route::middleware(['Buyer.middleware'])->group(function () {
     });
 
     Route::post('/order-product', [OrderController::class, 'ProcessOrder'])->name('client.order.processOrder');
+    Route::post('/voucherShop', [OrderController::class, 'voucherShop'])->name('order.voucher_shop');
+    Route::post('/voucherSEASIDE', [OrderController::class, 'voucherSEASIDE'])->name('order.voucher_SEASIDE');
+
 
     // routes/web.php
     Route::post('/saveOrder', [OrderController::class, 'SaveOrder'])->name('saveOrder');

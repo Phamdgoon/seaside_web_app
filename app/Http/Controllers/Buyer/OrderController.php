@@ -12,16 +12,21 @@ use App\Models\Order;
 use App\Models\Order_Detail;
 use App\Models\Size_Product;
 use App\Models\ShippingAddress;
+use App\Models\Voucher;
+use App\Models\Voucher_order;
+use Illuminate\Support\Carbon;
 
 class OrderController extends Controller
 {
     public function ProcessOrder(Request $request)
     {
-        // Kiểm tra xem người dùng đã đăng nhập chưa
         if (session()->has('username')) {
+            session()->forget('priceVoucherSEASIDE');
+            session()->forget('selectedSEASIDEVoucher');
+            session()->forget('priceVoucherShop');
+            session()->forget('selectedVoucher');
             $username = session('username');
             $shippingAddres=ShippingAddress::WHERE('username',$username)->get();
-            // Lấy dữ liệu từ request
             $size = $request->input('size');
             $quantity = $request->input('quantity');
             $user = User::where('username', $username)->first();
@@ -30,10 +35,17 @@ class OrderController extends Controller
 
             $productId = $productDetail->id_product;
 
-            $product = Product::find($productId);
+            $product = Product::find($productId);$voucherShops = Voucher::where('id_shop', $product->id_shop)
+            ->where('usageLimit', '>', 0)
+            ->where('validTo','>=',Carbon::now())
+            ->get();
+            $voucherSEASIDEs = Voucher::whereNull('id_shop')
+            ->where('usageLimit', '>', 0)
+            ->where('validTo','>=',Carbon::now())
+            ->get();
+
             $product_Images = Product_Images::where('id_product_detail', $selectedColorId)->get();
 
-                // Truyền dữ liệu đến view mà không lưu vào cơ sở dữ liệu
                 return view('buyer.order.orderProduct', [
                     'user' => $user,
                     'productDetail' => $productDetail,
@@ -42,6 +54,8 @@ class OrderController extends Controller
                     'quantity' => $quantity,
                     'product_Images' => $product_Images,
                     'shippingAddres' => $shippingAddres,
+                    'voucherShops' => $voucherShops,
+                    'voucherSEASIDEs' => $voucherSEASIDEs,
                 ]);
         } else {
             // Handle the case when the product detail is not found
@@ -49,8 +63,94 @@ class OrderController extends Controller
         }
     }
 
+    public function voucherShop(Request $request)
+    {
+        $username = session('username');
+        $shippingAddres=ShippingAddress::WHERE('username',$username)->get();
+        $selectedVoucher = $request->input('shopVoucher');        
+        session()->put('selectedVoucher', $selectedVoucher);
+        $priceVoucherShop = Voucher::where('id', $selectedVoucher)->value('discountAmount');
+        session()->put('priceVoucherShop', $priceVoucherShop);
+        
+        $size = $request->input('size');
+        $quantity = $request->input('quantity');
+        $user = User::where('username', $username)->first();
+        $selectedColorId = $request->input('color');
+        $productDetail = Product_Detail::find($selectedColorId);
+
+        $productId = $productDetail->id_product;
+
+        $product = Product::find($productId);$voucherShops = Voucher::where('id_shop', $product->id_shop)
+        ->where('usageLimit', '>', 0)
+        ->where('validTo','>=',Carbon::now())
+        ->get();
+        $voucherSEASIDEs = Voucher::whereNull('id_shop')
+        ->where('usageLimit', '>', 0)
+        ->where('validTo','>=',Carbon::now())
+        ->get();
+
+        $product_Images = Product_Images::where('id_product_detail', $selectedColorId)->get();
+
+        // dd($request->all());
+        return view('buyer.order.orderProduct', [
+            'user' => $user,
+            'productDetail' => $productDetail,
+            'product' => $product,  // Pass the product to the view
+            'size' => $size,
+            'quantity' => $quantity,
+            'product_Images' => $product_Images,
+            'shippingAddres' => $shippingAddres,
+            'voucherShops' => $voucherShops,
+            'voucherSEASIDEs' => $voucherSEASIDEs,
+        ]);
+        
+    }public function voucherSEASIDE(Request $request)
+    {
+        $username = session('username');
+        $shippingAddres=ShippingAddress::WHERE('username',$username)->get();
+        $selectedSEASIDEVoucher = $request->input('SEASIDEvoucher');        
+        session()->put('selectedSEASIDEVoucher', $selectedSEASIDEVoucher);
+        $priceVoucherSEASIDE = Voucher::where('id', $selectedSEASIDEVoucher)->value('discountAmount');
+        session()->put('priceVoucherSEASIDE', $priceVoucherSEASIDE);
+        
+        $size = $request->input('size');
+        $quantity = $request->input('quantity');
+        $user = User::where('username', $username)->first();
+        $selectedColorId = $request->input('color');
+        $productDetail = Product_Detail::find($selectedColorId);
+
+        $productId = $productDetail->id_product;
+
+        $product = Product::find($productId);$voucherShops = Voucher::where('id_shop', $product->id_shop)
+        ->where('usageLimit', '>', 0)
+        ->where('validTo','>=',Carbon::now())
+        ->get();
+        $voucherSEASIDEs = Voucher::whereNull('id_shop')
+        ->where('usageLimit', '>', 0)
+        ->where('validTo','>=',Carbon::now())
+        ->get();
+
+        $product_Images = Product_Images::where('id_product_detail', $selectedColorId)->get();
+
+        // dd($request->all());
+        return view('buyer.order.orderProduct', [
+            'user' => $user,
+            'productDetail' => $productDetail,
+            'product' => $product,  // Pass the product to the view
+            'size' => $size,
+            'quantity' => $quantity,
+            'product_Images' => $product_Images,
+            'shippingAddres' => $shippingAddres,
+            'voucherShops' => $voucherShops,
+            'voucherSEASIDEs' => $voucherSEASIDEs,
+        ]);
+        
+    }
+
     public function SaveOrder(Request $request) {
         $username = session('username');
+        $priceVoucherSEASIDE = session('priceVoucherSEASIDE');
+        $priceVoucherShop = session('priceVoucherShop');
         $productDetail = Product_Detail::find($request->input('color'));
         $quantity = $request->input('quantity');
         $size = $request->input('size');
@@ -67,7 +167,7 @@ class OrderController extends Controller
         $orderDetail->id_product_detail = $productDetail->id;
         $orderDetail->quantity = $quantity;
         $orderDetail->size = $size;
-        $orderDetail->price = $productDetail->price * $quantity + 20000; 
+        $orderDetail->price = $productDetail->price * $quantity + 20000 - $priceVoucherShop - $priceVoucherSEASIDE; 
         $orderDetail->status = 'Chờ duyệt'; 
         $orderDetail->save();
 
@@ -77,7 +177,17 @@ class OrderController extends Controller
         ])->first();
         $size_Product->product_number -= $quantity;
         $size_Product->save();        
-
+        $shopVoucherCode = $request->input('shopVoucher');
+        $voucherSEASIDECode = $request->input('voucherSEASIDE');
+    
+        if (!empty($shopVoucherCode)) {
+            Voucher_order::saveVoucher($orderDetail->id, $shopVoucherCode);
+        }
+    
+        if (!empty($voucherSEASIDECode)) {
+            Voucher_order::saveVoucher($orderDetail->id, $voucherSEASIDECode);
+        }
+        // dd($request->all());
         return redirect()->route('view')->with('ok', 'Đã đặt hàng thành công');
 
     }
@@ -114,6 +224,16 @@ class OrderController extends Controller
         $orderDetail->price = $vnp_Amount/100; 
         $orderDetail->status = 'Chờ duyệt'; 
         $orderDetail->save();
+        if (session()->has('selectedSEASIDEVoucher')) {
+            
+            $selectedSEASIDEVoucher = session('selectedSEASIDEVoucher');
+            Voucher_order::saveVoucher($orderDetail->id, $selectedSEASIDEVoucher);
+        }        
+        if (session()->has('selectedVoucher')) {
+            
+            $selectedVoucher = session('selectedVoucher');
+            Voucher_order::saveVoucher($orderDetail->id, $selectedVoucher);
+        }
 
         $size_Product = Size_Product::where([
             ['id_product_detail', $idProductDetail],

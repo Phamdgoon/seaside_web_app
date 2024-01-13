@@ -92,6 +92,8 @@ class PaymentController extends Controller
         $quantity = $request->input('quantity');
         $size = $request->input('size');
         $latestOrderId = Order::max('id');
+        $priceVoucherSEASIDE = session('priceVoucherSEASIDE');
+        $priceVoucherShop = session('priceVoucherShop');
 
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
         // thay cổng theo server máy đang chạy http://localhost:8000 
@@ -107,7 +109,7 @@ class PaymentController extends Controller
         $vnp_TxnRef = $latestOrderId+1;
         $vnp_OrderInfo = 'Thanh toan hoa don';
         $vnp_OrderType = 'xtmn';
-        $vnp_Amount =  ($productDetail->price * $quantity + 20000)*100;
+        $vnp_Amount =  ($productDetail->price * $quantity + 20000 - $priceVoucherSEASIDE - $priceVoucherShop)*100;
         $vnp_Locale = 'VN';
         $vnp_BankCode = 'NCB';
         $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamps();
             
             $table->foreign('id_order')
-            ->references('id')->on('order')->onUpdate('cascade')->onDelete('cascade');
+            ->references('id')->on('order_detail')->onUpdate('cascade')->onDelete('cascade');
 
             $table->foreign('voucher_code')
             ->references('id')->on('voucher')->onUpdate('cascade')->onDelete('cascade');
