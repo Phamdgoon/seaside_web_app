@@ -48,58 +48,73 @@
         </script>
     @endif
     <div class="profile-container">
-        <h4>Tất cả đơn hàng</h4>
+        <div class="flex-w flex-l-m filter-tope-group m-tb-10">
+            <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
+                Tất cả đơn hàng
+            </button>
+            <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".1">
+                Chờ duyệt
+            </button>
+            <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".2">
+                Đã giao hàng
+            </button>
+            <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".3">
+                Đã nhận hàng
+            </button>
+        </div>
         <div class="separator"></div>
-        <div class="form">
+        <div class="form isotope-grid">
             @foreach ($orderDetails as $orderDetail)
-                <fieldset>
-                    <legend><b>{{ \Illuminate\Support\Str::limit($orderDetail->name_product, 60, ' ...') }}</b>
-                        <p>{{ $orderDetail->status }}</p>
-                    </legend>
-                    <div>
-                        <img src="{{ $orderDetail->url_image }}" alt="">
+            <div class="isotope-item @if($orderDetail->status == 'Chờ duyệt') 1 @else @if($orderDetail->status == 'Đã giao hàng') 2 @else 3 @endif @endif">
+                    <fieldset>
+                        <legend><b>{{ \Illuminate\Support\Str::limit($orderDetail->name_product, 60, ' ...') }}</b>
+                            <p>{{ $orderDetail->status }}</p>
+                        </legend>
                         <div>
-                            <p style="width: 250px">Kiểu: {{ $orderDetail->name_product_detail }}</p>
-                            <p>Size: {{ $orderDetail->size }}</p>
-                            <p>Giá: {{ number_format($orderDetail->productPrice, 0, ',', ',') }}</p>
-                            <p>Số lượng: {{ $orderDetail->quantity }}</p>
-                        </div>
-                    </div>
-                    <div style="display: block;width:250px">
-                        <p>Thành tiền: <span
-                                style="color: crimson;font-size: 20px">{{ number_format($orderDetail->price, 0, ',', ',') }}
-                                đ</span></p>
-                        <p style="margin-top: 10px">( {{ $orderDetail->payment_methods }} )</p>
-                    </div>
-                    <div style="width:220px">
-                        @if ($orderDetail->status == 'Đã giao hàng')
+                            <img src="{{ $orderDetail->url_image }}" alt="">
                             <div>
-                                <form method="POST" action="{{ route('confirm.received', $orderDetail->id) }}">
-                                    @csrf
-                                    <button type="submit"
-                                        class="flex-c-m stext-101 cl0 bg10 bor1 hov-btn1 p-lr-15 trans-04">
-                                        Xác nhận nhận hàng
-                                    </button>
-                                </form>
+                                <p style="width: 250px">Kiểu: {{ $orderDetail->name_product_detail }}</p>
+                                <p>Size: {{ $orderDetail->size }}</p>
+                                <p>Giá: {{ number_format($orderDetail->productPrice, 0, ',', ',') }}</p>
+                                <p>Số lượng: {{ $orderDetail->quantity }}</p>
                             </div>
-                        @else
-                            @if ($orderDetail->status == 'Đã nhận hàng')
+                        </div>
+                        <div style="display: block;width:250px">
+                            <p>Thành tiền: <span
+                                    style="color: crimson;font-size: 20px">{{ number_format($orderDetail->price, 0, ',', ',') }}
+                                    đ</span></p>
+                            <p style="margin-top: 10px">( {{ $orderDetail->payment_methods }} )</p>
+                        </div>
+                        <div style="width:220px">
+                            @if ($orderDetail->status == 'Đã giao hàng')
                                 <div>
-                                    <a href="{{ route('buyer.productDetail', ['id' => $orderDetail->idProduct]) }}"
-                                        class="flex-c-m stext-101 cl0  bg10 bor1 hov-btn1 p-lr-15 trans-04">
-                                        Mua lại
-                                    </a>
+                                    <form method="POST" action="{{ route('confirm.received', $orderDetail->id) }}">
+                                        @csrf
+                                        <button type="submit"
+                                            class="flex-c-m stext-101 cl0 bg10 bor1 hov-btn1 p-lr-15 trans-04">
+                                            Xác nhận nhận hàng
+                                        </button>
+                                    </form>
                                 </div>
                             @else
-                                <div>
-                                    <label>
-                                        {{ $orderDetail->status }}
-                                    </label>
-                                </div>
+                                @if ($orderDetail->status == 'Đã nhận hàng')
+                                    <div>
+                                        <a href="{{ route('buyer.productDetail', ['id' => $orderDetail->idProduct]) }}"
+                                            class="flex-c-m stext-101 cl0  bg10 bor1 hov-btn1 p-lr-15 trans-04">
+                                            Mua lại
+                                        </a>
+                                    </div>
+                                @else
+                                    <div>
+                                        <label>
+                                            {{ $orderDetail->status }}
+                                        </label>
+                                    </div>
+                                @endif
                             @endif
-                        @endif
-                    </div>
-                </fieldset>
+                        </div>
+                    </fieldset>
+                </div>
             @endforeach
         </div>
     </div>
