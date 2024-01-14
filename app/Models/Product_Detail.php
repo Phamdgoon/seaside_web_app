@@ -31,4 +31,9 @@ class Product_Detail extends Model
         return $this->hasMany(Feedback::class, 'id_product_detail');
     }
 
+    public function orderDetails()
+    {
+        return $this->hasMany(Order_Detail::class, 'id_product_detail');
+    }
+
 }

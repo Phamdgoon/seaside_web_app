@@ -17,7 +17,7 @@ class Product extends Model
         return $this->belongsTo(Category_Child::class, 'id_category_child');
     }
 
-    public function productDetail()
+    public function productDetails()
     {
         return $this->hasMany(Product_Detail::class, 'id_product');
     }
@@ -32,5 +32,10 @@ class Product extends Model
             'id', // Khóa chính của model đích (Order_Detail)
             'id_product' // Khóa ngoại trong bảng đích (Order_Detail)
         );
+    }
+
+    public function shop()
+    {
+        return $this->belongsTo(ShopProfile::class, 'id_shop');
     }
 }

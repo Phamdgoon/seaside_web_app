@@ -5,15 +5,35 @@ namespace App\Http\Controllers\Seller;
 use App\Http\Controllers\Controller;
 use App\Models\ShopProfile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('shopProfile');
+    }
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('seller.dashboard.index');
+        $shopId = $request->idShop;
+        $shopProfile = ShopProfile::find($shopId);
+
+        if ($shopProfile) {
+            $productCount = $shopProfile->products()->count();
+            $orderDetailCount = 0;
+
+            foreach ($shopProfile->products as $product) {
+                foreach ($product->productDetails as $productDetail) {
+                    $orderDetailCount += $productDetail->orderDetails->count();
+                }
+            }
+            return view('seller.dashboard.index', compact('productCount', 'orderDetailCount'));
+        } else {
+            return response()->json(['error' => 'Shop not found'], 404);
+        }
     }
 
     /**

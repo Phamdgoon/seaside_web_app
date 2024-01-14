@@ -17,6 +17,11 @@ class Order_Detail extends Model
         return $this->belongsTo(Product_Detail::class, 'id_product_detail');
     }
 
+    public function order()
+    {
+        return $this->belongsTo(Order::class, 'id_order');
+    }
+
     public function feedbacks()
     {
         return $this->hasMany(Feedback::class, 'id_order_detail');
