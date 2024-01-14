@@ -34,8 +34,110 @@
         display: flex;
         margin-bottom: 5px;
     }
+
+    .custom-file-input-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .custom-file-input {
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: 100%;
+        min-height: 100%;
+        font-size: 100px;
+        text-align: right;
+        filter: alpha(opacity=0);
+        opacity: 0;
+        outline: none;
+        background: white;
+        cursor: pointer;
+        display: block;
+    }
+
+    .custom-file-label {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .custom-file-label i {
+        margin-left: 5px;
+        /* Khoảng cách giữa icon và label */
+    }
+
+    .custom-file-input:hover+.custom-file-label i,
+    .custom-file-input:active+.custom-file-label i {
+        color: #007bff;
+    }
+
+    .custom-file-input {
+        cursor: pointer;
+    }
 </style>
 @section('content1')
+    <div class="modal fade" id="feedback" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Đánh giá sản phẩm</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <label for="starRating">Đánh giá sao:</label>
+                    <div class="star-rating ">
+                        <i class="far fa-star" data-rating="1"></i>
+                        <i class="far fa-star" data-rating="2"></i>
+                        <i class="far fa-star" data-rating="3"></i>
+                        <i class="far fa-star" data-rating="4"></i>
+                        <i class="far fa-star" data-rating="5"></i>
+                    </div>
+                    <input type="hidden" id="starRatingInput" name="starRating">
+                    <!-- Ô input ẩn để lưu giữ giá trị số sao đã chọn -->
+                    <div>
+                        <label>Thêm nhận xét:</label>
+                        <textarea class="form-control mt-0" placeholder="Nhận xét"></textarea>
+                    </div>
+                    <div class="custom-file  custom-file-input-container">
+                        <input type="file" class="custom-file-input" id="imageInput" accept="image/*" multiple>
+                        <label class="custom-file-label" for="imageInput">
+                            Thêm hình ảnh: <i class="fas fa-image"></i>
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" onclick="submitReview()">Gửi đánh giá</button>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(".star-rating i").click(function() {
+                var rating = $(this).data("rating");
+
+                // Đặt lại tất cả các sao về màu trắng trước khi đổi màu sao đã chọn
+                $(".star-rating i").removeClass("fas text-warning").addClass("far");
+
+                // Đặt màu vàng cho sao đã chọn và tất cả các sao trước đó
+                $(this).prevAll().addBack().removeClass("far").addClass("fas text-warning");
+
+                $("#starRatingInput").val(rating);
+            });
+
+            function submitReview() {
+                // Xử lý việc gửi đánh giá, có thể thêm AJAX để gửi dữ liệu đánh giá đến máy chủ
+                var starRating = $("#starRatingInput").val();
+                var comment = $("textarea").val();
+                var imageFiles = $("input[type=file][accept='image/*']");
+
+                // Thực hiện các bước xử lý cần thiết, ví dụ: validation, gửi đến máy chủ, ...
+                // Sau đó, đóng modal hoặc hiển thị thông báo thành công tùy thuộc vào kết quả
+                $("#reviewModal").modal("hide");
+            }
+        </script>
+    </div>
     @if (session('ok'))
         <div class="alert alert-success" id="success-alert">
             {{ session('ok') }}
@@ -77,7 +179,7 @@
                                 <form method="POST" action="{{ route('confirm.received', $orderDetail->id) }}">
                                     @csrf
                                     <button type="submit"
-                                        class="flex-c-m stext-101 cl0 bg10 bor1 hov-btn1 p-lr-15 trans-04">
+                                        class="flex-c-m stext-103 cl0 bg10 bor10 hov-btn1 p-lr-15 trans-04">
                                         Xác nhận nhận hàng
                                     </button>
                                 </form>
@@ -86,8 +188,14 @@
                             @if ($orderDetail->status == 'Đã nhận hàng')
                                 <div>
                                     <a href="{{ route('buyer.productDetail', ['id' => $orderDetail->idProduct]) }}"
-                                        class="flex-c-m stext-101 cl0  bg10 bor1 hov-btn1 p-lr-15 trans-04">
+                                        class="flex-c-m stext-103 cl0 bg10 bor10 hov-btn1 p-lr-15 trans-04">
                                         Mua lại
+                                    </a>
+                                </div>
+                                <div class="p-l-20">
+                                    <a href="" data-toggle="modal" data-target="#feedback"
+                                        class="flex-c-m stext-103   cl14 bg11 bor10 hov-btn1 p-lr-15 trans-04">
+                                        Đánh giá
                                     </a>
                                 </div>
                             @else
