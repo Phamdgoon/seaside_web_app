@@ -314,10 +314,6 @@ class ProductController extends Controller
         ->where('product.id', $id)
         ->select('feedback.id', 'buyer_profile.account_name', 'buyer_profile.avt', 'feedback.created_at', 'feedback.star', 'product_detail.name_product_detail', 'order_detail.size', 'feedback.message')
         ->get();
-        $feedback_Images=0;
-        foreach($feedbackDatas as $feedbackData){
-            $feedback_Images= Feedback_Images::where('id_feedback',$feedbackData->id)->get();
-        }
         // Count total feedback
         $totalFeedback = $feedbackDatas->count();
 
@@ -343,7 +339,6 @@ class ProductController extends Controller
             'feedbackData' => $feedbackDatas,
             'totalFeedback' => $totalFeedback,
             'averageStarRating' => $averageStarRating,
-            'feedback_Images' => $feedback_Images,
             'shopProfiles' =>$shopProfile,
         ]);
     }

@@ -204,6 +204,10 @@ Route::middleware(['Buyer.middleware'])->group(function () {
     Route::post('/profile/update-password', [UserProfileController::class, 'updatePassword'])->name('update.password');
 
     Route::post('/confirm-received/{id}', [UserProfileController::class, 'confirmReceived'])->name('confirm.received');
+
+    Route::post('/submit-review/{orderId}', [UserProfileController::class, 'submitReview'])->name('submit.review');
+
+
 });
 
 

@@ -217,7 +217,8 @@
                                 </button>
                             </div>
                             <div class="m-l-10">
-                                <a href="{{ route('profile-seller', ['id' => $profile['id']]) }}" class="flex-c-m stext-102 cl8 bg0 bor20 hov-btn3 p-lr-15 p-tb-3 trans-04">
+                                <a href="{{ route('profile-seller', ['id' => $profile['id']]) }}"
+                                    class="flex-c-m stext-102 cl8 bg0 bor20 hov-btn3 p-lr-15 p-tb-3 trans-04">
                                     <i class="fas fa-store p-r-3"></i>Xem shop
                                 </a>
                             </div>
@@ -362,9 +363,12 @@
                                     {{ $feedback->message }}
                                 </p>
                                 <div class="block2-pic" style="display: flex;height:200px">
-                                    @foreach ($feedback_Images as $feedback_Image)
-                                        <img class="img-feedback" src="{{ $feedback_Image->url_image }}" alt="">
-                                    @endforeach
+
+                                    @php
+                                        $url_image = \App\Models\Feedback_Images::where('id_feedback', $feedback->id)->value('url_image');
+                                    @endphp
+
+                                    <img class="img-feedback" src="{{ $url_image }}" alt="Feedback Image">
                                 </div>
                             </div>
                         </div>

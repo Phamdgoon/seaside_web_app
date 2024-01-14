@@ -76,68 +76,6 @@
     }
 </style>
 @section('content1')
-    <div class="modal fade" id="feedback" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Đánh giá sản phẩm</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <label for="starRating">Đánh giá sao:</label>
-                    <div class="star-rating ">
-                        <i class="far fa-star" data-rating="1"></i>
-                        <i class="far fa-star" data-rating="2"></i>
-                        <i class="far fa-star" data-rating="3"></i>
-                        <i class="far fa-star" data-rating="4"></i>
-                        <i class="far fa-star" data-rating="5"></i>
-                    </div>
-                    <input type="hidden" id="starRatingInput" name="starRating">
-                    <!-- Ô input ẩn để lưu giữ giá trị số sao đã chọn -->
-                    <div>
-                        <label>Thêm nhận xét:</label>
-                        <textarea class="form-control mt-0" placeholder="Nhận xét"></textarea>
-                    </div>
-                    <div class="custom-file  custom-file-input-container">
-                        <input type="file" class="custom-file-input" id="imageInput" accept="image/*" multiple>
-                        <label class="custom-file-label" for="imageInput">
-                            Thêm hình ảnh: <i class="fas fa-image"></i>
-                        </label>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-primary" onclick="submitReview()">Gửi đánh giá</button>
-                </div>
-            </div>
-        </div>
-        <script>
-            $(".star-rating i").click(function() {
-                var rating = $(this).data("rating");
-
-                // Đặt lại tất cả các sao về màu trắng trước khi đổi màu sao đã chọn
-                $(".star-rating i").removeClass("fas text-warning").addClass("far");
-
-                // Đặt màu vàng cho sao đã chọn và tất cả các sao trước đó
-                $(this).prevAll().addBack().removeClass("far").addClass("fas text-warning");
-
-                $("#starRatingInput").val(rating);
-            });
-
-            function submitReview() {
-                // Xử lý việc gửi đánh giá, có thể thêm AJAX để gửi dữ liệu đánh giá đến máy chủ
-                var starRating = $("#starRatingInput").val();
-                var comment = $("textarea").val();
-                var imageFiles = $("input[type=file][accept='image/*']");
-
-                // Thực hiện các bước xử lý cần thiết, ví dụ: validation, gửi đến máy chủ, ...
-                // Sau đó, đóng modal hoặc hiển thị thông báo thành công tùy thuộc vào kết quả
-                $("#reviewModal").modal("hide");
-            }
-        </script>
-    </div>
     @if (session('ok'))
         <div class="alert alert-success" id="success-alert">
             {{ session('ok') }}
@@ -150,6 +88,7 @@
         </script>
     @endif
     <div class="profile-container">
+
         <div class="flex-w flex-l-m filter-tope-group m-tb-10">
             <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
                 Tất cả đơn hàng
@@ -167,7 +106,87 @@
         <div class="separator"></div>
         <div class="form isotope-grid">
             @foreach ($orderDetails as $orderDetail)
-            <div class="isotope-item @if($orderDetail->status == 'Chờ duyệt') 1 @else @if($orderDetail->status == 'Đã giao hàng') 2 @else 3 @endif @endif">
+                <div class="modal fade" id="feedback" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Đánh giá sản phẩm</h5>
+                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <form id="reviewForm" action="{{ route('submit.review', $orderDetail->id) }}" method="POST"
+                                enctype="multipart/form-data">
+
+                                @csrf
+                                <div class="modal-body">
+                                    <label for="starRating">Đánh giá sao:</label>
+                                    <div class="star-rating">
+                                        <i class="far fa-star" data-rating="1"></i>
+                                        <i class="far fa-star" data-rating="2"></i>
+                                        <i class="far fa-star" data-rating="3"></i>
+                                        <i class="far fa-star" data-rating="4"></i>
+                                        <i class="far fa-star" data-rating="5"></i>
+                                    </div>
+                                    <input type="hidden" id="starRatingInput" name="starRating">
+                                    <div>
+                                        <label>Thêm nhận xét:</label>
+                                        <textarea class="form-control mt-0" name="comment" placeholder="Nhận xét"></textarea>
+                                    </div>
+                                    <label class="custom-file-label" for="coverImageInput">
+                                        Thêm hình ảnh: <i class="fas fa-image"></i>
+                                    </label>
+                                    <div class="preview-container">
+                                        <img id="cover_image_preview" class="preview-image" src="" alt="Preview">
+                                    </div>
+                                    <input type="file" name="images[]" class="form-control-file" id="coverImageInput"
+                                        onchange="previewImage(this, 'cover_image_preview')">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                    <button type="submit" class="btn btn-primary">Gửi đánh giá</button>
+                                </div>
+                            </form>
+                            <script>
+                                $(document).ready(function() {
+                                    $(".star-rating i").click(function() {
+                                        var rating = $(this).data("rating");
+                                        $(".star-rating i").removeClass("fas text-warning").addClass("far");
+                                        $(this).prevAll().addBack().removeClass("far").addClass("fas text-warning");
+                                        $("#starRatingInput").val(rating);
+                                    });
+
+                                    $('#feedback').on('show.bs.modal', function(event) {
+                                        var button = $(event.relatedTarget);
+                                        var orderDetailId = button.data('order-id');
+                                        var form = $('#reviewForm');
+                                        form.attr('action', form.attr('action').replace(/\/\d+$/, '/' + orderDetailId));
+                                    });
+
+                                });
+
+                                function previewImage(input, previewId) {
+                                    var preview = document.getElementById(previewId);
+                                    var file = input.files[0];
+                                    var reader = new FileReader();
+
+                                    reader.onloadend = function() {
+                                        preview.src = reader.result;
+                                    };
+
+                                    if (file) {
+                                        reader.readAsDataURL(file);
+                                    } else {
+                                        preview.src = "";
+                                    }
+                                }
+                            </script>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="isotope-item @if ($orderDetail->status == 'Chờ duyệt') 1 @else @if ($orderDetail->status == 'Đã giao hàng') 2 @else 3 @endif @endif">
                     <fieldset>
                         <legend><b>{{ \Illuminate\Support\Str::limit($orderDetail->name_product, 60, ' ...') }}</b>
                             <p>{{ $orderDetail->status }}</p>
@@ -198,21 +217,31 @@
                                         </button>
                                     </form>
                                 </div>
-                                
                             @else
                                 @if ($orderDetail->status == 'Đã nhận hàng')
                                     <div>
                                         <a href="{{ route('buyer.productDetail', ['id' => $orderDetail->idProduct]) }}"
                                             class="flex-c-m stext-103 cl0 bg10 bor10 hov-btn1 p-lr-15 trans-04">
-                                            Mua lại
+                                            Mua lại
                                         </a>
                                     </div>
+                                    @php
+                                        $countFeedback = \App\Models\Feedback::where('id_order_detail', $orderDetail->id)->count();
+                                    @endphp
+                                    @if ($countFeedback == 0)
+                                        <div class="p-l-20">
+                                            <button type="button"
+                                                class="flex-c-m stext-103 cl14 bg11 bor10 hov-btn1 p-lr-15 trans-04"
+                                                data-toggle="modal" data-target="#feedback"
+                                                data-order-id="{{ $orderDetail->id }}">
+                                                Đánh giá
+                                            </button>
+                                        </div>
+                                    @else
                                     <div class="p-l-20">
-                                        <a href="" data-toggle="modal" data-target="#feedback"
-                                            class="flex-c-m stext-103   cl14 bg11 bor10 hov-btn1 p-lr-15 trans-04">
-                                            Đánh giá
-                                        </a>
+                                        Đã đánh giá
                                     </div>
+                                    @endif
                                 @else
                                     <div>
                                         <label>

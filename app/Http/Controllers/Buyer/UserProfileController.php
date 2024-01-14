@@ -6,10 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use App\Models\Order_Detail;
 use App\Models\User;
 use App\Models\BuyerProfile;
+use App\Models\Feedback;
+use App\Models\Feedback_Images;
 
 class UserProfileController extends Controller
 {
@@ -161,5 +164,44 @@ class UserProfileController extends Controller
     {
         return view('buyer.profile.settings');
     }
+
+    public function submitReview(Request $request, $orderId) {
+        // Lấy dữ liệu từ request
+        $request->validate([
+            'starRating' => [
+                'required',
+                Rule::in([1, 2, 3, 4, 5]), // Make sure the rating is one of 1, 2, 3, 4, or 5
+            ],]);
+        $starRating = $request->input('starRating');
+        $comment = $request->input('comment');
+    
+        // Lưu hình ảnh vào thư mục cần thiết (nếu có)
+        $imagePaths = [];
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('review_images', 'public'); // Đặt tên thư mục lưu hình ảnh
+                $imagePaths[] = Storage::url($path);
+            }
+        }
+    
+        // Lưu đánh giá vào cơ sở dữ liệu bằng Eloquent
+        $review = new Feedback();
+        $review->star = $starRating;
+        $review->message = $comment;
+        $review->id_order_detail = $orderId;
+        $review->save();
+    
+        // Lưu các đường dẫn hình ảnh vào cơ sở dữ liệu (nếu có)
+        foreach ($imagePaths as $imagePath) {
+            $image = new Feedback_Images();
+            $image->url_image = $imagePath;
+            $image->id_feedback = $review->id;
+            $image->save();
+        }
+    
+        
+        return redirect()->back()->with('ok', 'Đã đánh giá sản phẩm thành công.');
+    }
+    
 
 }
