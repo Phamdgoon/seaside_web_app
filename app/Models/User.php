@@ -48,4 +48,6 @@ class User extends Authenticatable
     {
         return $this->hasOne(ShopProfile::class, 'username', 'username');
     }
+
+    
 }

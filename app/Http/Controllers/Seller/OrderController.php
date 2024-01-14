@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
-use App\Models\ShopProfile;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-class DashboardController extends Controller
+class OrderController extends Controller
 {
     public function __construct()
     {
@@ -18,23 +16,17 @@ class DashboardController extends Controller
      */
     public function index(Request $request)
     {
-        $shopId = $request->idShop;
-        $shopProfile = ShopProfile::find($shopId);
+        $shopProfiles = $request->shopProfile;
+        $orderDetailsList = [];
 
-        if ($shopProfile) {
-            $productCount = $shopProfile->products()->count();
-
-            $orderDetailCount = 0;
-            foreach ($shopProfile->products as $product) {
-                foreach ($product->productDetails as $productDetail) {
-                    $orderDetailCount += $productDetail->orderDetails->count();
-                }
+        foreach ($shopProfiles->products as $product) {
+            foreach ($product->productDetails as $productDetail) {
+                $orderDetailsList = array_merge($orderDetailsList, $productDetail->orderDetails->all());
             }
-
-            return view('seller.dashboard.index', compact('productCount', 'orderDetailCount'));
-        } else {
-            return response()->json(['error' => 'Shop not found'], 404);
         }
+
+
+        return view('seller.order.index', compact('orderDetailsList'));
     }
 
     /**

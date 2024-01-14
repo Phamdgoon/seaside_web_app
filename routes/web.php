@@ -35,6 +35,7 @@ use App\Http\Controllers\Admin\ApproveController;
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\VoucherAdminController;
+use App\Http\Controllers\Seller\OrderController as SellerOrderController;
 
 Route::get('/', [HomeController::class, 'index'])->name('buyer.home');
 
@@ -121,6 +122,12 @@ Route::middleware(['SellerMiddleware'])->group(function () {
                 Route::post('create', 'store');
             });
         });
+
+        Route::controller(SellerOrderController::class)->group(function () {
+            Route::prefix('orders')->group(function () {
+                Route::get('list', 'index');
+            });
+        });
     });
     Route::get('/seller/confirm', function () {
         return view('auth.seller.confirm'); 
@@ -128,13 +135,13 @@ Route::middleware(['SellerMiddleware'])->group(function () {
     
     Route::get('/create-shop', [SellerController::class, 'create'])->name('create.shop');
 });
+
 //
 Route::get('/profile-seller', [ProfileSellerController::class, 'getInfoShop'])->name('profile-seller');
 Route::get('/product_detail', [ProductController::class, 'productDetail'])->name('buyer.productDetail');
 
+
 //seller-register/login
-
-
 Route::get('/seller/register', function () {
     return view('auth.seller.register');
 })->name('seller.register');

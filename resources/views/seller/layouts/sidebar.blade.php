@@ -66,7 +66,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="#" class="nav-link text-white">
+                    <a href="/seller1/orders/list" class="nav-link text-white">
                         <i class="nav-icon fas fa-file-invoice-dollar"></i>
                         <p> Đơn hàng </p>
                     </a>
