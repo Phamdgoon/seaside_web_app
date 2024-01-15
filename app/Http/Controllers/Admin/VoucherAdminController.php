@@ -41,7 +41,7 @@ class VoucherAdminController extends Controller
                 'validFrom' => $request->input('validFrom'),
                 'validTo' => $request->input('validTo'),
                 'usageLimit' => $request->input('usageLimit'),
-                'platformVoucher' => 1
+                'platformVoucher' => 0
             ]);
 
             Session::flash('success', 'Thêm voucher thành công');

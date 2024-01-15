@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Voucher;
+use App\Models\Order_Detail;
 
 class Voucher_order extends Model
 {
@@ -26,5 +27,9 @@ class Voucher_order extends Model
         
             $voucher->increment('platformVoucher');
         }
+    }
+    public function orderDetails()
+    {
+        return $this->hasMany(Order_Detail::class, 'id_order'); 
     }
 }

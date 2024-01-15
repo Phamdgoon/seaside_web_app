@@ -4,7 +4,9 @@
 
 <link rel="stylesheet" type="text/css" href="css/profile.css">
 <!-- ... your existing HTML ... -->
-
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 @section('content')
     <section class="sec-product-detail bg12 p-t-65 p-b-60">
         <div style="display: flex">
@@ -14,7 +16,8 @@
             <nav class="nav">
                 <!-- ... your existing code ... -->
                 <div class="separator"></div>
-                <a href="{{ url('/profile') }}" id="profile-link">Hồ Sơ</a>
+                <a href="{{ url('/profile') }}" id="profile-link">Hồ Sơ</a>                
+                <a href="{{ url('/address') }}" id="password-link">Địa chỉ</a>
                 <a href="{{ url('/password') }}" id="password-link">Đổi Mật Khẩu</a>
                 <a href="{{ url('/view') }}" id="view-link">Đơn mua</a>
                 <a href="{{ url('/settings') }}" id="settings-link">Cài Đặt Thông Báo</a>

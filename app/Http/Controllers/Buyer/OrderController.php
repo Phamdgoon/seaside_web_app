@@ -26,42 +26,54 @@ class OrderController extends Controller
             session()->forget('priceVoucherShop');
             session()->forget('selectedVoucher');
             $username = session('username');
-            $shippingAddres=ShippingAddress::WHERE('username',$username)->get();
+    
+            // Check if the ShippingAddress exists
+            $shippingAddress = ShippingAddress::where('username', $username)->get();
+            
+            if ($shippingAddress->isEmpty()) {
+                // Handle the case when ShippingAddress is not found
+                return redirect()->route('buyer.address.create')->with('info', 'Please add a shipping address first.');
+            }
+    
             $size = $request->input('size');
             $quantity = $request->input('quantity');
             $user = User::where('username', $username)->first();
             $selectedColorId = $request->input('color');
             $productDetail = Product_Detail::find($selectedColorId);
-
+    
             $productId = $productDetail->id_product;
-
-            $product = Product::find($productId);$voucherShops = Voucher::where('id_shop', $product->id_shop)
-            ->where('usageLimit', '>', 0)
-            ->where('validTo','>=',Carbon::now())
-            ->get();
+    
+            $product = Product::find($productId);
+    
+            $voucherShops = Voucher::where('id_shop', $product->id_shop)
+                ->where('usageLimit', '>', 0)
+                ->where('validTo', '>=', Carbon::now())
+                ->get();
+    
             $voucherSEASIDEs = Voucher::whereNull('id_shop')
-            ->where('usageLimit', '>', 0)
-            ->where('validTo','>=',Carbon::now())
-            ->get();
-
+                ->where('usageLimit', '>', 0)
+                ->where('validTo', '>=', Carbon::now())
+                ->get();
+    
             $product_Images = Product_Images::where('id_product_detail', $selectedColorId)->get();
-
-                return view('buyer.order.orderProduct', [
-                    'user' => $user,
-                    'productDetail' => $productDetail,
-                    'product' => $product,  // Pass the product to the view
-                    'size' => $size,
-                    'quantity' => $quantity,
-                    'product_Images' => $product_Images,
-                    'shippingAddres' => $shippingAddres,
-                    'voucherShops' => $voucherShops,
-                    'voucherSEASIDEs' => $voucherSEASIDEs,
-                ]);
+    
+            return view('buyer.order.orderProduct', [
+                'user' => $user,
+                'productDetail' => $productDetail,
+                'product' => $product,
+                'size' => $size,
+                'quantity' => $quantity,
+                'product_Images' => $product_Images,
+                'shippingAddres' => $shippingAddress,
+                'voucherShops' => $voucherShops,
+                'voucherSEASIDEs' => $voucherSEASIDEs,
+            ]);
         } else {
-            // Handle the case when the product detail is not found
+            // Handle the case when the user is not logged in
             return redirect()->route('login')->with('error', 'Please log in first.');
         }
     }
+    
 
     public function voucherShop(Request $request)
     {

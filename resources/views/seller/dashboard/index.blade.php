@@ -17,7 +17,7 @@ session_start();
             <!-- small box -->
             <div class="small-box bg-info">
                <div class="inner">
-                  <h3>{{ $productCount }}</h3>
+                  <h3>{{ $productCount }}<sup style="font-size: 20px">Sản phẩm</sup></h3>
 
                   <p>Tổng sản phẩm</p>
                </div>
@@ -32,7 +32,7 @@ session_start();
             <!-- small box -->
             <div class="small-box bg-success">
                <div class="inner">
-                  <h3>{{ $orderDetailCount }}</h3>
+                  <h3>{{ $orderDetailCount }}<sup style="font-size: 20px">Đơn</sup></h3>
 
                   <p>Số lượng đơn hàng</p>
                </div>
@@ -47,7 +47,7 @@ session_start();
             <!-- small box -->
             <div class="small-box bg-warning">
                <div class="inner">
-                  <h3>{{ number_format($revenue, 2, ',', '.') }}<sup style="font-size: 20px">VND</sup></h3>
+                  <h3>{{ number_format($revenue, 0, ',', '.') }}<sup style="font-size: 20px">VND</sup></h3>
                   <p>Doanh thu</p>
                </div>
                <div class="icon">
@@ -61,7 +61,7 @@ session_start();
             <!-- small box -->
             <div class="small-box bg-danger">
                <div class="inner">
-                  <h3>65</h3>
+                  <h3>{{ number_format($totalVoucher, 0, ',', '.') }}<sup style="font-size: 20px">VND</sup></h3>
                   <p>Số tiền trả lại từ voucher</p>
                </div>
                <div class="icon">

@@ -101,31 +101,35 @@
             </script>
         @endif
         <div class="separator"></div>
-            <div class="layout">
-                <!-- Add the following form to your Blade view -->
-                <form method="post" action="{{ route('update.password') }}">
-                    @csrf
-                    <div class="input-wrapper">
-                        <label for="pass_old">Nhập mật khẩu cũ:</label>
-                        <input class="input" type="password" id="pass_old" name="pass_old" required placeholder="Mật khẩu hiện tại">
-                        <i id="togglePassword_old" class="fas fa-regular fa-eye-slash toggle-password"></i>
-                    </div>
+        <div class="layout">
+            <!-- Add the following form to your Blade view -->
+            <form method="post" action="{{ route('update.password') }}">
+                @csrf
+                <div class="input-wrapper">
+                    <label for="pass_old">Nhập mật khẩu cũ:</label>
+                    <input class="input" type="password" id="pass_old" name="pass_old" required
+                        placeholder="Mật khẩu hiện tại">
+                    <i id="togglePassword_old" class="fas fa-regular fa-eye-slash toggle-password"></i>
+                </div>
 
-                    <div class="input-wrapper">
-                        <label for="pass_new">Nhập mật khẩu mới:</label>
-                        <input class="input" type="password" id="pass_new" name="pass_new" required placeholder="Mật khẩu mới">
-                        <i id="togglePassword_new" class="fas fa-regular fa-eye-slash toggle-password"></i>
-                    </div>
+                <div class="input-wrapper">
+                    <label for="pass_new">Nhập mật khẩu mới:</label>
+                    <input class="input" type="password" id="pass_new" name="pass_new" required
+                        placeholder="Mật khẩu mới">
+                    <i id="togglePassword_new" class="fas fa-regular fa-eye-slash toggle-password"></i>
+                </div>
 
-                    <div class="input-wrapper">
-                        <label for="pass_new_confirm">Nhập lại mật khẩu mới:</label>
-                        <input class="input" type="password" id="pass_new_confirm" name="pass_new_confirm" required placeholder="Nhập lại khẩu">
-                        <i id="togglePassword_confirm" class="fas fa-regular fa-eye-slash toggle-password"></i>
-                    </div>
+                <div class="input-wrapper">
+                    <label for="pass_new_confirm">Nhập lại mật khẩu mới:</label>
+                    <input class="input" type="password" id="pass_new_confirm" name="pass_new_confirm" required
+                        placeholder="Nhập lại khẩu">
+                    <i id="togglePassword_confirm" class="fas fa-regular fa-eye-slash toggle-password"></i>
+                </div>
 
-                    <button class="m-t flex-c-m stext-101 cl0  bg10 bor4 hov-btn1 p-lr-15 trans-04" type="submit">Lưu thay đổi</button>
-                </form>
-            </div>
+                <button class="m-t flex-c-m stext-101 cl0  bg10 bor4 hov-btn1 p-lr-15 trans-04" type="submit">Lưu thay
+                    đổi</button>
+            </form>
+        </div>
     </div>
 @endsection
 

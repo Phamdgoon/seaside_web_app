@@ -209,11 +209,19 @@ Route::middleware(['Buyer.middleware'])->group(function () {
 
     Route::get('/settings', [UserProfileController::class, 'showSettings']);
 
+    Route::get('/address', [UserProfileController::class, 'showAddress'])->name('buyer.address.create');
+    
+    Route::post('/add-address', [UserProfileController::class, 'addAddress'])->name('add.address');
+
     Route::post('/profile/update', [UserProfileController::class, 'updateProfile'])->name('profile.update');
 
     Route::post('/profile/update-password', [UserProfileController::class, 'updatePassword'])->name('update.password');
 
     Route::post('/confirm-received/{id}', [UserProfileController::class, 'confirmReceived'])->name('confirm.received');
+
+    Route::post('/submit-review/{orderId}', [UserProfileController::class, 'submitReview'])->name('submit.review');
+
+
 });
 
 

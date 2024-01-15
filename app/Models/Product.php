@@ -38,4 +38,5 @@ class Product extends Model
     {
         return $this->belongsTo(ShopProfile::class, 'id_shop');
     }
+    
 }

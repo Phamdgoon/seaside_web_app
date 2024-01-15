@@ -41,7 +41,22 @@ class DashboardController extends Controller
                 }
             }
 
-            return view('seller.dashboard.index', compact('productCount', 'orderDetailCount', 'revenue'));
+            $totalVoucher = DB::table(DB::raw('(SELECT voucher.discountAmount, COUNT(voucher.id) AS voucher_count
+            FROM order_detail
+            JOIN voucher_order ON order_detail.id = voucher_order.id_order
+            JOIN voucher ON voucher_order.voucher_code = voucher.id
+            JOIN product_detail ON order_detail.id_product_detail = product_detail.id
+            JOIN product ON product_detail.id_product = product.id
+            WHERE voucher.id_shop IS NULL
+                AND order_detail.status = \'Đã nhận hàng\'
+                AND product.id_shop = ' . $shopId . ' 
+            GROUP BY voucher.discountAmount) as subquery'))
+            ->selectRaw('SUM(subquery.discountAmount * subquery.voucher_count) AS totalAmount')
+            ->pluck('totalAmount')
+            ->first();
+        
+
+            return view('seller.dashboard.index', compact('productCount', 'orderDetailCount', 'revenue','totalVoucher'));
         } else {
             return response()->json(['error' => 'Shop not found'], 404);
         }

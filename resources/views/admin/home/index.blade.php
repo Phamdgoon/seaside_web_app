@@ -17,9 +17,9 @@
             <!-- small box -->
             <div class="small-box bg-info">
                <div class="inner">
-                  <h3>{{$countShop}}<sup style="font-size: 20px">shop</sup></h3>
+                  <h3>{{$countShop}}<sup style="font-size: 20px">Cửa hàng</sup></h3>
 
-                  <p>Seller</p>
+                  <p>Tổng số lượng của hàng</p>
                </div>
                <div class="icon">
                   <i class="ion ion-bag"></i>
@@ -34,7 +34,7 @@
                <div class="inner">
                   <h3>{{$countBuyer}}<sup style="font-size: 20px">người</sup></h3>
 
-                  <p>Buyer</p>
+                  <p>Tổng số lượng người mua</p>
                </div>
                <div class="icon">
                   <i class="ion ion-stats-bars"></i>
@@ -49,7 +49,7 @@
                <div class="inner">
                   <h3>{{ number_format($totalOrder, 0, ',', '.') }}<sup style="font-size: 20px">đ</sup></h3>
 
-                  <p>Buyer Registrations</p>
+                  <p>Tổng phí dịch vụ</p>
                </div>
                <div class="icon">
                   <i class="ion ion-person-add"></i>
@@ -64,7 +64,7 @@
                <div class="inner">
                   <h3>{{ number_format($totalVoucher, 0, ',', '.') }}<sup style="font-size: 20px">đ</sup></h3>
 
-                  <p>Unique Visitors</p>
+                  <p>Tổng tiền chi trả voucher SeaSide</p>
                </div>
                <div class="icon">
                   <i class="ion ion-pie-graph"></i>
