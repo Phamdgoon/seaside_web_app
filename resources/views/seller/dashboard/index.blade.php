@@ -39,7 +39,7 @@ session_start();
                <div class="icon">
                   <i class="ion ion-stats-bars"></i>
                </div>
-               <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+               <a href="/seller1/orders/list" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
          </div>
          <!-- ./col -->
@@ -47,7 +47,7 @@ session_start();
             <!-- small box -->
             <div class="small-box bg-warning">
                <div class="inner">
-                  <h3>53<sup style="font-size: 20px">%</sup></h3>
+                  <h3>{{ number_format($revenue, 2, ',', '.') }}<sup style="font-size: 20px">VND</sup></h3>
                   <p>Doanh thu</p>
                </div>
                <div class="icon">

@@ -17,21 +17,56 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        $shopProfiles = $request->shopProfile;
+        $shopProfile = $request->shopProfile;
         $orderDetailsList = [];
 
-        foreach ($shopProfiles->products as $product) {
+        foreach ($shopProfile->products as $product) {
             foreach ($product->productDetails as $productDetail) {
                 $orderDetailsList = array_merge($orderDetailsList, $productDetail->orderDetails->all());
             }
         }
+        $allCount = 0;
+        foreach ($shopProfile->products as $product) {
+            foreach ($product->productDetails as $productDetail) {
+                $allCount += $productDetail->orderDetails->count();
+            }
+        }
 
-        $allCount = Order_Detail::count();
-        $confirmCount = Order_Detail::where('status', 'Chờ duyệt')->count();
-        $pickupCount = Order_Detail::where('status', 'Chờ lấy hàng')->count();
-        $deliveryCount = Order_Detail::where('status', 'Đang giao hàng')->count();
-        $completeCount = Order_Detail::where('status', 'Đã nhận hàng')->count();
+        $confirmCount = 0;
+        foreach ($shopProfile->products as $product) {
+            foreach ($product->productDetails as $productDetail) {
+                $confirmCount += $productDetail->orderDetails
+                ->where('status', 'Chờ duyệt')
+                ->count();
+            }
+        }
 
+        $pickupCount = 0;
+        foreach ($shopProfile->products as $product) {
+            foreach ($product->productDetails as $productDetail) {
+                $pickupCount += $productDetail->orderDetails
+                ->where('status', 'Chờ lấy hàng')
+                ->count();
+            }
+        }
+
+        $deliveryCount = 0;
+        foreach ($shopProfile->products as $product) {
+            foreach ($product->productDetails as $productDetail) {
+                $deliveryCount += $productDetail->orderDetails
+                ->where('status', 'Đang giao hàng')
+                ->count();
+            }
+        }
+
+        $completeCount = 0;
+        foreach ($shopProfile->products as $product) {
+            foreach ($product->productDetails as $productDetail) {
+                $completeCount += $productDetail->orderDetails
+                ->where('status', 'Đã nhận hàng')
+                ->count();
+            }
+        }
 
         return view('seller.order.index', compact('orderDetailsList', 'allCount', 'confirmCount', 'pickupCount', 'deliveryCount', 'completeCount'));
     }

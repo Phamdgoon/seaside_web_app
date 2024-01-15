@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order_Detail;
 use App\Models\ShopProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -31,7 +32,16 @@ class DashboardController extends Controller
                 }
             }
 
-            return view('seller.dashboard.index', compact('productCount', 'orderDetailCount'));
+            $revenue = 0;
+            foreach ($shopProfile->products as $product) {
+                foreach ($product->productDetails as $productDetail) {
+                    $revenue += $productDetail->orderDetails
+                        ->where('status', trim(strtolower('Đã nhận hàng')))
+                        ->sum('price');
+                }
+            }
+
+            return view('seller.dashboard.index', compact('productCount', 'orderDetailCount', 'revenue'));
         } else {
             return response()->json(['error' => 'Shop not found'], 404);
         }
