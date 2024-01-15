@@ -62,7 +62,7 @@
                 <!-- Block2 -->
                 <div class="block2">
                     <div class="block2-pic hov-img0">
-                        @foreach ($product->productDetail as $productDetail)
+                        @foreach ($product->productDetails as $productDetail)
                         <img src="{{ $productDetail->productImage->first()->url_image }}" alt="IMG-PRODUCT">
                         @endforeach
 
@@ -78,7 +78,7 @@
                                 {{ \Illuminate\Support\Str::limit($product->name_product, 60, ' ...') }}
                             </a>
                             <span class="stext-105 cl3" style="color: #fa4251">
-                                {{ number_format($product->productDetail->first()->price, 0, ',', '.') }} <span style="font-size: 14px">đ</span>
+                                {{ number_format($product->productDetails->first()->price, 0, ',', '.') }} <span style="font-size: 14px">đ</span>
                             </span>
                         </div>
 

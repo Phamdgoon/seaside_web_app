@@ -22,7 +22,7 @@ class ProfileSellerController extends Controller
     public function getInfoShop(Request $request)
     {
         $idShop = $request->input('id');
-        $shopProfileInfo = ShopProfile::with(['products.productDetail'])->where('id', $idShop)->first();
+        $shopProfileInfo = ShopProfile::with(['products.productDetails'])->where('id', $idShop)->first();
 
         $products = $shopProfileInfo->products;
 
