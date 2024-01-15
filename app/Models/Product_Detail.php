@@ -10,7 +10,7 @@ class Product_Detail extends Model
     use HasFactory;
     protected $table = 'product_detail'; // Tên của bảng trong cơ sở dữ liệu
     protected $primaryKey = 'id'; // Khóa chính của bảng
-    protected $fillable = ['id_product','name_product_detail','price','created_at','updated_at'];
+    protected $fillable = ['id_product', 'name_product_detail', 'price', 'created_at', 'updated_at'];
 
     public function productImage()
     {
@@ -19,7 +19,7 @@ class Product_Detail extends Model
 
     public function productSizes()
     {
-        return $this->hasMany(Size_Product::class,'id_product_detail');
+        return $this->hasMany(Size_Product::class, 'id_product_detail');
     }
 
     public function product()
@@ -36,4 +36,8 @@ class Product_Detail extends Model
         return $this->hasMany(Order_Detail::class, 'id_product_detail');
     }
 
+    public function productImages()
+    {
+        return $this->hasMany(Product_Images::class, 'id_product_detail');
+    }
 }

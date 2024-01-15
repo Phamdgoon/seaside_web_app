@@ -26,8 +26,14 @@ class OrderController extends Controller
             }
         }
 
+        $allCount = Order_Detail::count();
+        $confirmCount = Order_Detail::where('status', 'Chờ duyệt')->count();
+        $pickupCount = Order_Detail::where('status', 'Chờ lấy hàng')->count();
+        $deliveryCount = Order_Detail::where('status', 'Đang giao hàng')->count();
+        $completeCount = Order_Detail::where('status', 'Đã nhận hàng')->count();
 
-        return view('seller.order.index', compact('orderDetailsList'));
+
+        return view('seller.order.index', compact('orderDetailsList', 'allCount', 'confirmCount', 'pickupCount', 'deliveryCount', 'completeCount'));
     }
 
     public function confirm($id)
@@ -67,7 +73,8 @@ class OrderController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $orderDetail = Order_Detail::find($id);
+        return view('seller.order.detail', compact('orderDetail'));
     }
 
     /**

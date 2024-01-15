@@ -26,4 +26,9 @@ class BuyerProfile extends Model
     {
         return $this->belongsTo(User::class, 'username', 'username');
     }
+
+    public function shippingAddresses()
+    {
+        return $this->hasMany(ShippingAddress::class, 'id_shipping_address', 'username');
+    }
 }

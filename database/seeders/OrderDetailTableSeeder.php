@@ -23,7 +23,7 @@ class OrderDetailTableSeeder extends Seeder
                 'quantity' => '1',
                 'size' => 'M',
                 'price' => '315000.00',
-                'status' => 'Đã giao hàng',
+                'status' => 'Đã nhận hàng',
                 'voucher_code' => null,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()

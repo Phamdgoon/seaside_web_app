@@ -129,6 +129,7 @@ Route::middleware(['SellerMiddleware'])->group(function () {
                 Route::get('list', 'index');
                 Route::post('confirm/{id}', 'confirm');
                 Route::post('pickup/{id}', 'pickup');
+                Route::get('detail/{id}', 'show');
             });
         });
     });

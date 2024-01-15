@@ -6,11 +6,12 @@
         <div class="col-md-12">
             <nav>
                 <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                    <a class="nav-item nav-link active" id="nav-all-tab" data-toggle="tab" href="#nav-all" role="tab" aria-controls="nav-all" aria-selected="true">Tất cả</a>
-                    <a class="nav-item nav-link" id="nav-confirm-tab" data-toggle="tab" href="#nav-confirm" role="tab" aria-controls="nav-confirm" aria-selected="false">Chờ xác nhận</a>
-                    <a class="nav-item nav-link" id="nav-pickup-tab" data-toggle="tab" href="#nav-pickup" role="tab" aria-controls="nav-delivery" aria-selected="false">Chờ lấy hàng</a>
-                    <a class="nav-item nav-link" id="nav-delivery-tab" data-toggle="tab" href="#nav-delivery" role="tab" aria-controls="nav-delivery" aria-selected="false">Đang giao hàng</a>
-                    <a class="nav-item nav-link" id="nav-complete-tab" data-toggle="tab" href="#nav-complete" role="tab" aria-controls="nav-complete" aria-selected="false">Hoàn thành</a>
+                    <a class="nav-item nav-link active" id="nav-all-tab" data-toggle="tab" href="#nav-all" role="tab" aria-controls="nav-all" aria-selected="true">Tất cả ({{ $allCount }})</a>
+                    <a class="nav-item nav-link" id="nav-confirm-tab" data-toggle="tab" href="#nav-confirm" role="tab" aria-controls="nav-confirm" aria-selected="false">Chờ xác nhận @if ($confirmCount > 0) ({{ $confirmCount }}) @endif</a>
+                    <a class="nav-item nav-link" id="nav-pickup-tab" data-toggle="tab" href="#nav-pickup" role="tab" aria-controls="nav-delivery" aria-selected="false">Chờ lấy hàng @if ($pickupCount > 0) ({{ $pickupCount }}) @endif</a>
+                    <a class="nav-item nav-link" id="nav-delivery-tab" data-toggle="tab" href="#nav-delivery" role="tab" aria-controls="nav-delivery" aria-selected="false">Đang giao hàng @if ($deliveryCount > 0) ({{ $deliveryCount }}) @endif</a>
+                    <a class="nav-item nav-link" id="nav-complete-tab" data-toggle="tab" href="#nav-complete" role="tab" aria-controls="nav-complete" aria-selected="false">Hoàn thành @if ($completeCount > 0) ({{ $completeCount }}) @endif</a>
+
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
@@ -31,13 +32,13 @@
                             @foreach ($orderDetailsList as $orderDetail)
                             <tr>
                                 <td>{{ $orderDetail->id }}</td>
-                                <td>{{ $orderDetail->order->user->username }}</td>
+                                <td>{{ $orderDetail->order->buyer->account_name }}</td>
                                 <td>{{ $orderDetail->productDetail->product->name_product }}</td>
                                 <td>{{ $orderDetail->quantity }}, {{ $orderDetail->size }}, {{ $orderDetail->productDetail->name_product_detail}}</td>
                                 <td>{{ number_format($orderDetail->price, 2, ',', '.') }}</td>
                                 <td>{{ $orderDetail->order->payment_methods }}</td>
                                 <td>
-                                    <a href="/seller1/vouchers/update/{{ $orderDetail->id }}" class="btn btn-warning"><i class="nav-icon fas fa-eye"></i></a>
+                                    <a href="/seller1/orders/detail/{{ $orderDetail->id }}" class="btn btn-warning"><i class="nav-icon fas fa-eye"></i></a>
                                 </td>
                             </tr>
                             @endforeach
@@ -62,7 +63,7 @@
                             @if ($orderDetail->confirmStatus())
                             <tr>
                                 <td>{{ $orderDetail->id }}</td>
-                                <td>{{ $orderDetail->order->user->username }}</td>
+                                <td>{{ $orderDetail->order->buyer->account_name }}</td>
                                 <td>{{ $orderDetail->productDetail->product->name_product }}</td>
                                 <td>{{ $orderDetail->quantity }}, {{ $orderDetail->size }}, {{ $orderDetail->productDetail->name_product_detail }}</td>
                                 <td>{{ number_format($orderDetail->price, 2, ',', '.') }}</td>
@@ -104,7 +105,7 @@
                             @if ($orderDetail->pickupStatus())
                             <tr>
                                 <td>{{ $orderDetail->id }}</td>
-                                <td>{{ $orderDetail->order->user->username }}</td>
+                                <td>{{ $orderDetail->order->buyer->account_name }}</td>
                                 <td>{{ $orderDetail->productDetail->product->name_product }}</td>
                                 <td>{{ $orderDetail->quantity }}, {{ $orderDetail->size }}, {{ $orderDetail->productDetail->name_product_detail }}</td>
                                 <td>{{ number_format($orderDetail->price, 2, ',', '.') }}</td>
@@ -145,7 +146,7 @@
                             @if ($orderDetail->deliveryStatus())
                             <tr>
                                 <td>{{ $orderDetail->id }}</td>
-                                <td>{{ $orderDetail->order->user->username }}</td>
+                                <td>{{ $orderDetail->order->buyer->account_name }}</td>
                                 <td>{{ $orderDetail->productDetail->product->name_product }}</td>
                                 <td>{{ $orderDetail->quantity }}, {{ $orderDetail->size }}, {{ $orderDetail->productDetail->name_product_detail }}</td>
                                 <td>{{ number_format($orderDetail->price, 2, ',', '.') }}</td>
@@ -173,7 +174,7 @@
                             @if ($orderDetail->completeStatus())
                             <tr>
                                 <td>{{ $orderDetail->id }}</td>
-                                <td>{{ $orderDetail->order->user->username }}</td>
+                                <td>{{ $orderDetail->order->buyer->account_name }}</td>
                                 <td>{{ $orderDetail->productDetail->product->name_product }}</td>
                                 <td>{{ $orderDetail->quantity }}, {{ $orderDetail->size }}, {{ $orderDetail->productDetail->name_product_detail }}</td>
                                 <td>{{ number_format($orderDetail->price, 2, ',', '.') }}</td>
