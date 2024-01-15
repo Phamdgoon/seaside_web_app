@@ -72,7 +72,7 @@
                         <p style="margin-top: 10px">( {{ $orderDetail->payment_methods }} )</p>
                     </div>
                     <div style="width:220px">
-                        @if ($orderDetail->status == 'Đã giao hàng')
+                        @if (trim(strtolower($orderDetail->status)) === 'Đang giao hàng')
                             <div>
                                 <form method="POST" action="{{ route('confirm.received', $orderDetail->id) }}">
                                     @csrf

@@ -37,7 +37,7 @@
                                 <td>{{ \Carbon\Carbon::parse($voucher->validFrom)->format('d-m-Y H:i:s') }}</td>
                                 <td>{{ \Carbon\Carbon::parse($voucher->validTo)->format('d-m-Y H:i:s') }}</td>
                                 <td>{{ $voucher->usageLimit }}</td>
-                                <td>{{ $voucher->usedVoucherCount() }}</td>
+                                <td>{{ $voucher->platformVoucher }}</td>
                                 <td>
                                     <a href="/seller1/vouchers/update/{{ $voucher->id }}" class="btn btn-warning">Edit</a>
                                     <form class="delete-form" action="/seller1/vouchers/delete/{{ $voucher->id }}" method="POST" style="display: inline;" onsubmit="return confirmDelete()">

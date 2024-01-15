@@ -36,6 +36,7 @@ use App\Http\Controllers\Admin\ApproveController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\VoucherAdminController;
 use App\Http\Controllers\Seller\OrderController as SellerOrderController;
+use App\Http\Controllers\Admin\DashboardAdminController;
 
 Route::get('/', [HomeController::class, 'index'])->name('buyer.home');
 
@@ -126,6 +127,8 @@ Route::middleware(['SellerMiddleware'])->group(function () {
         Route::controller(SellerOrderController::class)->group(function () {
             Route::prefix('orders')->group(function () {
                 Route::get('list', 'index');
+                Route::post('confirm/{id}', 'confirm');
+                Route::post('pickup/{id}', 'pickup');
             });
         });
     });
@@ -178,6 +181,9 @@ Route::middleware(['Buyer.middleware'])->group(function () {
     });
 
     Route::post('/order-product', [OrderController::class, 'ProcessOrder'])->name('client.order.processOrder');
+    Route::post('/voucherShop', [OrderController::class, 'voucherShop'])->name('order.voucher_shop');
+    Route::post('/voucherSEASIDE', [OrderController::class, 'voucherSEASIDE'])->name('order.voucher_SEASIDE');
+
 
     // routes/web.php
     Route::post('/saveOrder', [OrderController::class, 'SaveOrder'])->name('saveOrder');
@@ -219,11 +225,8 @@ Route::get('/logout', [AdminController::class, 'logout'])->name('logout');
 
 Route::middleware(['AdminMiddleware'])->group(function () {
     Route::prefix('')->group(function () {
-
-        Route::get('/admin', function () {
-            return view('admin.home.index');
-        })->name('admin.home');
     
+        Route::get('/admin', [DashboardAdminController::class, 'index'])->name('admin.home');
         Route::get('/admin/approve', [ApproveController::class, 'index'])->name('admin.approve');
         Route::post('/admin/approve/{username}', [ApproveController::class, 'update'])->name('admin.approve.update');
     });
@@ -246,9 +249,7 @@ Route::middleware(['AdminMiddleware'])->group(function () {
     Route::delete('/admin/vouchers/delete/{id}', [VoucherAdminController::class, 'destroy'])->name('admin.vouchers.delete');
     Route::get('/admin/vouchers/update/{id}', [VoucherAdminController::class, 'edit'])->name('admin.editVouchers');
     Route::post('/admin/vouchers/{id}', [VoucherAdminController::class, 'update'])->name('admin.updateVouchers');
-    Route::get('/admin', function () {
-        return view('admin.home.index');
-    })->name('admin.home');
+
     Route::get('/admin/approve', [ApproveController::class, 'index'])->name('admin.approve');
     Route::post('/admin/approve/{username}', [ApproveController::class, 'update'])->name('admin.approve.update');
 Route::post('/voucher/store', [VoucherAdminController::class, 'store'])->name('admin.voucher.store');

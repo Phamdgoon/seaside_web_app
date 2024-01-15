@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Order_Detail extends Model
 {
     use HasFactory;
-    protected $table = 'order_detail'; 
+    protected $table = 'order_detail';
     protected $primaryKey = 'id';
-    protected $fillable = ['id_order','id_product_detail','quantity', 'size', 'price', 'status', 'created_at','updated_at'];
+    protected $fillable = ['id_order', 'id_product_detail', 'quantity', 'size', 'price', 'status', 'created_at', 'updated_at'];
 
     public function productDetail()
     {
@@ -30,5 +30,25 @@ class Order_Detail extends Model
     public function voucher()
     {
         return $this->belongsTo(Voucher::class, 'voucher_code', 'code');
+    }
+
+    public function confirmStatus()
+    {
+        return $this->status === 'Chờ duyệt';
+    }
+
+    public function pickupStatus()
+    {
+        return trim(strtolower($this->status)) === 'chờ lấy hàng';
+    }
+
+    public function deliveryStatus()
+    {
+        return trim(strtolower($this->status)) === 'Đang giao hàng';
+    }
+
+    public function completeStatus()
+    {
+        return trim(strtolower($this->status)) === 'Đã nhận hàng';
     }
 }

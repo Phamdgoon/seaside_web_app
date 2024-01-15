@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order_Detail;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -27,6 +28,22 @@ class OrderController extends Controller
 
 
         return view('seller.order.index', compact('orderDetailsList'));
+    }
+
+    public function confirm($id)
+    {
+        $orderDetail = Order_Detail::find($id);
+        $orderDetail->update(['status' => 'Chờ lấy hàng']);
+
+        return redirect()->back()->with('success', 'Đơn hàng đã được xác nhận thành công.');
+    }
+
+    public function pickup($id)
+    {
+        $orderDetail = Order_Detail::find($id);
+        $orderDetail->update(['status' => 'Đang giao hàng']);
+
+        return redirect()->back()->with('success', 'Đơn hàng đã được lấy hàng thành công.');
     }
 
     /**

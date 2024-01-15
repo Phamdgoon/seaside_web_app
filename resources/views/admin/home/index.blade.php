@@ -17,7 +17,7 @@
             <!-- small box -->
             <div class="small-box bg-info">
                <div class="inner">
-                  <h3>150</h3>
+                  <h3>{{$countShop}}<sup style="font-size: 20px">shop</sup></h3>
 
                   <p>Seller</p>
                </div>
@@ -32,9 +32,9 @@
             <!-- small box -->
             <div class="small-box bg-success">
                <div class="inner">
-                  <h3>53<sup style="font-size: 20px">%</sup></h3>
+                  <h3>{{$countBuyer}}<sup style="font-size: 20px">người</sup></h3>
 
-                  <p>Bounce Rate</p>
+                  <p>Buyer</p>
                </div>
                <div class="icon">
                   <i class="ion ion-stats-bars"></i>
@@ -45,9 +45,9 @@
          <!-- ./col -->
          <div class="col-lg-3 col-6">
             <!-- small box -->
-            <div class="small-box bg-warning">
+            <div class="small-box bg-success">
                <div class="inner">
-                  <h3>44</h3>
+                  <h3>{{ number_format($totalOrder, 0, ',', '.') }}<sup style="font-size: 20px">đ</sup></h3>
 
                   <p>Buyer Registrations</p>
                </div>
@@ -62,7 +62,7 @@
             <!-- small box -->
             <div class="small-box bg-danger">
                <div class="inner">
-                  <h3>65</h3>
+                  <h3>{{ number_format($totalVoucher, 0, ',', '.') }}<sup style="font-size: 20px">đ</sup></h3>
 
                   <p>Unique Visitors</p>
                </div>
